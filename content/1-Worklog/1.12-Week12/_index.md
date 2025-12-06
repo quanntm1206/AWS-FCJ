@@ -1,52 +1,36 @@
 ---
 title: "Week 12 Worklog"
-date: "2025-11-24"
-weight: 2
+date: "2025-11-25"
+weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
+
 ### Week 12 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* **Pipeline Re-architecture:** Finalizing the transition from Batch Export to Real-time Log Streaming (Subscription Filters).
+* **Network Security:** Configuring Lambda networking (ENI) to ensure secure data ingestion within VPC.
+* **Advanced R&D (NLP):** Deep diving into Natural Language Processing (Vector Spaces & Probabilistic Models) for semantic log analysis.
+* **Industry Engagement:** Updating knowledge on AWS DevOps, IaC, and Container services via technical workshops.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Successfully installed AWS CDK with AWS CLI <br> Completed the tutorial for creating a first application with CDK: <br>&emsp; + Deployed stacks on AWS Accounts <br>&emsp; + Used diff to compare changes <br>&emsp; + Destroyed stack after finishing <br> - Created a Github Organization for the team | 24/11/2025 | 24/11/2025      |[CDK Tutorial](https://docs.aws.amazon.com/cdk/v2/guide/hello-world.html)|
-| 3   | - Added to IR Step Functions: Added a Map State to illiterate isolated Instances and trigger SSM Lambda for those Instances to collect logs from them for forensics <br> - Succesfully helped with creating auto export CloudWatch logs: Used Lambda to parse subcription filter form log stream to Raw Log S3 bucket, will have to modify CloudWatch ETL Lambda to work with the new auto export rather than the batch export job <br> - Update CloudTrail ETL Lambda: Noticed the usually high storage cost in the Processed CloudTrail Log bucket => The current Lambda Function save files as unzipped .jsonl => Updated the function so that the files is compressed by gzip before saving <br> - CloudTrail ETL Lambda have some spiking and error invocations when multiple people is interacting with the account => Raised timeout limit <br> CDK: Moved the CDK testing environment to a new account <br> - CDK: Created a Stack that enables GuardDuty and CloudTrail and the Raw Log S3 Bucket   | 25/11/2025 | 25/11/2025      ||
-| 4   | - CDK: Updated Bucket and CloudTrail Policy to replicate the current infastructure: got into circular dependencies but is resolved <br> CDK: Successfully recreated CloudTrailETL pipeline with Raw and Processed log buckets, ETL Lambda and Glue table to be queried with Athena and set the related polices | 26/11/2025 | 26/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - CDK: Configured CloudWatch, Log Group, Dns Query logging, added cdk-context for user to enter VPC ids to add logging for analysis <br> - Optimization: CloudTrail logs have gotten too much, quick check reveals that it also logs S3 Put events from the ETL Lambdas, causing a loop => Created custom event exclusion in CloudTrail Events tab to exclude APIs called by the ETL Lambdas <br> - Exclude event by Lambdas ARN wasn't reliable => Exclude API from log buckets <br> - CDK: Its impossible to configure advanced event selectors in CDK so that will have to be removed <br>- CDK: Succesfully configured the CloudWatch Auto Export Lambda and Subscription Filter: Got a lot of permission error from Subscription Filter permission to invoke Lambda => Used L2 construct and explicit dependency for _create_subscription_filter  | 27/11/2025 | 27/11/2025 | |
-| 6   | - CDK: Added ClouWatch ETL and the related Glue Table and Processed Bucket  <br> -CDK: Added KMS Key to allow GuardDuty to export findings to S3 BUcket and added the GuardDutyETL to process the findings for querying => Fully completed the ETL Pipeline and Data Forensics <br> - Team meetings: <br>&emsp; + Assigned CDK tasks for members <br>&emsp; + Got started on updating proposal and architecture diagram <br> - Fixed and improved IR Steps Function: <br>&emsp; + Fixed EC2Isolate Lambda: Wrong parsing method <br>&emsp; + Improved state: Added Parsing Lambda and reordered functions <br>&emsp; + SSM Failed due to missing IAM: Add role will be added into the SSM Forensics Function  | 28/11/2025 | 30/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
+| Day | Task | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Mon (25/11)** | **Architectural Pivot (Batch $\to$ Streaming)**<br>- **Failure Analysis:** Abandoned the *CloudWatch $\to$ S3 $\to$ Lambda* (Batch) approach due to API limits and high latency.<br>- **Success:** Implemented **CloudWatch Subscription Filters** to trigger Lambda directly (*CloudWatch $\to$ Lambda $\to$ S3*).<br>- **Benefit:** Achieved near real-time data ingestion latency. | 25/11/2025 | 25/11/2025 | [Subscription Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/SubscriptionFilters.html)<br>[Real-time Log Processing](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/SubscriptionFilters.html#LambdaFunctionExample) |
+| **Tue (26/11)** | **Stream Processing Logic (Lambda)**<br>- **Data Handling:** Updated Lambda code to handle the streaming payload (Base64 encoded & Gzip compressed) from CloudWatch.<br>- **Transformation:** Parsed raw log events and formatted them into JSON lines before buffering. | 26/11/2025 | 26/11/2025 | [Decompressing Log Data](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/SubscriptionFilters.html) |
+| **Wed (27/11)** | **Network Optimization & NLP Part 1**<br>- **Infrastructure:** Configured **Lambda ENI** to securely access S3 buckets within the VPC (using Gateway Endpoints).<br>- **Coursework:** Completed **NLP: Classification and Vector Spaces**. Studied how to represent text logs as vectors for machine learning models. | 27/11/2025 | 27/11/2025 | [Lambda VPC Access](https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html)<br>[NLP Course 1](https://www.coursera.org/programs/fptu-fall-2025-zmahp/learn/classification-vector-spaces-in-nlp) |
+| **Thu (28/11)** | **Advanced Analytics R&D (NLP Part 2)**<br>- **Coursework:** Advanced to **NLP: Probabilistic Models**. Investigated Auto-correct and N-gram language models to detect anomalies in log sequences.<br>- **Application:** Evaluated potential integration of probabilistic models for predicting system failures based on log patterns. | 28/11/2025 | 28/11/2025 | [NLP Course 2](https://www.coursera.org/programs/fptu-fall-2025-zmahp/learn/probabilistic-models-in-nlp) |
+| **Fri (29/11)** | **Workshop & Capstone Planning**<br>- **Event:** Attended **"AWS Cloud Mastery Series #3 - Security Pillar Workshop"**.<br>- **Key Topics:** CI/CD Pipeline, Infrastructure as Code (IaC), Container Services, and Observability.<br>- **Capstone:** Researched technical proposal structures and started drafting the **Final Project Proposal**. | 29/11/2025 | 29/11/2025 |  |
 
 ### Week 12 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* **Successfully Architected a Real-time Pipeline:**
+    * Validated that the **Streaming Pattern** (Subscription Filter) is superior to the **Batch Pattern** (Export Task) for this specific use case.
+    * Reduced data ingestion latency from minutes/hours to **milliseconds**.
 
-* Successfully created and configured an AWS Free Tier account.
+* **Advanced Skill Acquisition (AI/ML):**
+    * Laid a strong academic foundation in **Natural Language Processing** (Vector Spaces, Probabilistic Models), preparing for the implementation of "Smart Log Analysis" features.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* **Broadened Cloud Competency:**
+    * Gained comprehensive insights into the **DevOps ecosystem** on AWS (CI/CD, IaC, Containers) through the Cloud Mastery workshop, supporting the operational strategy for the final project.

@@ -1,59 +1,37 @@
 ---
-title: "Worklog Tuần 10"
-date: "2025-09-09"
-weight: 2
+title: "Nhật ký công việc Tuần 10"
+date: "2025-11-10"
+weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+### Mục tiêu Tuần 10:
 
+* **Tối ưu hóa Chi phí:** Tái cấu trúc Data Pipeline từ Athena ETL sang AWS Lambda để giảm chi phí vận hành.
+* **Triển khai ChatOps:** Tích hợp AWS GuardDuty với Slack để giám sát mối đe dọa theo thời gian thực (real-time threat monitoring).
+* **Vận hành Xuất sắc (Operational Excellence):** Tùy chỉnh payload thông báo để hiển thị tốt hơn và xử lý các sự cố "Alert Fatigue" (Mệt mỏi vì cảnh báo).
+* **Kỹ thuật Dữ liệu (Data Engineering):** Giải quyết các vấn đề schema mismatch bằng cách chuẩn hóa định dạng dữ liệu sang JSONL.
 
-### Mục tiêu tuần 10:
+### Các nhiệm vụ thực hiện trong tuần:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+| Ngày | Nhiệm vụ | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Thứ 2 (10/11)** | **Tái cấu trúc Pipeline (Tối ưu Chi phí)**<br>- **Quyết định:** Di chuyển từ Athena ETL sang **AWS Lambda** để xử lý log nhằm giảm thiểu chi phí.<br>- **Vấn đề:** Gặp lỗi **Schema Mismatch** (field mix-up) khi raw logs không thể parse chính xác vào cấu trúc đích.<br>- **Trạng thái:** Đang tiến hành điều tra. | 10/11/2025 | 10/11/2025 | [Lambda Pricing](https://aws.amazon.com/lambda/pricing/)<br>[Athena Pricing](https://aws.amazon.com/athena/pricing/) |
+| **Thứ 3 (11/11)** | **Tích hợp ChatOps & Xử lý Sự cố**<br>- **Thiết lập:** Cấu hình **AWS Chatbot** để tích hợp SNS với Slack Channel.<br>- **Sự cố:** Kích hoạt "Alert Storm" (1000+ emails) do đồng đội kích hoạt tất cả **GuardDuty Sample Findings** cùng lúc.<br>- **Phản hồi:** Tinh chỉnh SNS subscription filters để quản lý nhiễu (noise). | 11/11/2025 | 11/11/2025 | [GuardDuty Findings](https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings.html) |
+| **Thứ 4 (12/11)** | **Tối ưu hóa Payload Thông báo (Lambda)**<br>- **Kiểm tra UX:** Nhận thấy thông báo Slack mặc định thiếu ngữ cảnh quan trọng (Severity Level) trong chế độ xem trước/thu gọn.<br>- **Coding:** Cập nhật **logic Lambda** để parse raw findings và xây dựng một **Custom Message Payload**.<br>- **Kết quả:** Các trường quan trọng (Severity, Region, Type) hiện đã hiển thị ngay lập tức mà không cần mở ứng dụng. | 12/11/2025 | 12/11/2025 | |
+| **Thứ 5 (13/11)** | **Khắc phục Data Pipeline (Phần 1)**<br>- **Gỡ lỗi:** Phân tích lỗi "field mix-up" từ Thứ 2.<br>- **Nguyên nhân gốc:** Các mảng JSON tiêu chuẩn gây ra sự cố ingest với SerDe của Athena.<br>- **Chiến lược Giải pháp:** Quyết định chuyển đổi định dạng luồng dữ liệu sang **JSONL (Newline Delimited JSON)**. | 13/11/2025 | 13/11/2025 | |
+| **Thứ 6 (14/11)** | **Khắc phục Data Pipeline (Phần 2)**<br>- **Triển khai:** Cập nhật logic Lambda để serialize các log đã xử lý thành file `.jsonl`.<br>- **Xác thực:** Đẩy thành công dữ liệu đã làm sạch lên S3 và truy vấn thủ công qua Athena mà không gặp lỗi schema.<br>- **Kết quả:** Pipeline hiện đã hoạt động và tối ưu chi phí. | 14/11/2025 | 14/11/2025 |  |
+| **Thứ 7 (15/11)** | **Sự kiện: “AWS Cloud Mastery Series #1 - AI/ML/GenAI on AWS”**<br>- Giới thiệu về AI/ML/GenAI trên AWS. | 15/11/2025 | 15/11/2025 | |
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Thành tựu Tuần 10:
 
+* **Xây dựng Data Pipeline Tối ưu Chi phí:**
+    * Đã thay thế thành công phương pháp Athena ETL đắt đỏ bằng giải pháp **Lambda-based** nhẹ nhàng hơn.
+    * Giải quyết vấn đề phức tạp về **JSON Parsing/Schema Mismatch** bằng cách triển khai **JSONL serialization**, đảm bảo ingest dữ liệu liền mạch vào Data Lake.
 
-### Kết quả đạt được tuần 10:
+* **Thiết lập ChatOps Mạnh mẽ:**
+    * Xây dựng hệ thống thông báo mối đe dọa thời gian thực: **GuardDuty $\to$ EventBridge $\to$ SNS $\to$ AWS Chatbot $\to$ Slack**.
+    * **Tối ưu hóa UX:** Tùy chỉnh định dạng thông báo để hiển thị **Severity** ngay lập tức, giảm đáng kể "Mean Time To Know" (MTTK) cho các cảnh báo bảo mật.
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* **Kinh nghiệm Quản lý Sự cố:**
+    * Học được bài học giá trị về **Alert Fatigue** khi xử lý 1000+ sample findings, củng cố tầm quan trọng của việc lọc SNS và quy trình kiểm thử phù hợp.

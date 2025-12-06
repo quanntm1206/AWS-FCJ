@@ -1,43 +1,38 @@
 ---
 title: "Week 6 Worklog"
-date: "2025-09-09"
-weight: 6
+date: "2000-01-01"
+weight: 1
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
 ### Week 6 Objectives:
 
-* Complete and submit proposal
-* Assign tasks for team member to get started on the workshop
+* **Database Fundamentals:** Reviewing core concepts like Normalization, Indexing, and ACID vs. BASE models.
+* **Managed Relational Databases:** Mastering Amazon RDS and Aurora architecture.
+* **Static Web Hosting:** Deploying static websites on S3 and securing them with Public Access Block configurations.
+* **Content Delivery Network (CDN):** Analyzing architectural constraints when integrating CloudFront with S3 Website Endpoints.
+* **Incident Management:** Documenting infrastructure dependencies and resolving configuration conflicts.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2 | - Reformmatted and refined the worklog, adding information and summaries <br> - Succesfully deployed worklog to Github Page | 13/10/2025 | 13/10/2025| |
-| 3 | - Team meeting <br> - Revised workshop proposal: Focused on using Guard Duty for intrusion dectection instead of a custom Lambda function due to the need for a large dataset and extensive development time.  <br> - Redrew AWS Architecture: Added Guard Duty replacing CloudWatch Alarm <br> - Wrote a draft of the proposal with outlining basic function and providing a rough cost estimate. | 14/10/2025 | 14/10/2025      ||
-| 4 | - Team meeting <br> - Revised workshop proposal: <br> &emsp; + Incorporated the use of EventBridge <br> &emsp; + Recalculated costs by reducing the EC2 instance type and active hours <br> - Updated AWS Architecture: Include the EventBridge icon and connections | 15/10/2025 | 15/10/2025 ||
-| 5   | - Updated AWS Arhitecture: <br> &emsp; + Rearranged icons for clearer connections. <br> &emsp; + Moved SSM inside of region group <br> &emsp; + Added public subnet group for EC2 Instance <br> - Installed AmazonQ for enhanced proposal analytics <br> - Revised workshop proposal: Recalculated cost using AWS Pricing Calculator <br> - Translated proposal draft into markdown code and successfully  deployed it to Github Pages <br> - Joined the online seminar 𝗗𝗫<𝗶𝗻𝗔𝗰𝘁𝗶𝗼𝗻> 𝗧𝗮𝗹𝗸#𝟳: Reinventing DevSecOps with AWS Generative AI  | 16/10/2025 | 16/10/2025      ||
-| 6   | - Compiled study materials for midterm exam <br> - School subject: <br> &emsp; + ENW493c: Completed Being a researcher (in Information Science and Technology)   | 17/10/2025 | 17/10/2025      | [Being a researcher (in Information Science and Technology)](https://www.coursera.org/account/accomplishments/verify/JZB2HYOLEGOD) |
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| Mon (13/10) | **Module 6 Theory: AWS Database Services** <br> - **Core Concepts:** RDBMS vs. NoSQL, PK/FK, Indexing, Partitioning. <br> - **RDS & Aurora:** Automated backups, Multi-AZ for HA, Read Replicas. <br> - **Redshift & ElastiCache:** Data Warehousing and In-memory caching strategies. | 13/10/2025 | 13/10/2025 | [Module 06-01](https://youtu.be/OOD2RwWuLRw?si=zjAdvLgGv-_4N0Py) <br> [Module 06-02](https://youtu.be/qbrobQZrokY?si=HGRY-XhKWkr83Fod) <br> [Module 06-03](https://youtu.be/UvdiRW34aNI?si=vc11G0NB6erHFvRQ) |
+| Tue (14/10) | **Lab 43: Planned Execution & Incident Report** <br> - **Activity:** Scheduled execution of Lab 43. <br> - **Incident:** Documentation portal service unavailable (HTTP 5xx/Timeout). <br> - **Action:** Flagged as "External Dependency Failure". Documented the outage and pivoted to self-study on related AWS concepts pending resolution. | 14/10/2025 | 14/10/2025 | https://000043.awsstudygroup.com/ |
+| Wed (15/10) | **Lab 57: S3 Static Website & CloudFront Integration** <br> - **Part 1 (Success):** Completed S3 setup, enabled Static Website Hosting, configured Bucket Policy for public read access (Steps 1-6). <br> - **Part 2 (Critical Issue):** Attempted to accelerate site with CloudFront (Step 7.2). <br> - **Root Cause Analysis:** Identified architectural conflict: The tutorial instructed using **OAI/OAC** with an **S3 Website Endpoint**, which is unsupported by AWS. <br> - **Resolution Strategy:** Determined that S3 Website Endpoints must be treated as "Custom Origins" (without OAC), or switch to standard S3 Origin to use OAC. | 15/10/2025 | 15/10/2025 | https://000057.awsstudygroup.com/ |
+| Thu (16/10) | **Documentation Refinement** <br> - **Task:** Refactored weekly worklogs to align with professional reporting standards (Markdown/Hugo). <br> - **Goal:** Improved readability, structure, and consistency across all previous reports. | 16/10/2025 | 16/10/2025 |  |
+| Fri (17/10) | **Family matters**  | 17/10/2025 | 18/10/2025 |  |
 
 
 ### Week 6 Achievements:
 
-* Proposal Refinement:
+* **Deep Dive into CloudFront Architectures:**
+    * Successfully deployed a Static Website on Amazon S3 with public read permissions.
+    * **Crucial Learning:** Discovered that **Origin Access Control (OAC)** is NOT compatible with **S3 Website Endpoints**.
+    * Analyzed the difference between **S3 REST API Endpoints** (supports OAC/OAI for security) vs **S3 Website Endpoints** (requires Custom Origin config).
 
-  * Completed multiple revisions of the workshop proposal, shift from a custom Lambda function to using GuardDuty for intrusion detection.
+* **Incident & Risk Management:**
+    * Demonstrated adaptability by handling external documentation failures (Lab 43) without halting progress.
+    * Validated lab instructions against official AWS Documentation to identify critical configuration errors before deployment.
 
-  * Successfully recalculated and reduced estimated costs by optimizing the EC2 instance type and active hours.   
-
-  * Translated to markdown, and deployed the proposal draft to GitHub Pages.
-
-* Architecture and System Updates:
-
-  * Revised the AWS Architecture diagram, incorporating GuardDuty, EventBridge, and refining icon arrangements and subnet groups for clarity and accuracy.
-
-  * Updated the worklog and successfully deployed the refined worklog to GitHub Pages.
-
-  * Installed AmazonQ.
-
-* Attended the online seminar **'DX<inAction> Talk#7: Reinventing DevSecOps with AWS Generative AI'**.
-
-* Compiled study materials for the midterm exam.
+* **Professional Documentation:**
+    * Standardized the entire internship worklog, ensuring a clean, maintainable, and professional presentation format using Markdown.

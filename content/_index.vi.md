@@ -1,19 +1,19 @@
 ---
 title: "Báo cáo thực tập"
-date: "2025-09-09"
+date: "2000-01-01"
 weight: 1
 chapter: false
 ---
 
 # Báo cáo thực tập
 ### Thông tin sinh viên:
-&emsp; **Họ và tên:** Huỳnh An Khương
+&emsp; **Họ và tên:** Nguyễn Văn A
 
-&emsp; **Số điện thoại:** 0964443042
+&emsp; **Số điện thoại:** 0989888999
 
-&emsp; **Email:** huynhankhuong0511@gmail.com
+&emsp; **Email:** Anguyenvan@gmail.com
 
-&emsp; **Trường:** Trường Đại học FPT Thành Phố Hồ Chí Minh
+&emsp; **Trường:** Đại học Sư phạm Kỹ thuật TP.HCM
 
 &emsp; **Ngành:** Công nghệ thông tin
 

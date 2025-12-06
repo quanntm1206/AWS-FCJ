@@ -1,6 +1,6 @@
 ---
 title : "On-premises DNS Simulation"
-date: "2000-01-01"
+date : "2000-01-01"
 weight : 4
 chapter : false
 pre : " <b> 5.4.4 </b> "

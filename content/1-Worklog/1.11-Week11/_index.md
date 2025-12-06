@@ -1,53 +1,33 @@
 ---
 title: "Week 11 Worklog"
-date: "2025-09-09"
+date: "2000-01-01"
 weight: 2
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-
 ### Week 11 Objectives:
 
-* Refine project.
-
+* **ETL Automation:** Enhancing the "CloudWatch ETL Lambda" to support automated schema evolution (Auto-Create Table) and Event-driven execution.
+* **Pipeline R&D:** Investigating methods to automate CloudWatch Log Exports (Batch Ingestion) vs Streaming.
+* **Architectural Trade-offs:** Evaluating EventBridge Scheduler vs Subscription Filters for data ingestion.
+* **Incident Analysis:** Troubleshooting compatibility issues between Real-time Streaming (Subscription Filters) and Batch Processing formats.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Joined the AWS Cloud Mastery Series #2: Got some really good value in CDK and CloudFormation for the project, got some recommendation from mentors about demo strategy, wrote about event experience | 17/11/2025 | 17/11/2025      ||
-| 3   | - Dashboard overview: Updated for more upfront fields <br> - Architecture revised: <br>&emsp; + Removed Crawler from the architecture <br>&emsp; + Added SQS between EventBridge and StepFunctions  <br> - Took note of the cost of S3 API calls, especially the S3 Bucket for CloudTrail logs, the Lambda is configured to process every CloudTrail logs, resulting in large number of S3 GET calls, have to update the pricing accordingly <br> - Team member succesfully Isolated EC2 in testing environment <br> - Succesfully upgraded GuardDuty ETL Lambda to create table without Crawler and return more detailed fields <br> - Team member succesfully upgraded CloudWatch ELT Lambda to create table without Crawler, I helped in creating a trigger and update Lambda code to process new exported file <br> Backed up Lambda codes| 18/11/2025 |18/11/2025 ||
-| 4   | - Joined the Secure Your Applications: AWS Perimeter Protection Workshop: Learnt more about CloudFront and WAF and got introduced to the brand new CloudFront pricing tier, did two workshops on CloudFront and WAF <br> - Learnt how to set up API Gateway RestAPIs to prepare to integrate with dashboard | 19/11/2025 | 19/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - | 20/11/2025 | 20/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - Invited to FPT's Convocation Day by graduating bachelors <br> - Researched on CDK: How to install, how to use, how to configure stacks to prepare for next week's plan| 21/11/2025 | 23/11/2025      | [AWS CDK Github](https://github.com/aws/aws-cdk) <br><br> [AWS CDK Document](https://docs.aws.amazon.com/cdk/v2/guide/home.html) |
 
+| Day | Task | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Mon (17/11)** | **Event: “AWS Cloud Mastery Series #2 - DevOps on AWS”**<br>- Introduce AWS DevOps Services. – CI/CD Pipeline.<br>- Introduce Infrastructure as Code (IaC) and related tools.<br>- Introduce Container Services on AWS. <br> - Ensure Monitoring and Observability capability using AWS Services | 17/11/2025 | 17/11/2025 | |
+| **Tue (18/11)** | **ETL Pipeline Upgrade (Event-Driven Architecture)**<br>- **Feature:** Upgraded **CloudWatch ETL Lambda** code to automatically detect schema and execute DDL (Create Table) if the Athena table is missing.<br>- **Automation:** Configured **S3 Event Notifications** to trigger this Lambda immediately upon object creation (`s3:ObjectCreated:*`), removing the need for manual invocation. | 18/11/2025 | 18/11/2025 |  |
+| **Wed (19/11)** | **Ingestion Gap Analysis (Auto-Export Research)**<br>- **Gap:** Identified that CloudWatch Logs requires manual initiation for S3 exports.<br>- **Research:** Investigated **Amazon EventBridge Scheduler** to trigger the `create_export_task` API periodically.<br>- **Status:** Proof of Concept (PoC) phase. | 19/11/2025 | 19/11/2025 |  |
+| **Thu (20/11)** | **Architectural Pivot & Failure Analysis**<br>- **Pivot:** Attempted to use **CloudWatch Subscription Filters** as a simpler alternative to EventBridge.<br>- **Failure:** The pipeline broke because Subscription Filters stream data (base64 encoded real-time stream), whereas the current ETL Lambda expects batch log files (.gz).<br>- **Decision:** Reverted to the Batch Export strategy. | 20/11/2025 | 20/11/2025 | [Subscription Filters](https://youtu.be/KRwDInHmgQY?si=4VrwITz_bgjgk_uN) |
+| **Fri (21/11)** | **Ingestion Remediation (EventBridge Retry)**<br>- **Action:** Resumed testing with EventBridge Scheduler to trigger Log Exports.<br>- **Challenge:** Encountered IAM permission and Lambda timeout issues during the export trigger execution.<br>- **Outcome:** Solution is currently **unstable/pending resolution**. Continued debugging over the weekend. | 21/11/2025 | 22/11/2025 |  |
 
 ### Week 11 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* **Advanced Lambda & Automation:**
+    * Successfully transformed the ETL process into a fully **Event-Driven** workflow. Now, data is processed instantly as soon as it arrives in the Data Lake (S3), reducing data latency.
+    * Implemented **Automated Schema Management** within Lambda (Auto-Create Athena Table), reducing operational overhead when deploying to new environments.
 
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* **Architectural Deep Dive (Streaming vs Batch):**
+    * Gained a profound understanding of the difference between **Log Streaming** (Subscription Filters - Kinesis/Lambda) and **Log Export** (S3 Batch).
+    * Validated that "Streaming" requires a completely different processing logic (Stream decoding) compared to "Batching" (File parsing), leading to informed architectural decisions.

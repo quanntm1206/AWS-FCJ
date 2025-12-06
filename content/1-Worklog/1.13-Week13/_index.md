@@ -1,20 +1,36 @@
 ---
 title: "Week 13 Worklog"
 date: "2025-12-01"
-weight: 2
+weight: 13
 chapter: false
 pre: " <b> 1.13. </b> "
 ---
-### Week 13 Objectives:
-Complete the project and submit
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Removed Map State in Steps Function <br> - Created Lambdas to add policies to EC2 Instance for SSM automation in IR Step Functions <br> - Reconfigured Quarantine SG: Added Outbound rule for HTTPS for SSM connection <br> - Replaced Lambdas with Step Functions provided States: Used DescribeIamInstanceProfileAssociation, AttachRolePolicy, DetachRolePolicy and StartAutomationExecution <br> - CDK: Created EventBridge and Topics with subscription emails stored in cdk-context <br> - Team meetings: Planned and reassigned task to meet the new deadline | 01/12/2025 | 01/12/2025      |[CDK Tutorial](https://docs.aws.amazon.com/cdk/v2/guide/hello-world.html)|
-| 3   | - CDK: Added SES alert for GuardDuty findings <br> - CDK: Added ENI ETL into ETL Pipeline <br> - Assisted in upgrading dashboard <br> Updated Event Participated and overall Worklog update fix and improvement <br> - Researched more on how to optimize pipeline, currently the S3 Get Request is higher than expected do to Athena query low size but many objects | 02/12/2025 | 02/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | -CDK: Upgraded Alert with Slack <br> - Architecture: br> &emsp; + Researched and failed in using SQS to pool logs before sending to Lambda: Lambda is still event based and still process log individually instead of pooling <br> &emsp; + Researched and added Data Firehose to consolidate logs before writing to the processed S3 => Reduced the amount of objects written to S3 <br> - IR Step Function revised: Removed SSM actions due to it requiring outbound connections after isolating EC2 => Replaced it with tagging, removing it from ASG and taking a EBS Snapshot to for analyzing and preserving data <br> - Team member updated CloudWatch ETL with Data Firehose succesfully <br> - CDK: Updated all of ETL Pipeline with Kinesis Firehose + Overhauled CloudTrailELT | 03/12/2025 | 03/12/2025  |  |
-| 5   | - Partly finished writing Workshop on creating ETL Pipeline <br> CDK: Created and updated Step Functions <br> - Updated Worklog: Events  | 04/12/2025 | 04/12/2025      |  |
-| 6   | - Joined the BUILDING AGENTIC AI - Context Optimization with Amazon Bedrock Workshop: Won a prize from CloudThinker for winning in the Workshop <br> - Updated GuardDuty ETL and table for querying optimzation <br> - Redraw and updated Architecture Diagram | 05/12/2025 | 05/12/2025      | [Event 7](/content/4-EventParticipated/4.7-Event7/_index.md)|
 
+### Week 13 Objectives:
+
+* **Advanced Analytics Optimization:** Implementing **Athena Partition Projection** to automate partition management and improve query performance.
+* **Pipeline Refinement:** Migrating from SQS polling to **Amazon Kinesis Data Firehose** to resolve high-concurrency invocation issues.
+* **AI/ML Deep Dive:** Mastering Sequence Models and Attention Mechanisms in NLP; exploring Agentic AI with Amazon Bedrock.
+* **Capstone Preparation:** Finalizing presentation materials for the internship defense.
+
+### Tasks to be carried out this week:
+
+| Day | Task | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Mon (01/12)** | **Project Management & NLP Study (Part 3)**<br>- **Milestone:** Submitted Final Project Proposal to the team for peer review.<br>- **Coursework:** Advanced to **NLP: Sequence Models**. Studied RNNs (Recurrent Neural Networks) for processing sequential log data. | 01/12/2025 | 01/12/2025 | [NLP Course 3](https://www.coursera.org/programs/fptu-fall-2025-zmahp/learn/sequence-models-in-nlp) |
+| **Tue (02/12)** | **Operational Enablement & Lambda Refactoring**<br>- **Knowledge Sharing:** Produced a Video Tutorial on creating Slack Webhooks for ChatOps.<br>- **Code Update:** Reconfigured **Lambda ENI** logic to align output format with the new Athena schema requirements. | 02/12/2025 | 02/12/2025 | N/A |
+| **Wed (03/12)** | **Pipeline Optimization (Firehose & Athena)**<br>- **Problem:** SQS-triggered Lambda incurred excessive GET requests/invocations.<br>- **Solution:** Pivoted to **Kinesis Data Firehose** for batching and buffering data before S3 ingestion.<br>- **Athena Optimization:** Implemented **Partition Projection** for VPC Logs to automate partition management without `MSCK REPAIR TABLE`. | 03/12/2025 | 03/12/2025 | [Athena Partition Projection](https://docs.aws.amazon.com/athena/latest/ug/partition-projection.html) |
+| **Thu (04/12)** | **Workshop Content Development**<br>- **Task:** Drafted the "Data Module" for the team's internal workshop.<br>- **Content:** Detailed the end-to-end flow of log data from ingestion (Firehose) to analysis (Athena). | 04/12/2025 | 04/12/2025 | N/A |
+| **Fri (05/12)** | **Industry Engagement: GenAI & Agentic AI**<br>- **Event:** Attended **"BUILDING AGENTIC AI - Context Optimization with Amazon Bedrock"**.<br>- **Key Takeaway:** Learned about RAG (Retrieval-Augmented Generation) and context management for AI Agents.<br>- **Action:** Continued developing workshop materials. | 05/12/2025 | 05/12/2025 | [Amazon Bedrock](https://aws.amazon.com/bedrock/) |
+| **Sat (06/12)** | **Advanced AI Research & Final Prep**<br>- **Coursework:** Progressed to **NLP: Attention Models** (Transformers/Self-Attention).<br>- **Presentation:** Designed the **Final Defense Slides**, visualizing the architectural evolution (Batch $\to$ Streaming) and key technical achievements. | 06/12/2025 | 06/12/2025 | [NLP Course 4](https://www.coursera.org/programs/fptu-fall-2025-zmahp/learn/attention-models-in-nlp) |
 
 ### Week 13 Achievements:
+
+* **Solved High-Scale Data Ingestion Issues:**
+    * Diagnosed the bottleneck with SQS polling (High GET requests) and successfully re-architected the pipeline using **Kinesis Data Firehose**, reducing API costs and improving throughput.
+
+* **Mastered Athena Advanced Features:**
+    * Successfully implemented **Partition Projection** (via DDL `TBLPROPERTIES`), eliminating the operational overhead of manually adding partitions. This ensures queries on `vpc-logs` are always up-to-date and performant.
+
+* **Project Completion Readiness:**
+    * Bridged the gap between traditional NLP and modern Generative AI, while simultaneously finalizing the documentation and presentation materials for the project defense.

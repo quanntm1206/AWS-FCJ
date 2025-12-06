@@ -1,45 +1,40 @@
 ---
 title: "Week 4 Worklog"
-date: "2025-09-29"
-weight: 4
+date: "2000-01-01"
+weight: 1
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
 
-
-
 ### Week 4 Objectives:
-- Complete Module 6
-- Started on proposal
+
+* **Observability & Monitoring:** Master the "Three Pillars of Observability" on AWS: Logs (CloudTrail), Metrics (CloudWatch), and Traces/Traffic (VPC Flow Logs).
+* **Incident Response Automation:** Understand how to link CloudWatch Alarms with SNS to trigger automated alerts.
+* **Security Analytics:** Learn to query audit logs using Amazon Athena and detect threats with GuardDuty.
+* **Serverless Basics:** Introduction to AWS Lambda and Systems Manager.
+* **Project Initiation:** Begin researching project architecture and translating technical engineering blogs.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   |- Module 6: Database Concept review:<br> &emsp; + Database <br> &emsp; + Session <br> &emsp; + Primary/Foreign Key <br> &emsp; + Index <br> &emsp; + Partitions <br> &emsp; + Execution/Query Plan <br> &emsp; + Log & Buffer <br> &emsp; + RDBMS (Relational Database Manangement System) <br> &emsp; + NOSQL <br> ![Database](/images/1-Worklog/Database.png) <br> &emsp; + OLTP(Online Transaction Processing): For payments, transactions <br> &emsp; + OLAP (Online Analytical Processing): Analyze data, predict trends and patterns <br> - AWS RDS (Relational Database Serive): Include Aurora, MySQL, Postgres SQL , MSSQL, Oracle , Maria <br> &emsp; + Automatic backup <br> &emsp; + Generate read replica <br> &emsp; +Read replica can be turned into primary code <br> &emsp; + Auto Fail Over/Multi AZ (Backups on mutiple AZs) <br> &emsp; + Commonly used for OLTP <br> &emsp; + Encrypt data while at rest/in transit <br> &emsp; + Protected my Security Group and NACL <br> &emsp; + Can change instance size <br> &emsp; + Storage Auto SCaling <br> - Amazon Aurora: Optimized underlying storage infrastructure, uses MySQL and PostgreSQL <br> &emsp; + Back track: revert to previous state <br> &emsp; + Clone <br> &emsp; + Global Database (Multi Region) <br> &emsp; + Multi Master: Many Master Databases <br> - Amazon Redshift: Data warehouse service: PostgreSQL core, optimized for OLAP <br> &emsp; + Uses MMP Database: data is partitioned and saved at computer nodes, a Leader node is used to coordinate and compile queries <br> &emsp; + Stores data in a columnar storage format, useful for OLAP applications <br> ![Columnar](/images/1-Worklog/Columnar.png) <br> &emsp; + Uses SQL and drivers like JDBC and ODBC <br> &emsp; + Provide cost effective services (Transient Cluster/ Redshift spectrum) <br> - Amazon ElastiCache: Creates Cluster Caching Engines (Redis/Memcached) <br> &emsp; + Detects and replaces failed nodes <br> &emsp; + Put before CSDL layer in order to cache data <br> &emsp; + Recommended to use Redis for new workloads <br> &emsp; + Using ElastiCache requires caching logic on applications, not recommended to use default system caching <br> - Formulated a proposal for workshop with teammates <br> - School subject: <br> &emsp; + KS57: Completed Quản trị dữ liệu và an toàn thông tin   | 29/09/2025 | 29/09/2025| [Quản trị dữ liệu và an toàn thông tin](https://www.coursera.org/account/accomplishments/verify/JA236L8TZGD7) |
-| 3   |- Lab 43: Guide is broken, the link doesnt go anywhere, going by video <br> &emsp; + Downloaded Schema Conversion Tool <br> &emsp; + Downloaded MSSQL in EC2 Instance <br> &emsp; + No SQL script was given, trying with custom basic MSSQL Database <br> &emsp; + No CloudFormation Stack was given, skipping Oracle Database connection <br> &emsp; + Installed MySQL on EC2 Instance <br> &emsp; + Migrated custom MSSQL Database to MySQL Database using AWS Schema Conversion Tool <br> &emsp; + Created custom RDS to test migration task <br> &emsp; + Attempted to migrate from local machine to RDS <br> &emsp; + Tried to use AWS Replication Agent: Unsuccessful due to it being made for Window/Linux server only, not OS <br> &emsp; + Tried to portforward PC to be used as an endpoint <br> &emsp; + Failed portforwarding, not allowed by ISP   | 30/09/2025 | 30/09/2025      | [Lab 43](https://000043.awsstudygroup.com/) <br><br> [Application Mirgation Service Guide](https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html) |
-| 4   |- Found out AWS account's credits are all expired from doing lab 12 <br> - Wrote a support case <br> - Stopping labs for now <br> - Focus on researching about team's proposal| 01/10/2025 | 01/10/2025 <br> - School subject: <br> &emsp; + ENW439c: Completed Research Methodologies | [Research Methodologies](https://www.coursera.org/account/accomplishments/verify/M3368Q4AAMNB) |
-| 5   |- Continued doing labs by aquiring help from team member: Created an IAM User with admin privilege for me to log in and use their account <br> - Translate first blog| 02/10/2025 | 02/10/2025      | [Blog 1](content/3-BlogsTranslated/3.1-Blog1/_index.md) |
-| 6   |- Joined the AI-Driven Development Life Cycle: Reimagining Software Engineering event <br> - Translated second and third blog| 03/10/2025 | 04/10/2025 | [Blog 2](content/3-BlogsTranslated/3.2-Blog2/_index.md) <br><br> [Blog 3](content/3-BlogsTranslated/3.3-Blog3/_index.md) | 
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| Mon (29/9) | **Incident Response Essentials:** <br> - **CloudTrail:** Configured trails for auditing user activity and API calls. <br> - **CloudWatch:** Setup Metrics and Alarms (CPU/Network thresholds). <br> - **VPC Flow Logs:** Captured IP traffic for network troubleshooting. <br> - **SNS:** Setup notification topics for alarm triggers. | 29/09/2025 | 29/09/2025 | [CloudWatch Metrics](https://youtu.be/Yxl7e88cTAQ) <br> [VPC Flow Logs](https://youtu.be/_qM6ilKz3C8) <br> [CloudWatch Alarms](https://youtu.be/3v_X53RmYf0) <br> [SNS Setup](https://youtu.be/j5Xp51eUyXE) <br> [CloudTrail Basics](https://youtu.be/CXbdsp9ThvM) |
+| Tue (30/9) | **Advanced Analytics & Serverless:** <br> - **Athena:** Queried CloudTrail logs in S3 using SQL to investigate specific events. <br> - **GuardDuty:** Explored intelligent threat detection mechanisms. <br> - **Compute:** Introduction to AWS Lambda (Serverless) and Systems Manager (Ops automation). | 30/09/2025 | 30/09/2025 | [AWS Lambda Intro](https://youtu.be/eOBq__h4OJ4) <br> [Systems Manager](https://youtu.be/pSVK-ingvfc) <br> [GuardDuty Deep Dive](https://www.youtube.com/watch?v=Wkpl66NaqEA) <br> [CloudTrail with Athena](https://youtu.be/I4vYkrHq5hs) |
+| Wed (1/10) | **Self-study & Review:** <br> - Consolidate knowledge on Monitoring tools. <br> - Prepare environment for upcoming Project. | 01/10/2025 | 01/10/2025 ||
+| Thu (2/10) | **Project Architecture & Translation:** <br> - **Project:** Research and analyze the proposed architecture for the internship project. <br> - **Blog 1:** Translated "Democratizing quantum resources: University of Michigan and AWS collaborate on a remote access quantum testbed". | 02/10/2025 | 02/10/2025 | [Original Blog](https://aws.amazon.com/vi/blogs/publicsector/democratizing-quantum-resources-university-of-michigan-and-aws-collaborate-on-a-remote-access-quantum-testbed/) <br> [My Translation](https://docs.google.com/document/d/1SAgaxbJU1wQMvoegtjcIjG0iNRnHMAaOlaZg5VzcaXk/edit?tab=t.0) |
+| Fri (3/10) | **Event: AI-Driven Development Life Cycle: Reimagining Software Engineering** <br> - Generative AI is turning developers into editors, shifting the main job from writing code to just reviewing it. <br> - AI-DLC is where AI executes the coding and testing phases, shifting the human role from writing syntax to defining business intent and validating the AI's output. <br> Kiro and Amazon Q Developer showcase. | 03/10/2025 | 03/10/2025 | |
+| Sat (4/10) | **Advanced Data Streaming (Blog 2):** <br> - **Topic:** Apache Kafka Disaster Recovery & Migration. <br> - **Task:** Translated Blog "Amazon MSK Replicator and MirrorMaker2". <br> - **Key Learnings:** Replication strategies, Active-Active vs Active-Passive setups. | 04/10/2025 | 04/10/2025 | [Original Blog](https://aws.amazon.com/vi/blogs/big-data/amazon-msk-replicator-and-mirrormaker2-choosing-the-right-replication-strategy-for-apache-kafka-disaster-recovery-and-migrations/) <br> [My Translation](https://docs.google.com/document/d/11JuanGg4j-wQ8khxs8xU23GkNEaO-xmhJlYNLc4Q6H8/edit?tab=t.0) |
 
 
 ### Week 4 Achievements:
 
-* Completed a comprehensive review of core database concepts including RDBMS, keys, indexes, partitioning, OLTP/OLAP, and AWS-specific database services.
+* **Mastered AWS Observability Suite:**
+    * Differentiated the distinct roles of **CloudTrail** (Auditing/Who did what?) vs **CloudWatch** (Performance/How is it running?).
+    * Understood the cost/retention limitations of CloudTrail (90 days default) and the necessity of S3 export for long-term compliance.
 
-* Gained theoretical knowledge of the features and use cases for AWS RDS, Amazon Aurora (e.g., Backtrack, Global Database), Amazon Redshift (Data Warehouse for OLAP), and Amazon ElastiCache (caching with Redis/Memcached).
+* **Security & Forensic Analysis:**
+    * Learned to use **Amazon Athena** to run SQL queries directly on log data in S3, significantly reducing the time needed to investigate security incidents.
+    * Configured **SNS** to decouple monitoring from alerting, allowing multiple subscribers (Email, Lambda, SMS) to react to a single alarm.
 
-* Database Migration: Attempted a complex database migration lab, demonstrating resourcefulness by:
-
-  *  Sourcing a custom MSSQL Database and installing necessary services on an EC2 instance due to broken lab guides.
-
-  *  Successfully migrating the custom MSSQL database to MySQL using the AWS Schema Conversion Tool (SCT).
-
-* Identified and addressed the issue of expired AWS credits by raising a support case.
-
-* Secured continuation of lab work by setting up an IAM User with admin privileges on a team member's account.
-
-* Formulated a proposal for the team's upcoming workshop with teammates.
-
-* Completed the translation of three blogs.
-
-* Attended the AI-Driven Development Life Cycle: Reimagining Software Engineering event.
+* **Technical Translation & Research:**
+    * Deepened technical vocabulary through translating complex topics (Quantum Computing & Kafka Replication).
+    * Gained insights into hybrid architectures (MSK Replicator) and academic cloud collaborations.

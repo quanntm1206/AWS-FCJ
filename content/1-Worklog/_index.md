@@ -5,7 +5,7 @@ weight: 1
 chapter: false
 pre: " <b> 1. </b> "
 ---
-**Week 1:** [Cloud Fundamentals, VPC Networking & Basic Security](1.1-week1/)
+**Week 1:** [Cloud Fundamentals, VPC Networking and Basic Security](1.1-week1/)
 
 **Week 2:** [Compute Deep Dive, RDS Deployment & IAM Policies](1.2-week2/)
 

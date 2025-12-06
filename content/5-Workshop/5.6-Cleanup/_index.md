@@ -1,6 +1,6 @@
 ---
 title : "Clean up"
-date : "2000-01-01"
+date: "2000-01-01"
 weight : 6
 chapter : false
 pre : " <b> 5.6. </b> "

@@ -1,37 +1,49 @@
 ---
 title: "Week 7 Worklog"
-date: "2000-01-01"
-weight: 1
+date: "2025-10-20"
+weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
 ### Week 7 Objectives:
 
-* **Advanced Networking:** Mastering VPC connectivity (Peering vs. Transit Gateway) and Hybrid DNS resolution.
-* **Security Best Practices:** Implementing IAM Roles for EC2 to enforce "Least Privilege" access.
-* **Hybrid Storage:** Deploying storage solutions for Windows workloads (FSx) and extending on-premise storage to cloud (Storage Gateway).
-* **Data Protection & Migration:** Automating centralized backups and executing "Lift-and-Shift" VM migrations.
+* Connect and get acquainted with members of First Cloud Journey.
+* Understand basic AWS services, how to use the console & CLI.
 
 ### Tasks to be carried out this week:
-| Day | Task | Start Date | Completion Date | Reference Material |
-| --- | --- | --- | --- | --- |
-| Mon (20/10) | **Networking Basics & Security** <br> - **Lab 19 (VPC Peering):** Established direct network connection between two VPCs, configured Route Tables, and enabled Cross-Peer DNS Resolution. <br> - **Lab 48 (IAM Roles):** Replaced hard-coded Access Keys with IAM Roles attached to EC2 instances to secure application access to S3. | 22/09/2025 | 22/09/2025 | https://000019.awsstudygroup.com/ <br> https://000048.awsstudygroup.com/ |
-| Tue (21/10) | **Lab 20: Advanced Networking with Transit Gateway** <br> - **Architecture:** Implemented a Hub-and-Spoke topology connecting 4 VPCs using a single Transit Gateway (TGW). <br> - **Routing:** Configured TGW Route Tables to centralize traffic management, replacing complex mesh peering connections. | 23/09/2025 | 23/09/2025 | https://000020.awsstudygroup.com/ |
-| Wed (22/10) | **Lab 10: Hybrid Connectivity with Route 53 Resolver** <br> - **Hybrid DNS:** Configured Inbound and Outbound Endpoints to resolve domain names between AWS VPCs and On-premise networks. <br> - **Integration:** Deployed Microsoft Active Directory to simulate on-premise DNS resolution. | 24/09/2025 | 24/09/2025 | https://000010.awsstudygroup.com/ |
-| Thu (23/10) | **Lab 25: Amazon FSx for Windows File Server** <br> - **Deployment:** Created a fully managed Native Windows File System integrated with Microsoft Active Directory. <br> - **Features:** Mapped SMB file shares to Windows instances and enabled Data Deduplication/Shadow Copies for storage efficiency. | 25/09/2025 | 25/09/2025 | https://000025.awsstudygroup.com/ |
-| Fri (24/10) | **Hybrid Storage & Backup Automation** <br> - **Lab 24 (Storage Gateway):** Deployed File Gateway to map local NFS/SMB shares directly to S3 buckets for limitless cloud storage extension. <br> - **Lab 13 (AWS Backup):** Created a centralized Backup Plan to automate protection for EBS, RDS, and EFS resources with SNS notifications. | 26/09/2025 | 26/09/2025 | https://000024.awsstudygroup.com/ <br> https://000013.awsstudygroup.com/ |
-| Sat (25/10) | **Lab 14: Migration Strategy (Lift & Shift)** <br> - **VM Import/Export:** Exported a local Virtual Machine (VMware), uploaded image to S3, and converted it into an Amazon Machine Image (AMI). <br> - **Validation:** Launched a new EC2 instance from the imported AMI, verifying the workload migration capability. | 27/09/2025 | 27/09/2025 | https://000014.awsstudygroup.com/ |
+| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
+| 2   | - Learnt the basics of Guard Duty with "Getting Hands on with Amazon GuardDuty - AWS Virtual Workshop" <br> - Got familiarized with Guard Duty by using Amazon Q to generate a basic lab: <br> &emsp; + Created sample finding via setting <br> &emsp; + Learnt the finding interface <br> &emsp; + Test EC2 by port scanning scanme.nmap.org <br> &emsp; + Simulated DNS exfiltration on EC2 <br> &emsp; + GuardDuty did not alert findings from VPC Flow Logs as expected <br> &emsp; + Triggered GuardDuty findings through CloudTrail by accessing API ListPolicies with root credentials <br> - Learnt more by doing Guard Duty workshops <br> - Online team meeting: Assign members to research the services to be used in the workshop  | 20/10/2025 | 20/10/2025| [Getting Hands on with Amazon GuardDuty - AWS Virtual Workshop](https://www.youtube.com/watch?v=eq3_H-aiHhk) <br><br> [Guard Duty Workshop](https://catalog.workshops.aws/security/en-US) |
+| 3   | - Succesfully triggered GuardDuty sample alerts with various severities and types via CloudShell CLI => Easier testing environment <br> - Created a custom threat list of IPs and domain names for GuardDuty via CloudShell commands although it did not work  | 21/10/2025 | 21/10/2025      ||
+| 4   | - Team meeting: <br> &emsp; + Quick AWS Services knowledge revision <br> &emsp; + Conversed about changes in the proposal <br> - Updated AWS Architecture: Added AWS Detective <br> - Revised proposal: <br> &emsp; + Added the usage of AWS Detective <br> &emsp; + Added plan for CDK after finishing the workshop <br> - Mentor reccommendations: <br> &emsp; + Visualize data but without using Quicksight, instead make a custom-coded dashboard (Researching) <br> &emsp; + Save GuardDuty findings in S3 bucket for analyzing (Researching) <br> - Succesfully configured EventBridge to trigger upon specific GuardDuty findings and: <br> &emsp; + Sent SNS emails to all of team members <br> &emsp; + Triggered a simple Lambda script <br> - Fomulated an idea to add to workshop: Make a simple data graphing page hosted in S3 and use API Gateway and Lambda to pull forensics data from Amazon Athena (Researching)| 22/10/2025 | 22/10/2025      | |
+| 5   | - Tried out AWS Card Clash with team members: Surprisingly good for learning services and their functions, their placement in Architectures <br> - Reviewed AWS Services Knowledge for Mid-Term: Using Google Gemini to generate quizzes based on the given requirements| 23/10/2025 | 23/10/2025      |[AWS Card Clash](https://aws.amazon.com/training/digital/aws-card-clash/)|
+| 6   | - Successfully configured GuardDuty threat list to trigger findings from EC2 Instance activities | 08/15/2025 | 08/15/2025 <br> - School subject: <br> &emsp; + KS57: Completed Pháp luật và đạo đức trong công nghệ số  |[Pháp luật và đạo đức trong công nghệ số](https://www.coursera.org/account/accomplishments/verify/7JELDK2MGGKL) |
 
 
-### Week 3 Achievements:
+### Week 7 Achievements:
 
-* **Designed Scalable Network Architectures:**
-    * Transitioned from simple **VPC Peering** (Lab 19) to scalable **Transit Gateway** architectures (Lab 20), significantly reducing routing complexity for multi-VPC environments.
-    * Solved the **Hybrid DNS** challenge using **Route 53 Resolver**, enabling seamless service discovery between Cloud and On-premise.
+* GuardDuty Hands-on Practice:
 
-* **Mastered Storage & Data Protection:**
-    * Implemented specialized storage for Windows workloads using **Amazon FSx** and extended on-prem capacity using **Storage Gateway**.
-    * Established a robust Disaster Recovery foundation by automating backups via **AWS Backup**.
+  * Completed the "Getting Hands on with Amazon GuardDuty - AWS Virtual Workshop" and an in-depth lab generated with Amazon Q.
 
-* **Executed Cloud Migration:**
-    * Successfully performed a **"Lift and Shift" migration** (Lab 14), validating the technical path for moving legacy virtual machines to AWS EC2 without re-architecting.
+  * Successfully created, tested, and triggered various GuardDuty findings through console settings, EC2 activity, and CloudTrail API access.
+
+  * Established an easier testing environment by successfully triggering sample alerts with different severities and types via CloudShell CLI.
+
+  * Successfully configured a GuardDuty threat list to trigger findings from EC2 Instance activities.
+
+* Workshop Proposal and Architecture Advancement:
+
+  * Updated the proposal and AWS Architecture to incorporate AWS Detective for further investigation capabilities.
+
+  * Added a plan for CDK implementation following the completion of the workshop.
+
+  * Initiated research into mentor recommendations, including custom-coded data visualization and saving GuardDuty findings to S3 for analysis.
+
+  * Formulated a new workshop idea for a simple data graphing page hosted in S3 using API Gateway and Lambda.
+
+* Service Integration and Automation:
+
+  * Successfully configured EventBridge to act upon specific GuardDuty findings.
+  
+  * Automated notifications by sending SNS emails to team members and triggering a Lambda script based on GuardDuty alerts.

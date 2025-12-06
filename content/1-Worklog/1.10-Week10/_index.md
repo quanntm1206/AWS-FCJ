@@ -1,37 +1,23 @@
 ---
 title: "Week 10 Worklog"
-date: "2000-01-01"
+date: "2025-09-09"
 weight: 2
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
-### Week 10 Objectives:
 
-* **Cost Optimization:** Refactoring the Data Pipeline from Athena ETL to AWS Lambda to reduce operational costs.
-* **ChatOps Implementation:** Integrating AWS GuardDuty with Slack for real-time threat monitoring.
-* **Operational Excellence:** Customizing notification payloads for better visibility and handling "Alert Fatigue" incidents.
-* **Data Engineering:** resolving schema mismatch issues by standardizing data format to JSONL.
+### Week 10 Objectives:
+* Fully research and test all of the components and ready to add together to build the workshop
 
 ### Tasks to be carried out this week:
+| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
+| 2   | - Assisted in building ETL Pipeline for CloudWatch logs with team member <br> -  Updated proposal:<br>&emsp; + Included updated Architecture and Services <br>&emsp; + Recalculated prices | 10/11/2025 | 10/11/2025      ||
+| 3   | - Finished building ETL Pipeline for CloudWatch logs <br> - Fixed ETL Pipeline for CloudTrail logs: Processed logs from different dates cause schema error due to randomized field order in struct data type <br> - Successfully used AWS SSM to get EC2 system logs after IR Responses <br> - Succesfully intergrated threat notification chatbots in Slack and Telegram <br> - Successfully shown formatted notifications based on live threat findings <br> Got sent over 1000 mails because team member triggered all GuardDuty sample findings combined with multiple test SNS <br> - Team member suggested adding SES (Simple Email Service) to format emails and send| 11/11/2025 | 11/11/2025 ||
+| 4   |- Did research into CloudTrail Lake: Good for future usage specifically for in-depth CloudTrail log analysis, deemed unnecessary for current project due to it being CloudTrail exclusive <br> - Updated CloudTrail ETL Lambda: promoted fields in request parameters into collumns for better query and less schema crawling errors => Reliably crawled proccessed data between days <br> - Team members started on designing dashboard site, suggested intergrating Grafana <br> - Team member finished Lambda IR Functions <br> - Got started on updating proposal to the new format| 12/11/2025 | 12/11/2025      ||
+| 5   | - Succesfully tested using Lambda to query with Athena to prepare for API Gateway for Dashboard <br> - Family matters | 13/11/2025 | 13/11/2025      | [Lambda Athena Query Guide](https://www.youtube.com/watch?v=a_Og1t3ULOI)|
+| 6   | - Crawling raw GuardDuty exported log proved to be a bad idea, a large amount of schema errors <br> - Built a lambda ETL Pipeline for GuardDuty logs <br> - Revised architecture: <br>&emsp; + Directed the log from Guard Duty to the Raw Log S3 Bucket to under go ETL Pipeline <br>&emsp; Added SES as per team member's suggestion <br> - Researched on alternative architectures: We might be able to remove Crawler altogether, due the custom Lambda ETL pipeline we created, we already did most of the Crawler's service. Crawler is mostly used for large amount of logs with various data types, except for **struct** data type it seems, which CloudWatch,CloudTrail and Guard Duty logs have a lot of. After formatting the logs into Parquet with custom Lambda ETL, Crawler's purpose now is to turn it into Catalog Table, which alternatively can be done with Lambda. Will be testing this alternative approach. <br> - Successfully updated CloudTrail ETL Pipeline to directly call Glue API to create table without the use of Crawler <br> - Included the use of KMS in the project due to the sensitive nature of the security logs | 14/11/2025 | 14/11/2025 ||
 
-| Day | Task | Start Date | Completion Date | Reference Material |
-| :--- | :--- | :--- | :--- | :--- |
-| **Mon (10/11)** | **Pipeline Refactoring (Cost Optimization)**<br>- **Decision:** Migrated from Athena ETL to **AWS Lambda** for log processing to minimize costs.<br>- **Issue:** Encountered **Schema Mismatch** (field mix-up) where raw logs could not be correctly parsed into the target structure.<br>- **Status:** Investigation in progress. | 10/11/2025 | 10/11/2025 | [Lambda Pricing](https://aws.amazon.com/lambda/pricing/)<br>[Athena Pricing](https://aws.amazon.com/athena/pricing/) |
-| **Tue (11/11)** | **ChatOps Integration & Incident Handling**<br>- **Setup:** Configured **AWS Chatbot** to integrate SNS with Slack Channel.<br>- **Incident:** Triggered "Alert Storm" (1000+ emails) due to teammate activating all **GuardDuty Sample Findings** simultaneously.<br>- **Response:** Tuned SNS subscription filters to manage noise. | 11/11/2025 | 11/11/2025 | [GuardDuty Findings](https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings.html) |
-| **Wed (12/11)** | **Notification Payload Optimization (Lambda)**<br>- **UX Audit:** Noticed default Slack notifications lacked critical context (Severity Level) in the preview/collapsed view.<br>- **Coding:** Updated **Lambda logic** to parse raw findings and construct a **Custom Message Payload**.<br>- **Result:** Important fields (Severity, Region, Type) are now visible immediately without opening the app. | 12/11/2025 | 12/11/2025 | |
-| **Thu (13/11)** | **Data Pipeline Remediation (Part 1)**<br>- **Debugging:** Analyzed the "field mix-up" error from Monday.<br>- **Root Cause:** Standard JSON arrays were causing ingestion issues with Athena's SerDe.<br>- **Solution Strategy:** Decided to convert the data stream format to **JSONL (Newline Delimited JSON)**. | 13/11/2025 | 13/11/2025 | |
-| **Fri (14/11)** | **Data Pipeline Remediation (Part 2)**<br>- **Implementation:** Updated Lambda logic to serialize processed logs as `.jsonl` files.<br>- **Validation:** Successfully pushed cleaned data to S3 and manually queried via Athena without schema errors.<br>- **Outcome:** Pipeline is now functional and cost-effective. | 14/11/2025 | 14/11/2025 |  |
-| **Sat (15/11)** | **Event: “AWS Cloud Mastery Series #1 - AI/ML/GenAI on AWS”**<br>- Introducing AI/ML/GenAI on AWS. | 15/11/2025 | 15/11/2025 | |
 
 ### Week 10 Achievements:
 
-* **Engineered a Cost-Effective Data Pipeline:**
-    * Successfully replaced the expensive Athena ETL approach with a lightweight **Lambda-based** solution.
-    * Solved the complex **JSON Parsing/Schema Mismatch** issue by implementing **JSONL serialization**, ensuring seamless data ingestion into the Data Lake.
-
-* **Established Robust ChatOps:**
-    * Built a real-time threat notification system: **GuardDuty $\to$ EventBridge $\to$ SNS $\to$ AWS Chatbot $\to$ Slack**.
-    * **UX Optimization:** Custom-formatted notifications to display **Severity** immediately, significantly reducing the "Mean Time To Know" (MTTK) for security alerts.
-
-* **Incident Management Experience:**
-    * Learned a valuable lesson on **Alert Fatigue** when handling 1000+ sample findings, reinforcing the importance of proper SNS filtering and testing protocols.

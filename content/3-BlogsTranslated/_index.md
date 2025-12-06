@@ -6,26 +6,18 @@ chapter: false
 pre: " <b> 3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
+###  [Blog 1 - Achieve Excellence in Aftermarket Service with Syncron and AWS](3.1-Blog1/)
 
-This section will list and introduce the blogs you have translated. For example:
+This blog explains how manufacturers can enhance their aftermarket services by implementing the Syncron Service Lifecycle Management (SLM) platform on AWS. You will learn why traditional, isolated operations often lead to inefficiencies and increased costs , and how Syncron’s SLM platform creates a connected business ecosystem by unifying data from parts, service, and warranty management. The article also explores the solution's architecture, which leverages services like Amazon S3 and AWS Glue, and walks through customer use cases such as gaining instant access to data and building custom AI/ML models for price optimization.
 
-###  [Blog 1 - Getting started with healthcare data lakes: Using microservices](3.1-Blog1/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+###  [Blog 2 - Amazon Q Developer CLI supports image inputs in your terminal](3.2-Blog2/)
 
-###  [Blog 2 - ...](3.2-Blog2/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+This blog introduces the powerful new capability of the Amazon Q Developer CLI to accept and analyze image inputs directly in the terminal. You will learn how this feature bridges the gap between visual design assets and functional code, streamlining development by reducing the manual, error-prone work of translating diagrams into implementation. The article also provides a hands-on guide with several practical use cases, demonstrating how to generate Terraform code from an architecture diagram, create a SQL schema from an ER diagram, transform a hand-drawn sketch into a formal design document, and build UI code from a simple screenshot.
 
-###  [Blog 3 - ...](3.3-Blog3/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+###  [Blog 3 - Simulating partial failures with AWS Fault Injection Service](3.3-Blog3/)
+
+This blog details an advanced chaos engineering technique for simulating partial, or localized, system failures using AWS Fault Injection Service (FIS). You will learn why testing for these non-total failures is critical for building truly resilient applications and how traditional fault injection methods often overlook this important scenario. The article also provides a complete, step-by-step walkthrough of the solution, guiding you on how to combine FIS with an Application Load Balancer (ALB) and an AWS Lambda function to inject controlled faults that impact only a percentage of traffic, all without requiring any changes to your application's code.
 
 ###  [Blog 4 - ...](3.4-Blog4/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
-
 ###  [Blog 5 - ...](3.5-Blog5/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
-
 ###  [Blog 6 - ...](3.6-Blog6/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.

@@ -1,7 +1,6 @@
 baseURL = "https://quanntm1206.github.io/AWS-FCJ/"
-relativeURLs = false
-canonifyURLs = false
-defaultContentLanguage = "en"
+relativeURLs = true
+canonifyURLs = true
 
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"

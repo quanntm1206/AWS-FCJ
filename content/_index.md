@@ -1,32 +1,31 @@
 ---
 title: "Internship Report"
-date: "2000-01-01"
+date: "2025-09-09"
 weight: 1
 chapter: false
 ---
 
     
 # Internship Report
+
 ### Student Information:
-&emsp; **Full Name:** Nguyen Tran Minh Quan
+&emsp; **Full Name:** Huynh An Khuong
 
-&emsp; **Phone Number:** 0908351595
+&emsp; **Phone Number:** 0964440342
 
-&emsp; **Email:** nguyentranminhquanb@gmail.com
+&emsp; **Email:** huynhankhuong0511@gmail.com
 
-&emsp; **University:** FPT University
+&emsp; **University:** FPTU Ho Chi Minh Campus
 
-&emsp; **Major:** Artificial Intelligent
-
-&emsp; **Class:** AWS082025
+&emsp; **Major:** Information Technology
 
 &emsp; **Internship Company:** Amazon Web Services Vietnam Co., Ltd.
 
-&emsp; **Internship Position:** FCJ Cloud Intern
+&emsp; **Internship Position:** FCJA Cloud Intern
 
-&emsp; **Internship Duration:** From 09/09/2025 to 09/12/2025
+&emsp; **Internship Duration:** From 08/09/2025 to 12/12/2025
 
-![Your profile picture](/images/avatar.png)
+![Your profile picture](/images/KhuongAnhThe.jpg)
 
 ### Report Content
 

@@ -1,36 +1,42 @@
 ---
 title: "Week 9 Worklog"
-date: "2000-01-01"
+date: "2025-09-09"
 weight: 1
 chapter: false
 pre: " <b> 1.9. </b> "
 ---
 ### Week 9 Objectives:
 
-* **Project Architecture:** Designing a Serverless Log Analytics pipeline using AWS managed services.
-* **Data Ingestion:** Automating log extraction from Amazon CloudWatch to Amazon S3 using AWS Lambda.
-* **ETL Automation:** Implementing Extract-Transform-Load (ETL) logic to normalize raw JSON logs.
-* **Data Analytics:** Enabling interactive SQL queries on S3 data using Amazon Athena.
+* Keep working on the workshop
 
 ### Tasks to be carried out this week:
+| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
+| 2   | - AWS Architecture revised: <br>&emsp; + Removed AWS Detective <br>&emsp; + Updated with Step Function Workflow instead of a singular AWS Lambda Function <br>&emsp; + Added Custom Dashboard: A static custom dashboard website hosted with S3 and use Athena to query from data lake <br> - School subject: <br> &emsp; + KS57: Completed Quản trị dự án và duy trì đổi mới trong chuyển đổi số  | 03/11/2025 | 03/11/2025 | [Quản trị dự án và duy trì đổi mới trong chuyển đổi số](https://www.coursera.org/account/accomplishments/verify/IC06JCSZ7AVG) |
+| 3   | - Successfully exported Guard Duty Findings to S3 Bucket <br> - Experimented with AWS Glue Crawler: <br>&emsp; + Failed on Cloudwatch and CloudTrail logs, schema too complicated for Crawler (Have to research on an alternative way) <br>&emsp; + Ran succesfully on exported Guard Duty Findings: Had to update KMS Policy to allow Crawler to decrypt data <br> - Researching ETL Pipeline for logs| 04/11/2025 | 04/11/2025      | |
+| 4   | - Team meetings: Progress report: <br>&emsp; + IR Workflow: Halfway done, EC2 quarantine function is finished, not tested with findings yet <br>&emsp; + Assigned task for dashboard frontend design <br>&emsp; + Assigned task for Glue ETL Pipeline research <br>&emsp; + Signed up for VPBank Cloud Day 2025 with team members | 05/11/2025 | 05/11/2025 || 
+| 5   | - Team meetings <br> - Researched on ETL Pipeline approach: <br>&emsp; + Instead of using Glue ELT Jobs, we use custom Lambda ELT pipeline for CloudTrail and CloudWatch  logs <br>&emsp; + Store raw logs into a Raw Log S3 Bucket then use ETL Lambda to process the data and write it to a Proccesed Data S3 to then be Crawled <br> - AWS Architecture revised: Added a new group: DATA PREP group which contain the Raw Log S3 Bucket and the ETL Lambda <br>- School subject: <br> &emsp; + ENW493c: Completed Advanced Writing | 06/11/2025 | 06/11/2025      | [Advanced Writing](https://www.coursera.org/account/accomplishments/verify/EDQ1NY2UG063) |
+| 6   | - Researched on Kinesis Data Firehose to collect log: Good for future usage, not suitable for current project because real time streaming data was not necessary, using batch processing is better <br> - Succesfully build an ETL Pipeline for CloudTrail logs: Triggered by object creation in CloudTrail Raw Log Bucket and reformatted the raw logs into JSONL and save it into Proccessed S3 <br> - Succesfully crawled and queried the processed log to show CloudTrail Events | 07/11/2025 | 07/11/2025      | |
 
-| Day | Task | Start Date | Completion Date | Reference Material |
-| :--- | :--- | :--- | :--- | :--- |
-| **Mon (3/11)** | **Project R&D: Log Analytics Architecture**<br>- **Requirement Analysis:** Defined the flow for collecting and analyzing application logs.<br>- **Architecture Design:** Designed a pipeline: **CloudWatch Logs** (Source) $\to$ **AWS Lambda** (Collector) $\to$ **Amazon S3** (Data Lake) $\to$ **Amazon Athena** (Query Engine).<br>- **Format Strategy:** Decided on JSON format for raw logs to ensure schema flexibility. | 03/11/2025 | 03/11/2025 | [S3 User Guide](https://docs.aws.amazon.com/pdfs/AmazonS3/latest/userguide/s3-userguide.pdf)<br>[Module 04-02 - S3 Concepts](https://youtu.be/_yunukwcAwc?si=eFjVimOndHJO2_x1)<br>[CloudWatch Metrics](https://docs.aws.amazon.com/pdfs/AWSEC2/latest/UserGuide/ec2-ug.pdf) |
-| **Tue (4/11)** | **Data Ingestion Implementation (Part 1)**<br>- **Lambda Dev:** Developed a Python/Node.js Lambda function to interface with CloudWatch Logs API.<br>- **Logic:** Implemented logic to "crawl" (fetch) log streams and aggregate them.<br>- **Storage:** Configured S3 Bucket policy to allow Lambda write access. | 04/11/2025 | 04/11/2025 | [S3 API Reference](https://docs.aws.amazon.com/pdfs/AmazonS3/latest/API/s3-api.pdf)<br>[CloudWatch for VPC](https://docs.aws.amazon.com/pdfs/vpc/latest/userguide/vpc-ug.pdf) |
-| **Wed (5/11)** | **Data Ingestion Implementation (Part 2)**<br>- **Formatting:** Structured the fetched logs into valid JSON objects.<br>- **Persistence:** Successfully stored raw log files into the S3 bucket (Raw Zone).<br>- **Testing:** Verified log integrity by manually inspecting S3 objects. | 05/11/2025 | 05/11/2025 | [S3 User Guide](https://docs.aws.amazon.com/pdfs/AmazonS3/latest/userguide/s3-userguide.pdf) |
-| **Thu (6/11)** | **ETL Processing Development (Part 1)**<br>- **Lambda ETL:** Started developing a second Lambda function triggered by S3 Event Notifications (ObjectCreate).<br>- **Transformation:** Implemented logic to parse raw JSON files, clean data, and flatten nested structures. | 06/11/2025 | 06/11/2025 | [Athena User Guide](https://docs.aws.amazon.com/pdfs/AmazonS3/latest/userguide/s3-userguide.pdf)|
-| **Fri (7/11)** | **ETL Processing & Athena Integration (Part 2)**<br>- **Loading:** Configured the Lambda to output processed data to a target S3 bucket (Clean Zone).<br>- **Athena Integration:** Defined the Table Schema (DDL) in Athena to map to the processed JSON data.<br>- **Validation:** Executed SQL queries in Athena to verify data accuracy and structure. | 07/11/2025 | 07/11/2025 | [VPC Flow Logs & Athena](https://docs.aws.amazon.com/pdfs/vpc/latest/userguide/vpc-ug.pdf)<br>[Athena Solutions](https://docs.aws.amazon.com/pdfs/solutions/latest/amazon-marketing-cloud-insights-on-aws/amazon-marketing-cloud-insights-on-aws.pdf) |
 
 ### Week 9 Achievements:
 
-* **Built a Serverless ETL Pipeline:**
-    * Successfully automated the flow of data from operational logs (CloudWatch) to an analytical data lake (S3) without provisioning any servers (using **AWS Lambda**).
-    * Implemented **ETL (Extract, Transform, Load)** processes to convert unstructured raw logs into structured, queryable JSON datasets.
+* Architecture Refinement:
 
-* **Mastered Data Analytics on AWS:**
-    * Configured **Amazon Athena** to treat files in S3 as a relational database, enabling SQL-based analysis on log data.
-    * Applied **S3 Best Practices** by organizing data into "Raw" and "Processed" zones to maintain data lake hygiene.
+  * Updated the Incident Response (IR) mechanism to use a Step Functions Workflow instead of a single Lambda function.
 
-* **CloudWatch Integration:**
-    * Deepened understanding of programmatic access to CloudWatch Logs beyond the Console UI.
+  * Introduced a Custom Dashboard (static website hosted on S3) that uses Athena to query the data lake.
+  
+  * Created a new DATA PREP group in the architecture, including a Raw Log S3 Bucket and an ETL Lambda to manage log transformation.
+
+* Successfully configured the pipeline to export GuardDuty Findings to an S3 Bucket.
+
+* Built and deployed a custom ETL Lambda pipeline** to process CloudTrail logs, triggered by new objects in the Raw Log S3 Bucket.
+
+* Successfully crawled and queried the processed CloudTrail logs using Glue/Athena to demonstrate CloudTrail Events.
+
+* Team members completed half of the IR Step Functions Workflow, with the EC2 quarantine function being finished.
+
+* Assigned tasks for dashboard frontend design and Glue ETL Pipeline research.
+
+* Signed up with team members for the VPBank Cloud Day 2025 event.

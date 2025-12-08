@@ -1,176 +1,208 @@
 ---
 title: "Event 4"
-date: "2025-11-17"
-weight: 1
+date: "2025-11-29"
+weight: 04
 chapter: false
-pre: " <b> 4.4. </b> "
+pre: " <b> 4.6. </b> "
 ---
 
-# Summary Report: “AWS Cloud Mastery Series #2 - DevOps on AWS”
+# Summary Report: “AWS Cloud Mastery Series #3: AWS Well-Architected – Security Pillar Workshop”
 
 ### Event Objectives
 
-- Introduce AWS DevOps Services – CI/CD Pipeline
-- Introduce Infrastructure as Code (IaC) and related tools
-- Introduce Container Services on AWS
-- Ensure Monitoring and Observability capability using AWS Services
+- Introduction to AWS Cloud Club
+- Pillar 1: Identity and Access Management (IAM)
+- Pillar 2: Detection and Continuous Monitoring
+- Pillar 3: Infrastructure Protection
+- Pillar 4: Data Protection
+- Pillar 5: Incident Response
 
 ### Speakers
 
-- **Truong Quang Tinh** – AWS Community Builder, Platform Engineer - TymeX
-- **Bao Huynh** – AWS Community Builder
-- **Nguyen Khanh Phuc Thinh** – AWS Community Builder
-- **Tran Dai Vi** – AWS Community Builder
-- **Huynh Hoang Long** – AWS Community Builder
-- **Pham Hoang Quy** – AWS Community Builder
-- **Nghiem Le** – AWS Community Builder
-- **Dinh Le Hoang Anh** - Cloud Engineer Trainee, First Cloud AI Journey
+- **Le Vu Xuan An** - AWS Cloud Club Captain HCMUTE
+- **Tran Duc Anh** - AWS Cloud Club Captain SGU
+- **Tran Doan Cong Ly** - AWS Cloud Club Captain PTIT
+- **Danh Hoang Hieu Nghi** - AWS Cloud Club Captain HUFLIT
+
+- **Huynh Hoang Long** - AWS Community Builder
+- **Dinh Le Hoang Anh** - AWS Community Builder
+
+- **Nguyen Tuan Thinh** - Cloud Engineer Trainee
+- **Nguyen Do Thanh Dat** - Cloud Engineer Trainee
+
+- **Van Hoang Kha** - Cloud Security Engineer, AWS Community Builder
+
+- **Thinh Lam** - FCJ Member
+- **Viet Nguyen** - FCJ Member
+
+- **Mendel Grabski (Long)** - Ex-Head of Security & DevOps, Cloud Security Solution Architect
+- **Tinh Truong** - Platform Engineer at TymeX, AWS Community Builder 
 
 ### Key Highlights
 
-## DevOps Mindset
+### AWS Cloud Club
+The session began with an introduction to the AWS Cloud Club, which is designed to:
+- Facilitate the exploration and growth of cloud computing skills.
+- Foster technical leadership.
+- Build meaningful global connections.
 
-**- Culture:** Collaboration, Automation, Continuous Learning and Measurement
-**- DevOps Roles:** DevOps Engineer, Cloud Engineer, Platform Engineer, Site Reliability Engineer
-**- Success Metrics:**
-    + Ensure deployment health
-    + Improve agility
-    + System stability
-    + Optimize customer Experience
-    + Justify technology investments
+The club provides hands-on AWS experiences, mentorship from AWS professionals, and long-term career support. The AWS Cloud Clubs associated with FCJA include:
+- AWS Cloud Club HCMUTE
+- AWS Cloud Club SGU
+- AWS Cloud Club PTIT
+- AWS Cloud Club HUFLIT
 
-| DO | DON'T |
+**Benefits:** Opportunities to build skills, engage with the community, and access career advancement.
+
+### Identity & Access Management (IAM)
+IAM is a fundamental AWS service responsible for controlling secure access. It manages Users, Groups, Roles, and Permissions, ensuring robust authentication and authorization.
+
+- **Best Practices:**
+
+    + **Least Privilege Principle:** Granting only the permissions necessary to perform a task.
+
+    + **Root Access:** Deleting root access keys immediately after creation.
+
+    + **Policy Precision:** Avoiding the use of wildcards ("*") in Actions or Resources.
+
+    + **Single Sign-On (SSO):** Utilizing SSO for multi-account integration and centralized access management.
+
+- **Service Control Policies (SCPs):** These are organization-level policies that define the maximum available permissions for all accounts within an organization. It is important to note that SCPs act as filters; they do not grant permissions.
+
+- **Permission Boundaries:** These set the maximum permissions that an identity-based policy can grant to a specific User or Role within an account.
+
+- **MFA:**
+| TOTP (Time-based One-Time Password) | FIDO2 (Fast Identity Online 2) |
 | :--- | :--- |
-| Start with Fundamentals | Stay in Tutorial Hell |
-| Learn by Building Real Projects | Copy-paste blindly |
-| Document Everything | Compare Your Progress to Others |
-| Master one thing at a time | Give Up After Failures |
-| Soft Skills Enhancement | |
+| **Shared secret** | **Public-key cryptography** |
+| Requires manually typing a 6-digit code | Requires a simple touch or biometric scan |
+| Free | Variable cost |
+| Flexible backups and recovery | Strict backups and zero recovery |
 
-**- Continuous Integration:** Team members integrate their work frequently, aims for continuous Delivery and Deployment
+- **Credential Rotation with AWS Secrets Manager:**
+    + The Credential Updater utilizes Secrets Manager functions in a cycle: Create Secret, Set Secret (e.g., every 7 days), Test Secret, and Finish Secret.
+    + Rotation events can be triggered via an EventBridge Schedule for precise timing control.
+    + The process concludes by deprecating the previous secret.
 
-## Infrastructure as Code (IaC)
 
-**-Benefits:** Automation, Scalability, Reproducibility and better Collaboration
+### Detection and Continuous Monitoring
+- **Multi-Layer Security Visibility:**
+    + **Management Events:** Monitors API calls and console actions across all organization accounts.
+    + **Data Events:** Tracks S3 object access and Lambda executions at scale.
+    + **Network Activity Events:** Integrates VPC Flow Logs for network-level monitoring.
+    + **Organization Coverage:** Ensures unified logging across all member accounts and regions.
 
-# AWS CloudFormation
+- **Alerting & Automation with EventBridge:**
 
-AWS's own built in IaC tool, use templates written with YAML or JSON, can build every AWS Infrastructure automatically
+    + **Real-time Events:** CloudTrail events flow directly to EventBridge for immediate processing. This forms the foundation of Event-Driven Architecture (EDA), allowing systems to react instantaneously to changes.
 
-**- Stack:** A set of AWS Resources defined in a template, can be used by CloudFormation to create, update or delete said resources
+    + **Automated Alerting:** Detects suspicious activities across all organization accounts.
 
-**- CloudFormation Template:** A YAML/JSON file that define an AWS Infrastructure, act like a blueprint to deploy and configure resources
+    + **Cross-account Event Routing:** Facilitates centralized event processing and automated response. EventBridge seamlessly routes events based on rules to targets across different accounts or regions.
 
-**- How it works:** Create template -> Store in S3 Bucket or Local storage -> Use CloudFormation to create Stacks based on template -> CloudFormation built resources 
+    + **Integration & Workflows:** Supports integration with Lambda, SNS, and SQS for automated security workflows.
 
-**- Drift Detection:** Detect changes in the infrastructure compared to the Stack => Update Stack or revert change, useful for versioning 
+- **Detection-as-Code:**
+    
+    + **CloudTrail Lake Queries:** Involves creating and using SQL-based detection rules for advanced threat hunting.
 
-# AWS Cloud Development Kit(CDK)
+    + **Version-Controlled Logic:** Detection rules and logic are tracked and managed via code repositories.
 
-Open-source software development framework, support IaC using real programming languages(Python,Java,C#.Net, Type/JavaScript and Go)
+    + **Automated Deployment:** Trails and detection rules are automatically deployed across all relevant organization accounts, ensuring uniform security coverage.
 
-**- Construct:** Building blocks, comprised of components that represent AWS Resources and their Configuration, have 3 construct level:
-  + L1 Construct: Low-level resources maps directly to a single AWS CloudFormation resource
-  + L2 Construct: Provide a higher-level abstraction through an intuitive intent-based API,encapsulate best practices and security defaults 
-  + L3 Construct: Complete architecture patterns with multiple resources, opinionated implementation and fast deployment
+    + **Infrastructure-as-Code (IaC):** Utilizes IaC tools for the automated setup and configuration of the organization's logging and event trails.
+### Guard Duty
+- GuardDuty is an always-on, intelligent threat detection solution.
 
-# AWS Amplify
+- **How GuardDuty Works:** It relies on continuous analysis of the **Three Pillars of Detection**:
 
-AWS platform that makes it easy to build, deploy, and scale web and mobile apps, uses CloudFormation under the hood: Stacks deployed to built infrastructure programmatically 
-
-# Terraform
-
-IaC tool, start by defining infrastructure in Terraform code and plan then apply the infrastructure on multiple cloud platforms like Azure, AWS, Google Cloud, etc..
-
-**- Strength:** Multi-Cloud support, State tracking with the same configuration
-
-# How to choose IaC Tools?
-**-Criteria:**
-  + Plan using one Cloud or many?
-  + Role as Developer or Ops?
-  + Does the Cloud and Ecosystem support the tool?
-
-## Container Services on AWS
-
-# Dockerfile
-
-A Dockerfile defines how to build a container image, which describe the environment, dependencies, build steps, and final runtime configuration, ensuring that the application run consistently across any system that support Dockers
-
-**- Images:** A packaged blueprint of an application, build from a Dockerfile using layered file system, used to create containers consistently across environments
-
-**- Workflow:** Dockerfile build a Docker Image which can be used to run Container and push to ECR/Docker Hub
-
-# Amazon ECR
-
-A fully managed container registry that make it easy to store, manage, and securely share Docker container image.
-AWS's own secure and scalable private container registry
-
-**-Features:** 
-  + Image Scanning
-  + Immutable Tags
-  + Lifecycle Policies
-  + Encryption & IAM
-
-**- Orchestration:** Orchestrate many containers processes: restart containers, scale up automatically under high load, distribute traffic efficiently, manage where containers are placed and run
-
-# Kubernetes
-Open source, automates deployment, scaling, healing, and load balancing
-**- Components:**
-  + Master Node: Control Plane, manage worker nodes and pods
-  + Worker Node: Run application workloads inside pods
-  + Pod: Smallest deployable unit, can contain one or more containers
-  + Service
-
-ECS vs EKS
-
-| Feature | Amazon ECS (Elastic Container Service) | Amazon EKS (Elastic Kubernetes Service) |
+| Data Source | What It Monitors | Real-World Example |
 | :--- | :--- | :--- |
-| **Core Technology** | AWS-native container orchestration | Kubernetes-based (open-source standard) |
-| **Complexity** | Simpler, easier to operate | Highly flexible but more **complex** |
-| **Knowledge Required** | **No Kubernetes knowledge needed** | Requires **Kubernetes knowledge** (pods, deployments, etc.) |
-| **AWS Integration** | Deep AWS integration (ALB, IAM, CloudWatch, etc.) | Standard Kubernetes integration |
-| **Use Case/Benefits** | Great for **fast deployments** & **lower ops overhead** | **Multi-cluster**, **multi-cloud portability** |
-| **Ecosystem/Community** | AWS-native tools and community | **Larger ecosystem** & community tools |
-| **Summary** | ECS = easier, faster to run, **lower operational overhead** | EKS = more flexibility, more control, **more complexity** |
+| **CloudTrail Events** | IAM actions, permission changes, API calls | Attacker disables logging to cover tracks. |
+| **VPC Flow Logs** | Network traffic to/from your resources | EC2 sending data to a botnet C2 server. |
+| **DNS Logs** | DNS queries from your infrastructure | Malware-infected queries to cryptomining sites. |
 
-# App Runner
+- **Advanced Protection Plans:** GuardDuty offers specialized detection add-ons for comprehensive coverage:
 
-Suitable for quick deployment of web applications and REST APIS, ideal for small to medium production workload
+    + **S3 Protection:** Detects abnormal S3 access patterns and scans for malware in S3 objects upon upload.
 
-## Monitoring & Observability
+    + **EKS Protection:** Monitors Kubernetes audit logs for unauthorized access and correlates findings with S3 to map the full attack path.
 
-# CloudWatch
-- Monitor AWS Resources and Applications running on AWS in real time
-- Provide observabilty
-- Alarms and automated responses
-- Dashboard to help with operational and cost optimization
+    + **Malware Protection:** Automatically scans EBS volumes of EC2 instances when a compromise is suspected.
 
-**- CloudWatch metrics:** Data of the performance of system on AWS or on premise with CloudWatch Agent, integrate well with EventBridge, Auto Scaling and DevOps workflow
+    + **RDS Protection:** Analyzes login activity logs for databases (Aurora/RDS) to detect brute-force attacks (e.g., multiple failed login attempts from a single IP).
 
-# AWS X-Ray
-**- Distributed Tracing:** Tracks requests end-to-end, and draw maps and paths between service visited, add SDK to code to trace IDs
+    + **Lambda Protection:** Monitors network logs from Lambda function invocations and detects if a compromised function is sending data to malicious IPs.
 
-**- Performance Insight:** Root cause analysis for latency and errors, deduce insights from traces and provide Real User Monitoring
+    + **Runtime Monitoring – Deep Inside Your OS:** Achieved using a GuardDuty Agent installed on EC2/EKS/ECS Fargate. It monitors running processes, file access patterns, system calls, and attempts at privilege escalation or reverse shells.
+
+- **Compliance Standards:**
+
+    + **AWS Foundational Security Best Practices:** Developed by AWS, covering a wide range of services.
+
+    + **CIS AWS Foundations Benchmark:** Developed by AWS and industry professionals, focusing on Identity (IAM), Logging & Monitoring, and Networking.
+
+- **Compliance Enforcement with Detection-as-Code:**
+
+    + **IaC Tool:** AWS CloudFormation is used to deploy configurations.
+
+    + **Compliance Engine:** AWS CloudFormation pushes configuration checks to AWS Security Hub CSPM.
+
+    + **Compliance Standards Applied:** Security Hub performs checks against listed standards (AWS Foundational Security Best Practices, CIS AWS Foundations Benchmark, PCI DSS, NIST).
+
+    + **Resources Covered:** Amazon S3, Amazon EC2, and Amazon RDS.
+
+### Network Security Controls
+
+- **Attack Vectors:** Threats are categorized into Ingress Attacks (e.g., DDoS, SQL injection), Egress Attacks (e.g., data exfiltration, DNS tunneling), and Inside Attacks (e.g., lateral movement).
+
+- **Security Groups (SG):** Act as stateful firewalls at the instance/interface level. They only support allow rules and include an implicit "deny all."
+
+- **Network ACLs (NACLs):** Operate at the subnet level. They are stateless and use numbered rules to explicitly ALLOW or DENY traffic.
+
+- **AWS TGW Security Group Referencing:** Allows Transit Gateway (TGW) VPCs to define inbound rules using only SG references.
+
+- **Route 53 Resolver:** Routes DNS queries to Private DNS (private hosted zones), VPC DNS, or Public DNS.
+
+- **AWS Network Firewall:**
+
+    + **Use Cases:** Egress filtering (blocking bad domains, malicious protocols), environment segmentation (VPC to VPC), and intrusion prevention (IDS/IPS rules).
+
+    + **Active Defense:** Can automatically block malicious traffic using Amazon Threat Intelligence, where GuardDuty findings are marked for automated blocking.
+
+### Data Protection & Governance
+
+- **Encryption (KMS):** Data is encrypted using a Data Key, which is protected by a Customer Master Key (CMK). KMS policies enforce a second layer of security with Condition keys to define *when* encryption/decryption is allowed.
+
+- **Certificate Management (ACM):** Provides free public certificates and automatically renews them 60 days before expiration. DNS Validation is the recommended method.
+
+- **Secrets Manager:** Addresses the issue of hardcoded credentials. It uses a 4-step Lambda logic (createSecret, setSecret, testSecret, finishSecret) for automatic credential rotation without downtime.
+
+- **API Service Security (S3 & DynamoDB):** S3 requires TLS 1.2+ and bucket policies with `aws:SecureTransport` for enforcement. DynamoDB is secure by default with mandatory HTTPS.
+
+- **Database Service Security (RDS):** Requires client-side trust in the AWS Root CA Bundle to verify server identity, and server-side enforcement (e.g., `rds.force_ssl=1` for PostgreSQL).
+
+### Incident Response & Prevention
+
+- **Prevention Best Practices:** Key steps include using temporary credentials, never exposing S3 buckets directly, placing sensitive services within private subnets, managing all resources through Infrastructure as Code, and utilizing double-gate verification for high-risk changes (PR approval, pipeline deployment).
+
+- **Incident Response Process:** A structured 5-step approach: Preparation, Detection & Analysis, Containment (isolate, revoke credentials), Eradication & Recovery, and Post-Incident (lessons learned).
+
 
 ### Event Experience
 
-This event was very important for our project as it tackle our plan of adding IaC using CDK, instead of using ClickOps for maintainability and reproducibility. Also some more insights on CloudWatch helped greatly with our data monitoring feature
+- This event was extremely useful for our team, aligning directly with our project on Automated Incident Response and Forensics.
 
-The speakers answered our team's question:
+- **Q:** Our team's project is an Automated Incident Response and Forensics tool with GuardDuty as the main focus for incident response. However, our testing indicates that GuardDuty can take up to 5 minutes to generate a finding when an incident occurs. Are there any solutions to reduce this latency?
 
-- Q: Our project up until now have been purely built with ClickOps, and we are planning to use CDK. Are there any tool that could scan and turn our existing infrastructure into CDK or CloudFormation rather than reproducing the infrastructure from scratch with IaC? 
-- A: Unfortunately no, there isn't a tool that can assist with that problem yet, your team is going to have to built the infrastructure from scratch again. If there by any chance that you do found a tool that can assist with please share with us too.
+- **A:** The 5-minute delay for GuardDuty to generate findings is inherent to its configuration, as it must process a large volume of security data to accurately determine threats. To reduce latency, you might consider integrating 3rd-party security services such as Open Clarity Free for near real-time findings. Additionally, CloudTrail can be used to detect anomalies and unusual user behavior more rapidly.
 
-- Q: We noticed that AWS X-Ray used with CloudWatch is similar to CloudTrail in its tracing method, can you explain more on what differentiate them?
-- A: X-Ray is used for CloudWatch and used to trail the resources and services that the system interacted with, meanwhile CloudTrail is commonly used to trail the AWS user's actions
-
-- Q: Our project is built around Guard Duty Findings, do you have any experiences on how to reliably trigger Findings for a demo scenarios?
-- A: In my experience I know that Guard Duty Findings can be triggered by port scanning activities but i'm sure there are other ways too
-- A: Guard Duty can be configured to have a threat list containing custom rules to trigger findings upon activities relating the configured malicious domains or IPs  
-
-This event is also the first time some of the speaker's first time presenting a topic:
-- The DevOps and IaC sections was well presented 
-- Monitoring & Observability wasn't as great and we can notice the speaker's nervousness but still delivered great values regardless
+- Mr. Mendel Grabski was very keen to offer his support when we discussed our project after the event.
 
 #### Some event photos
-![Group picture during the event taken by speaker Tran Dai Vi](/images/4-Event/CM2GroupPic.jpg)
+
+![All Attendee Picture](/images/4-Event/Event6AttendeePic.jpg)
+_Picture of all Attendees_
+
+![Group Picture With Speaker Mendel Grabski and Speaker Van Hoang Kha](/images/4-Event/Event6PicturewithSpeakers.jpg)
+_Group Picture With Speaker Mendel Grabski and Speaker Van Hoang Kha_

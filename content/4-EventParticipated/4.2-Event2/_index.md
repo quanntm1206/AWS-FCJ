@@ -1,126 +1,96 @@
 ---
 title: "Event 2"
-date: "2000-01-01"
-weight: 1
+date: "2025-11-15"
+weight: 02
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: " <b> 4.3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
-
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+# Summary Report: “AWS Cloud Mastery Series #1 - AI/ML/GenAI on AWS”
 
 ### Event Objectives
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+- To provide an introduction to AI, Machine Learning, and Generative AI within the AWS ecosystem.
 
 ### Speakers
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
-
+- **Lam Tuan Kiet** – Sr DevOps Engineer, FPT Software
+- **Danh Hoang Hieu Nghi** - AI Engineer, Renova Cloud
+- **Dinh Le Hoang Anh** - Cloud Engineer Trainee, First Cloud AI Journey
+- **Van Hoang Kha** - Cloud Security Engineer, AWS Community Builder
 ### Key Highlights
 
-#### Identifying the drawbacks of legacy application architecture
+# Explored Generative AI with Amazon Bedrock:
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+**- Foundation Models:** Unlike traditional models, these serve as versatile tools adaptable to a multitude of tasks. Bedrock provides access to fully managed models from leading AI companies such as OpenAI, Claude, and Anthropic.
+**- Prompt Engineering:** The art of crafting and refining instructions to optimize model output.
+   + Zero-Shot Prompting: Providing a prompt without any prior context or examples.
+   + Few-shot Prompting: Including a limited amount of context and examples within the prompt to guide the model.
+   + Chain of Thought: Encouraging the model to outline its reasoning process and steps to derive the final answer.
+**- Retrieval Augmented Generation (RAG):** A method for retrieving relevant information from specific data sources.
+   + R: Retrieval - Gathers relevant information from a knowledge base or external data sources.
+   + A: Augmented - Incorporates the retrieved information as additional context in the user's prompt before input.
+   + G: Generation - Produces responses from the model based on the enhanced, augmented prompt.
+   + Use cases: Applications include enhancing content quality, creating contextual chatbots, enabling personalized search, and facilitating real-time data summarization.
 
-#### Transitioning to modern application architecture – Microservices
+**- Amazon Titan Embedding:** A lightweight model designed to efficiently translate text into numerical representations (embeddings). It excels in high-accuracy retrieval tasks and supports over 100 languages.
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+**- Pretrained AI Services:** 
+  + Amazon Rekognition: Facilitates image and video analysis.
+  + Amazon Translate: Detects and translates text across languages.
+  + Amazon Textract: Extracts text and layout data from documents.
+  + Amazon Transcribe: Converts speech into text.
+  + Amazon Polly: Converts text into lifelike speech.
+  + Amazon Comprehend: Derives insights and identifies relationships within text.
+  + Amazon Kendra: An intelligent enterprise search service.
+  + Amazon Lookout: Detects anomalies in business metrics, equipment, and images.
+  + Amazon Personalize: Tailors recommendations to individual users.
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+**- Demo:** AMZPhoto: A demonstration of face recognition capabilities using AI on images.
 
-#### Domain-Driven Design (DDD)
+**- Amazon Bedrock AgentCore:** A comprehensive platform designed to address the challenges of deploying agents into production:
+  + Securely executing and scaling agent code.
+  + Incorporating memory to retain past interactions and facilitate learning.
+  + Implementing identity and access controls for both agents and tools.
+  + Enabling agentic tool use for complex workflows.
+  + Discovering and connecting with custom tools and resources.
+  + Understanding and auditing every interaction (observability).
+  **+ Foundational Services:** Categorized services that ensure agents run securely at scale.
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+  **+ Enhance with tools & memory:** Includes components such as Memory, Gateway, Browser tools, and Code Interpreter.
 
-#### Event-Driven Architecture
+  **+ Deploy securely at scale:** Covers Runtime and Identity management.
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
+  **+ Gain operational insights:** Focuses on Observability.
 
-#### Compute Evolution
+  **+ Enabling Agents at Scale (Architecture):** Connects the AgentCore Gateway (via MCP) to Memory, Identity, Observability, Browser, and Code Interpreter components.
 
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
-
-#### Amazon Q Developer
-
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+  **+ Frameworks for Building Agents:** Supports frameworks such as CrewAI, Google ADK, LangGraph/LangChain, LlamaIndex, OpenAI Agents SDK, and Strands Agents SDK.
 
 ### Key Takeaways
+- Bedrock is the GenAI Hub: Amazon Bedrock serves as a central hub, offering fully managed Foundation Models from top industry players for a wide array of tasks.
 
-#### Design Mindset
+- Customization via Prompts and Data: Users can customize interactions through various prompting techniques (Zero-Shot, Few-Shot, CoT) and utilize RAG to inject context for superior model responses.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+- Embeddings Power Search: Amazon Titan Embeddings plays a critical role in translating text to numerical data, thereby facilitating high-accuracy retrieval tasks (such as RAG).
 
-#### Technical Architecture
+- Pretrained Models: AWS offers a suite of ready-to-deploy AI services for common requirements, such as Amazon Rekognition for imagery and Textract for documentation.
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
+- AgentCore Solves Production Issues: Amazon Bedrock AgentCore is a comprehensive platform that addresses the complexities of operating AI Agents at scale, managing critical components like Memory, Identity, and Observability.
 
 ### Applying to Work
 
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+- The insights gained will be highly beneficial for the team's upcoming projects, which are likely to incorporate AI Foundation Models into our architecture.
 
 ### Event Experience
-
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
-
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
-
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
-
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
-
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
-
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+- The speakers were articulate and provided highly informative content.
+- Q&A: A team member raised a project-critical question, despite it being slightly tangential to the main topic.
+  + Q: Our architecture utilizes SNS to process GuardDuty findings, but we face bottlenecks when over 1000 alerts occur simultaneously. How can this be resolved?
+  + A: Implementing SQS to queue the events ensures that no alerts are missed during high-volume periods.
+- I secured a position in the top 10 during the concluding Kahoot quiz and had the opportunity to take a photo with the speakers.
+- We established an unofficial group named "Mèo Cam Đeo Khăn," representing a collaboration between my group, "The Ballers," and "Vinhomies."
 
 #### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+![Top 10 Kahoot](/images/4-Event/Kahoottop10.jpg)
+![A Picture with the speakers and top 10 players](/images/4-Event/WithSpeaker.jpg)
+![Mèo Cam Đeo Khăn group](/images/4-Event/Meocamdeokhan.jpg)

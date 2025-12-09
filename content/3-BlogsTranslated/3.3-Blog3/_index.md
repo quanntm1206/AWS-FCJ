@@ -1,13 +1,10 @@
 ---
-title: "OSPAR 2025 Report"
+title: "OSPAR 2025 report"
 date: "2025-09-16"
-weight: 3
+weight: 03
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
 # OSPAR 2025 report: 170 services in scope based on enhanced OSPAR v2.0 guidelines
 

@@ -1,6 +1,6 @@
 ---
-title: "Báo cáo OSPAR 2025"
-date: "2025-08-16"
+title: "Blog 3"
+date: "2025-09-16"
 weight: 03
 chapter: false
 pre: " <b> 3.3. </b> "

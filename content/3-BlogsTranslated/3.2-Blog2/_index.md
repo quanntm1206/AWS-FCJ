@@ -1,7 +1,7 @@
 ---
-title: "MSK Replicator vs MirrorMaker2"
+title: "MSK Replicator and MirrorMaker2"
 date: "2025-09-16"
-weight: 2
+weight: 02
 chapter: false
 pre: " <b> 3.2. </b> "
 ---

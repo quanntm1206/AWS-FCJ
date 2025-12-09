@@ -1,7 +1,7 @@
 ---
 title: "Democratizing Quantum Resources"
 date: "2025-09-16"
-weight: 1
+weight: 01
 chapter: false
 pre: " <b> 3.1. </b> "
 ---

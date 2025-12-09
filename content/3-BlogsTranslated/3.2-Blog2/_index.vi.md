@@ -1,6 +1,6 @@
 ---
-title: "MSK Replicator và MirrorMaker2"
-date: "2025-08-16"
+title: "Blog 2"
+date: "2025-09-16"
 weight: 02
 chapter: false
 pre: " <b> 3.2. </b> "

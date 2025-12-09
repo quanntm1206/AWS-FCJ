@@ -1,6 +1,6 @@
 ---
-title: "Dân chủ hóa nguồn lực lượng tử"
-date: "2025-08-16"
+title: "Blog 1"
+date: "2025-09-16"
 weight: 01
 chapter: false
 pre: " <b> 3.1. </b> "

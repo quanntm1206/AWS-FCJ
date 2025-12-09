@@ -1,125 +1,153 @@
 ---
-title: "Event 2"
-date: "2000-01-01"
-weight: 1
+title: "Event 5"
+date: "2025-11-29"
+weight: 5
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: " <b> 4.5.</b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Báo cáo Tóm tắt: “BUILDING AGENTIC AI - Context Optimization with Amazon Bedrock”
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+## Mục tiêu Sự kiện
 
-### Mục Đích Của Sự Kiện
+- Thực hiện tìm hiểu sâu về kỹ thuật (technical deep-dive) đối với AWS Bedrock Agent Core.
+- Minh họa việc xây dựng các Quy trình làm việc Agentic (Agentic Workflows) trong hệ sinh thái AWS.
+- Giới thiệu **Diaflow** như một nền tảng tự động hóa AI.
+- Giới thiệu **CloudThinker** và các khả năng của nó trong Vận hành Đám mây (Cloud Operations).
+- Khám phá các chiến lược Điều phối Agentic (Agentic Orchestration) và Tối ưu hóa Ngữ cảnh (Context Optimization) sử dụng Amazon Bedrock.
+- Tạo điều kiện học tập thực tế thông qua CloudThinker Hack: Hands-on Workshop.
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+## Diễn giả
 
-### Danh Sách Diễn Giả
+- **Nguyen Gia Hung** - Head of Solutions Architect, AWS
+- **Kien Nguyen** - AWS Startup Solutions Architect
+- **Viet Pham** - CEO & Founder, Diaflow
+- **Thang Ton** - Co-Founder & COO, CloudThinker
+- **Henry Bui** - Head of Engineering, CloudThinker
+- **Van Hoang Kha** - AWS Community Leader
+- **Nhat Tran** - CTO, CloudThinker
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+## Điểm nổi bật Chính
 
-### Nội Dung Nổi Bật
+### Amazon Bedrock AgentCore
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+**Sự tiến hóa lên Agentic AI:** Việc các doanh nghiệp áp dụng các hệ thống Agentic AI đang tăng tốc nhanh chóng. AWS định vị mình là môi trường tối ưu để xây dựng và mở rộng quy mô các AI Agents này.
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+**Cung cấp từ Hệ sinh thái AWS:**
+- **Frameworks:** Hỗ trợ tích hợp với Strands, LangGraph, OpenAI, v.v.
+- **Applications (Ứng dụng):** Các dịch vụ bao gồm Kiro và AWS QuickSuite.
+- **Foundation (Nền tảng):** Được xây dựng dựa trên Amazon SageMaker và Amazon Bedrock Models.
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+**Các thành phần cốt lõi của Amazon Bedrock AgentCore:**
+- **Runtime:** Một môi trường triển khai agent không máy chủ (serverless), an toàn giúp mở rộng khối lượng công việc và tăng tốc thời gian đưa ra thị trường.
+- **Identity:** Quản lý định danh và truy cập (IAM) cấp doanh nghiệp giúp tăng tốc phát triển trong khi bảo mật quyền truy cập cho AI Agents.
+- **Gateway:** Cung cấp quyền truy cập thống nhất, an toàn vào các công cụ, với khả năng khám phá công cụ thông minh.
+- **Memory:** Tạo điều kiện lưu giữ bộ nhớ nhận thức ngữ cảnh thông minh, đơn giản hóa việc quản lý dữ liệu cấp doanh nghiệp với các tùy chọn tùy chỉnh sâu.
+- **Browser:** Một runtime trình duyệt đám mây serverless, có thể mở rộng, cung cấp bảo mật và khả năng quan sát cấp doanh nghiệp.
+- **Code Interpreter:** Một môi trường sandboxed an toàn để thực thi mã, cho phép xử lý dữ liệu quy mô lớn một cách dễ dàng.
+- **Observability:** Cung cấp khả năng hiển thị hoàn chỉnh về hiệu suất của agent để duy trì chất lượng và sự tin cậy trong khi tích hợp liền mạch với các công cụ quan sát khác.
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+### Diaflow: Nền tảng Tự động hóa AI
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+Diaflow là một Nền tảng Tự động hóa AI cho Doanh nghiệp được thiết kế để khai mở tiềm năng của đội ngũ bằng cách cung cấp các công cụ linh hoạt, không cần mã (no-code) để tự động hóa các quy trình công việc quan trọng một cách nhanh chóng.
 
-#### Domain-Driven Design (DDD)
+- **Sứ mệnh:** Biến các quy trình thủ công thành các quy trình làm việc thông minh trong vài phút, giải quyết thực trạng 90% doanh nghiệp lãng phí hơn 20 giờ mỗi người mỗi tuần cho các tác vụ lặp lại, đồng thời giải quyết các lo ngại về quyền riêng tư dữ liệu.
+- **Sự chấp nhận:** Hơn 6.000 người dùng trên toàn cầu trong các lĩnh vực Bán lẻ, Dịch vụ CNTT, Tài chính, Tiếp thị và Chăm sóc sức khỏe.
+- **Được hậu thuẫn bởi:** Được phát triển bởi các chuyên gia từ các tổ chức công nghệ lớn và được hỗ trợ bởi các đối tác như NVIDIA, Microsoft, AWS và Google.
+- **Sự hiện diện:** Hoạt động tại Mỹ, Thụy Sĩ, Pháp, Hàn Quốc, Singapore và Việt Nam.
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+**Các khả năng & Tính năng Cốt lõi:**
+- **AI-Powered Automation:** Giảm 80% các tác vụ thủ công bằng cách kết nối Cơ sở dữ liệu, Ứng dụng, Knowledge Bases, API và các hệ thống Legacy.
+- **Autonomous Task Execution:** Người dùng mô tả mục tiêu, và Diaflow lập kế hoạch và thực hiện các bước cần thiết.
+- **Multi-Model Processing:** Hỗ trợ nhiều LLM khác nhau bao gồm Claude, Gemini và Deepseek.
+- **Enterprise-Grade Security:** Tuân thủ HIPAA, SOC2 và GDPR.
 
-#### Event-Driven Architecture
+### CloudThinker: Agentic Cloud Operations
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+CloudThinker giải quyết các thách thức phổ biến của khách hàng như chi phí đám mây bùng nổ, sự phức tạp của quản lý đám mây vượt quá khả năng và phản ứng sự cố thụ động.
 
-#### Compute Evolution
+**Khả năng: Insights (Thông tin chi tiết) -> Reasoning (Suy luận) -> Execution (Thực thi)**
+- Cộng tác Đa agent (Multi-agent Collaboration)
+- Vận hành Tự chủ (Autonomous Operations)
+- Tối ưu hóa & Học tập Liên tục
+- Khả năng Đa đám mây (Multi-cloud Capability)
 
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
+**Đội ngũ CloudThinker AI Agent:**
+- **Alex:** Cloud Engineer
+- **Kai:** Kubernetes Engineer
+- **Anna:** General Manager
+- **Oliver:** Security Engineer
+- **Tony:** Database Engineer
 
-#### Amazon Q Developer
+### Agentic Orchestration và Context Optimization
 
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+#### Kiến trúc AI Agent
+- **Chatbots so với Agents:** Không giống như các chatbot thụ động sử dụng các quyết định dựa trên quy tắc, Agents chủ động, có khả năng bắt đầu hành động, đưa ra các quyết định động và thích ứng thông qua kinh nghiệm để xử lý các tác vụ nhiều bước.
+- **Các thành phần Cốt lõi:**
+    + **Planning (Lập kế hoạch):** Phân rã các tác vụ thành các bước có thể thực thi.
+    + **Memory (Bộ nhớ):** Lưu giữ ngữ cảnh và lịch sử tương tác.
+    + **Tools (Công cụ):** Giao tiếp với các API bên ngoài, công cụ tìm kiếm và trình thông dịch mã.
+    + **Action (Hành động):** Thực thi kế hoạch và đưa ra phản hồi cuối cùng.
 
-### Những Gì Học Được
+#### Bắt đầu với Agents
+- **Kiến trúc ReAct:** Một mô hình đan xen giữa suy nghĩ và hành động (User Input → Reasoning/Thought → Action/Tool Use → Observation → Final Answer).
+- **Lựa chọn Công cụ:** Các công cụ hiệu quả phải sở hữu Ngữ cảnh Agent, hỗ trợ các quy trình làm việc đa dạng, cho phép giải quyết vấn đề trực quan và trải qua các thử nghiệm thực tế nghiêm ngặt.
 
-#### Tư Duy Thiết Kế
+#### Các mô hình Phối hợp: Giải quyết các Điểm nghẽn
+Các hệ thống Single-Agent thường đối mặt với "sự cô lập ngữ cảnh" (xử lý 100k+ tokens) và các điểm nghẽn xử lý tuần tự. Điều phối phân tán giải quyết vấn đề này thông qua hai mô hình chính:
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+| Tính năng | Network (Peer-to-Peer) | Supervisor |
+| :--- | :--- | :--- |
+| **Cấu trúc** | Các agents giao tiếp trực tiếp với nhau. | Một Supervisor trung tâm ủy quyền nhiệm vụ cho các Worker agents chuyên biệt. |
+| **Ưu điểm** | * Giao tiếp linh hoạt.<br>* Khả năng chịu lỗi cao.<br>* Dễ dàng chuyển đổi từ chế độ single-agent. | * Ủy quyền nhiệm vụ rõ ràng.<br>* Phối hợp tập trung.<br>* Kiến trúc mô-đun và có thể mở rộng. |
+| **Nhược điểm** | * Gỡ lỗi phức tạp.<br>* Sự mơ hồ về quyền sở hữu. | * Rủi ro điểm nghẽn tiềm ẩn.<br>* Không linh hoạt khi chuyển sang chế độ single-agent. |
 
-#### Kiến Trúc Kỹ Thuật
+**Các biến thể Supervisor:**
+1.  **Group Chat-based:** Ngữ cảnh cộng tác, phối hợp đơn giản. *Được sử dụng bởi CloudThinker.*
+2.  **Supervisor as Tool (Subagents):** Kiểm soát chi tiết, worker ít tự chủ hơn.
+3.  **Hierarchical:** Giám sát đa lớp, có thể mở rộng cho các tổ chức lớn.
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
+#### Giải quyết Bài toán Chi phí Agentic 100:1
+Các kiến trúc Agentic đối mặt với "Sự bùng nổ Ngữ cảnh" (Context Explosion) nơi tỷ lệ token Input/Output có thể đạt 100:1 (so với 3:1 cho chatbot). Để giải quyết vấn đề này, bốn kỹ thuật "Quick-win" đã được trình bày, mang lại khoản tiết kiệm chi phí 80–95% và giảm độ trễ 3–5 lần:
 
-#### Chiến Lược Hiện Đại Hóa
+1.  **Prompt Caching:**
+    * *Mục tiêu:* Giảm 70–90% chi phí.
+    * *Phương pháp:* Kiến trúc Ba tầng (Three-Tier Architecture) nơi System Prompt và Lịch sử Hội thoại được cache, trong khi lượt hiện tại vẫn động.
+2.  **Context Compaction:**
+    * *Mục tiêu:* Giảm 80% chi phí tóm tắt.
+    * *Phương pháp:* Cache-Preserving Summarization thêm các hướng dẫn ở cấp độ payload để tóm tắt các tin nhắn cũ mà không phá vỡ cache keys.
+3.  **Tool Consolidation:**
+    * *Mục tiêu:* Giảm 20% số lượng token và ảo giác (hallucinations).
+    * *Phương pháp:* Hợp nhất các hoạt động CRUD vào các giao diện đơn lẻ và sử dụng **Just-In-Time Schemas** để tìm nạp tài liệu chỉ khi cần thiết.
+4.  **Parallel Tool Calling:**
+    * *Mục tiêu:* Giảm 30–40% số vòng lặp (round trips).
+    * *Phương pháp:* Cung cấp hướng dẫn rõ ràng cho LLM để song song hóa các lệnh gọi công cụ và các bước suy luận.
 
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+#### Cross-Region Inference (Suy luận Liên vùng)
+Để tránh giới hạn tốc độ (rate limits) do khối lượng gọi công cụ lớn (50–100 mỗi tác vụ), khối lượng công việc được tự động định tuyến qua các khu vực toàn cầu (US, EU, APAC). Điều này loại bỏ các điểm lỗi đơn lẻ và cung cấp hồ sơ toàn cầu cho độ trễ gần như bằng không.
 
-### Ứng Dụng Vào Công Việc
+> **Key Insight:** Hệ thống multi-agent tốt nhất tự nhận ra khi nào *KHÔNG* nên sử dụng nhiều agents.
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+## CloudThinker Hack: Hands-On Workshop
 
-### Trải nghiệm trong event
+Ban tổ chức đã cung cấp cho người tham dự quyền truy cập vào hướng dẫn CloudThinker và Mã gói Standard miễn phí để phân tích Tài khoản AWS cá nhân của họ.
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+## Trải nghiệm Sự kiện
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+Sự kiện này rất giàu thông tin, củng cố đáng kể sự hiểu biết của chúng tôi về Amazon Bedrock và giới thiệu cho chúng tôi các công cụ mạnh mẽ như Diaflow và CloudThinker.
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
+**Câu chuyện Thành công:**
+Trong workshop *CloudThinker Hack*, nhóm chúng tôi đã sử dụng công cụ này để phân tích cơ sở hạ tầng Tài khoản AWS của mình.
+- **Phát hiện:** CloudThinker đã xác định thành công khối lượng yêu cầu GET S3 Bucket cao bất thường (hơn 3 triệu yêu cầu trong khoảng thời gian 2 tuần).
+- **Giải pháp:** Agent đã khuyến nghị sử dụng **Amazon Data Firehose** để hợp nhất các log trước khi lưu chúng vào S3, thay vì ghi các tệp nhỏ riêng lẻ.
+- **Kết quả:** Nhóm chúng tôi đã được trao giải thưởng vì đã sử dụng CloudThinker hiệu quả để chẩn đoán và giải quyết vấn đề này. Chúng tôi đã nhận được Áo thun và Móc khóa CloudThinker.
 
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
+#### Một số hình ảnh sự kiện
+![Hình ảnh tất cả người tham dự](/images/4-Event/Event7AllAttendee.jpg)
+_Hình ảnh tất cả người tham dự_
 
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
+![Nhận giải thưởng từ CloudThinker 1](/images/4-Event/CloudThinkerPrize1.jpg)
+_Nhận giải thưởng từ CloudThinker_
 
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
-
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+![Nhận giải thưởng từ CloudThinker 2](/images/4-Event/CloudThinkerPrize2.jpg)
+_Nhận giải thưởng từ CloudThinker_

@@ -1,127 +1,59 @@
 ---
-title: "Blog 3"
-date: "2000-01-01"
-weight: 1
+title: "Báo cáo OSPAR 2025"
+date: "2025-08-16"
+weight: 03
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Báo cáo OSPAR 2025: 170 dịch vụ trong phạm vi theo hướng dẫn OSPAR v2.0 mới
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
-
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
-
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Chúng tôi vui mừng thông báo đã hoàn thành chu kỳ kiểm toán hàng năm của AWS về **Báo cáo Kiểm toán Nhà Cung cấp Dịch vụ Gia công (OSPAR)** vào ngày 7 tháng 8 năm 2025, dựa trên các hướng dẫn mới được nâng cấp phiên bản 2.0 (**OSPAR v2.0**). AWS là nhà cung cấp dịch vụ đám mây toàn cầu đầu tiên tại Singapore nhận được báo cáo này theo các hướng dẫn OSPAR v2.0 mới.
 
 ---
 
-## Hướng dẫn kiến trúc
+## Hướng dẫn ABS và Tiêu chuẩn OSPAR v2.0
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+Hiệp hội Các Ngân hàng tại Singapore (ABS) đã thiết lập *Hướng dẫn về Mục tiêu Kiểm soát và Thủ tục cho các Nhà Cung cấp Dịch vụ Gia công* (ABS Guidelines) nhằm cung cấp các tiêu chí kiểm soát cơ bản mà các nhà cung cấp dịch vụ gia công (OSP) hoạt động tại Singapore cần tuân thủ.
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+> ABS đã cập nhật nâng cấp Hướng dẫn ABS lên **phiên bản 2.0**, yêu cầu các OSP — như AWS — phải tuân thủ trong kỳ kiểm toán bắt đầu từ hoặc sau ngày 1 tháng 1 năm 2025.
 
-**Kiến trúc giải pháp bây giờ như sau:**
+Hướng dẫn ABS phiên bản nâng cấp tích hợp các yếu tố then chốt từ các cập nhật quy định của Cơ quan Tiền tệ Singapore (MAS) về:
+* Vệ sinh an ninh mạng
+* Quản lý rủi ro công nghệ
+* Quản lý liên tục kinh doanh
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
-
----
-
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
-
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Đồng thời, phiên bản này bổ sung các lĩnh vực kiểm soát mới như bảo mật dữ liệu, mật mã học, phát triển và quản lý phần mềm ứng dụng.
 
 ---
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+## Phạm vi mở rộng: 170 Dịch vụ
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Chu kỳ chứng nhận OSPAR 2025 bao gồm việc bổ sung **bảy (07) dịch vụ mới** vào phạm vi, nâng tổng số dịch vụ trong phạm vi lên **170** tại khu vực AWS Châu Á Thái Bình Dương (Singapore).
 
----
+**Các dịch vụ mới bổ sung bao gồm:**
+* Amazon DynamoDB Accelerator (DAX)
+* Amazon Security Lake
+* Amazon Verified Permissions
+* AWS Payment Cryptography
+* AWS Resource Explorer
+* AWS Verified Access
+* AWS Wickr
 
-## The pub/sub hub
+Việc thành công hoàn thành đánh giá OSPAR cho thấy AWS tiếp tục duy trì một hệ thống kiểm soát vững chắc đáp ứng các hướng dẫn này. Điều này nhấn mạnh cam kết của chúng tôi trong việc đáp ứng các kỳ vọng về an ninh dành cho các nhà cung cấp dịch vụ đám mây do ngành dịch vụ tài chính tại Singapore đặt ra.
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
-
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+Khách hàng có thể sử dụng OSPAR để đơn giản hóa các quy trình thẩm định (due diligence), qua đó giảm bớt công sức và chi phí liên quan đến việc tuân thủ. OSPAR vẫn là một chương trình đảm bảo cốt lõi dành cho các khách hàng ngành dịch vụ tài chính vì nó gắn chặt với các yêu cầu quy định địa phương từ MAS.
 
 ---
 
-## Core microservice
+## Cách truy cập báo cáo
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+Bạn có thể tải xuống báo cáo OSPAR mới nhất từ **AWS Artifact**, một cổng dịch vụ tự phục vụ cho truy cập các báo cáo tuân thủ của AWS theo yêu cầu.
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+1.  Đăng nhập vào **AWS Artifact** trong AWS Management Console.
+2.  Tìm kiếm báo cáo OSPAR 2025.
+3.  Danh sách đầy đủ các dịch vụ nằm trong phạm vi OSPAR có trong báo cáo hoặc được liệt kê trên trang *AWS Services in Scope by Compliance Program*.
 
----
+Như thường lệ, chúng tôi cam kết đưa các dịch vụ mới vào phạm vi của chương trình OSPAR dựa trên nhu cầu kiến trúc và quy định của bạn. Nếu bạn có câu hỏi về báo cáo OSPAR, vui lòng liên hệ với đội ngũ tài khoản AWS của bạn.
 
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+_Nguồn: Joseph Goh | 16/08/2025_

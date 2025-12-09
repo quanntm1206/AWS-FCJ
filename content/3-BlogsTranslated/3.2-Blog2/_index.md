@@ -1,126 +1,103 @@
 ---
-title: "Blog 2"
-date: "2000-01-01"
-weight: 1
+title: "MSK Replicator và MirrorMaker2"
+date: "2025-08-16"
+weight: 02
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Amazon MSK Replicator và MirrorMaker2: Chiến lược sao chép Apache Kafka cho DR và Di chuyển
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+Khách hàng cần sao chép dữ liệu từ các cụm Apache Kafka của họ vì nhiều lý do khác nhau, chẳng hạn như yêu cầu tuân thủ quy định, di chuyển cụm và triển khai phục hồi thảm họa (DR). Tuy nhiên, chiến lược sao chép phù hợp có thể thay đổi tùy theo bối cảnh ứng dụng.
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Trong bài viết này, chúng tôi sẽ phân tích các yếu tố cần xem xét khi sử dụng **Amazon MSK Replicator** thay vì **MirrorMaker 2** của Apache Kafka, đồng thời giúp bạn lựa chọn giải pháp sao chép phù hợp với trường hợp sử dụng của mình.
 
 ---
 
-## Architecture Guidance
+## Những thách thức trong việc lựa chọn chiến lược phục hồi thảm họa (DR)
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+Khách hàng tạo ra kế hoạch duy trì hoạt động kinh doanh và chiến lược phục hồi thảm họa (DR) nhằm tối đa hóa khả năng chịu lỗi cho các ứng dụng của họ, bởi vì thời gian gián đoạn hoặc mất mát dữ liệu có thể dẫn đến mất doanh thu hoặc ngừng hoạt động.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+Đối với những khách hàng sử dụng Kafka như một dịch vụ phát trực tuyến và nhắn tin cốt lõi, việc lên kế hoạch DR cho hạ tầng Kafka là thiết yếu để đạt được các mục tiêu về **Thời gian Khôi phục (RTO)** và **Điểm Khôi phục (RPO)**.
 
-**The solution architecture is now as follows:**
+### Tính sẵn sàng của Amazon MSK
+* **Đa vùng khả dụng (Multi-AZ):** Amazon MSK phân phối các broker trên nhiều vùng khả dụng khác nhau trong một khu vực AWS.
+* **Sao chép nội cụm:** Hệ số nhân bản là 3 và giá trị `min-ISR` là 2, cùng với thiết lập producer `acks=all`, đảm bảo khả năng bảo vệ trước sự cố mất một broker hoặc mất một vùng khả dụng đơn lẻ.
+* **Express brokers:** Tăng cường khả năng phục hồi với lưu trữ trả theo mức sử dụng, tự động cấu hình tin cậy và phục hồi nhanh hơn.
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+Tuy nhiên, nếu sự cố ảnh hưởng đến nhiều hơn một Availability Zone, bạn cần kiến trúc đa vùng (Multi-Region).
 
----
+### Sao lưu vào Amazon S3 so với Sao chép đa vùng
+Đối với các công ty có thể chịu được RTO dài hơn nhưng yêu cầu RPO thấp hơn, việc sao lưu dữ liệu vào **Amazon S3** (sử dụng Amazon MSK Connect) có thể là đủ. Tuy nhiên, phương pháp này có nhược điểm:
+* Quá trình khôi phục có thể mất nhiều thời gian tùy thuộc vào khối lượng dữ liệu.
+* Phức tạp trong việc xử lý offset nhóm tiêu dùng (consumer group offsets).
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
-
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+Do đó, phần lớn các trường hợp sử dụng dữ liệu luồng đều dựa vào thiết lập các cụm **MSK đa vùng (multi-Region)** và cấu hình sao chép dữ liệu giữa các cụm để đảm bảo tính liên tục kinh doanh.
 
 ---
 
-## Technology Choices and Communication Scope
+## Lựa chọn giải pháp sao chép phù hợp: MSK Replicator so với MirrorMaker 2
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+AWS khuyến nghị hai giải pháp chính để sao chép Kafka giữa các vùng (cross-Region):
 
----
+### 1. MSK Replicator: Ưu tiên cho sao chép cụm MSK trong cùng một tài khoản
+MSK Replicator là dịch vụ được quản lý hoàn toàn, không máy chủ (serverless), giúp sao chép dữ liệu giữa các cụm MSK ở các vùng khác nhau hoặc trong cùng một vùng.
 
-## The Pub/Sub Hub
+**Lợi ích:**
+* **Sao chép giữa các cụm MSK:** Hỗ trợ mô hình active-active và active-passive.
+* **Không quản lý hạ tầng:** Hoàn toàn không máy chủ, tự động mở rộng.
+* **Giám sát tích hợp:** Tích hợp chặt chẽ với Amazon CloudWatch.
+* **Tính khả dụng cao:** Khả năng chịu lỗi tích hợp vượt qua các Vùng Khả dụng.
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+### 2. MirrorMaker 2: Dành cho các kịch bản di cư, phức tạp và lai
+MirrorMaker 2 (MM2) là tiện ích tích hợp trong Kafka, sử dụng khung Kafka Connect, phù hợp cho các trường hợp đòi hỏi sự linh hoạt cao hoặc môi trường không phải Amazon MSK hoàn toàn.
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
-
----
-
-## Core Microservice
-
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+**Khuyến nghị sử dụng khi:**
+* **Sao chép giữa các tài khoản:** Giữa các cụm MSK trong các tài khoản AWS khác nhau.
+* **Di chuyển sang Amazon MSK:** Từ on-premise, đám mây khác hoặc EC2 tự quản lý.
+* **Đám mây lai / Đa đám mây:** Kết nối Kafka tại cơ sở với Amazon MSK.
+* **Sử dụng xác thực mTLS hoặc SASL/SCRAM:** Khi không thể kích hoạt xác thực IAM (mặc dù MSK Replicator có hỗ trợ IAM kết hợp).
+* **Chính sách tùy chỉnh:** Yêu cầu nâng cao về đặt tên chủ đề hoặc biến đổi dữ liệu (SMT).
 
 ---
 
-## Front Door Microservice
+## Tổng quan giải pháp MSK Replicator
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+Sơ đồ sau minh họa kiến trúc sử dụng MSK Replicator cho mô hình phục hồi thảm họa:
 
----
+![alt text](/images/3-Blog/1.png)
 
-## Staging ER7 Microservice
+Chúng tôi tạo ra hai cụm MSK — một cụm chính tại vùng chính và một cụm dự phòng tại vùng phụ. MSK Replicator được triển khai ở vùng phụ nhằm sao chép các chủ đề, ACL, dữ liệu và offset nhóm tiêu dùng từ cụm chính.
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+* **Mô hình:** Sao chép một chiều cho DR (active-passive), nhưng có thể mở rộng cho active-active.
+* **Hoạt động:** Client kết nối với cụm chính và chuyển sang cụm phụ nếu xảy ra failover.
 
 ---
 
-## New Features in the Solution
+## Giải pháp MirrorMaker 2
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Sơ đồ sau minh họa kiến trúc sử dụng MirrorMaker 2 cho kịch bản di chuyển:
+
+![alt text](/images/3-Blog/2.png)
+
+Chúng tôi tạo một cụm MSK tại vùng chính cùng với cụm Kafka hiện có tại cơ sở (hoặc trên đám mây khác/EC2).
+* **Mô hình:** Sao chép một chiều cho di cư cụm.
+* **Hoạt động:** Client tương tác với cụm tại cơ sở và dần được di cư sang tương tác với cụm MSK trên AWS.
+
+**Tài nguyên triển khai tự động (Amazon ECS với Fargate):**
+Thay vì cấu hình thủ công, nên sử dụng các mẫu Terraform và Docker có sẵn để triển khai MM2 trên Amazon ECS/Fargate với khả năng tự động mở rộng.
+
+---
+
+## Kết luận
+
+Việc lựa chọn phụ thuộc vào yêu cầu cụ thể:
+
+| Giải pháp | Trường hợp sử dụng chính |
+| :--- | :--- |
+| **Amazon MSK Replicator** | Sao chép MSK-sang-MSK trong cùng tài khoản, cần giải pháp quản lý hoàn toàn cho DR. |
+| **MirrorMaker 2** | Di chuyển sang MSK, môi trường lai, sao chép chéo tài khoản, hoặc cần chính sách sao chép tùy chỉnh phức tạp. |
+
+Các phương pháp này cung cấp các tùy chọn để đảm bảo dự phòng dữ liệu, đáp ứng tuân thủ quy định và giảm thiểu công tác vận hành thông qua tự động hóa.
+
+_Nguồn: Mazrim Mehrtens | 16/08/2025_

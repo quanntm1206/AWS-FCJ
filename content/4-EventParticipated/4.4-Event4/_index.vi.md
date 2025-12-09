@@ -1,125 +1,183 @@
 ---
-title: "Event 2"
-date: "2000-01-01"
-weight: 1
+title: "Event 4"
+date: "2025-11-29"
+weight: 4
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: " <b> 4.4.</b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Báo cáo Tóm tắt: “AWS Cloud Mastery Series #3: AWS Well-Architected – Security Pillar Workshop”
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+## Mục tiêu Sự kiện
 
-### Mục Đích Của Sự Kiện
+- **Giới thiệu về AWS Cloud Club:** Thiết lập sứ mệnh và phạm vi của cộng đồng.
+- **Pillar 1: Identity and Access Management (IAM):** Làm chủ kiểm soát truy cập và ủy quyền.
+- **Pillar 2: Detection and Continuous Monitoring:** Triển khai khả năng quan sát và cảnh báo tự động.
+- **Pillar 3: Infrastructure Protection:** Bảo vệ biên giới mạng và tài nguyên tính toán.
+- **Pillar 4: Data Protection:** Đảm bảo tính bảo mật và toàn vẹn dữ liệu thông qua mã hóa và quản trị.
+- **Pillar 5: Incident Response:** Thiết lập các giao thức để chuẩn bị, ứng phó và phục hồi sau các sự cố bảo mật.
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+## Diễn giả
 
-### Danh Sách Diễn Giả
+- **Le Vu Xuan An** - AWS Cloud Club Captain HCMUTE
+- **Tran Duc Anh** - AWS Cloud Club Captain SGU
+- **Tran Doan Cong Ly** - AWS Cloud Club Captain PTIT
+- **Danh Hoang Hieu Nghi** - AWS Cloud Club Captain HUFLIT
+- **Huynh Hoang Long** - AWS Community Builder
+- **Dinh Le Hoang Anh** - AWS Community Builder
+- **Nguyen Tuan Thinh** - Cloud Engineer Trainee
+- **Nguyen Do Thanh Dat** - Cloud Engineer Trainee
+- **Van Hoang Kha** - Cloud Security Engineer, AWS Community Builder
+- **Thinh Lam** - FCJ Member
+- **Viet Nguyen** - FCJ Member
+- **Mendel Grabski (Long)** - Ex-Head of Security & DevOps, Cloud Security Solution Architect
+- **Tinh Truong** - Platform Engineer at TymeX, AWS Community Builder
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+## Điểm nổi bật Chính
 
-### Nội Dung Nổi Bật
+### AWS Cloud Club
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+Phiên làm việc bắt đầu với phần giới thiệu về AWS Cloud Club, một sáng kiến được thiết kế để:
+- Tạo điều kiện khám phá và trau dồi kỹ năng điện toán đám mây.
+- Thúc đẩy khả năng lãnh đạo kỹ thuật trong cộng đồng sinh viên.
+- Xây dựng các kết nối chuyên nghiệp ý nghĩa, mang tính toàn cầu.
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+Câu lạc bộ cung cấp cho các thành viên trải nghiệm AWS thực tế, sự cố vấn từ các chuyên gia AWS dày dạn kinh nghiệm và hỗ trợ nghề nghiệp lâu dài. Các AWS Cloud Clubs liên kết với FCJA bao gồm các chapter tại HCMUTE, SGU, PTIT và HUFLIT.
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+**Lợi ích:** Các thành viên có cơ hội đáng kể để xây dựng các kỹ năng thực tế, tham gia sâu vào cộng đồng và tiếp cận các con đường thăng tiến nghề nghiệp.
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+### Identity & Access Management (IAM)
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+IAM đóng vai trò là dịch vụ AWS cơ bản chịu trách nhiệm kiểm soát truy cập an toàn. Nó quản lý Users, Groups, Roles và Permissions, đảm bảo các cơ chế xác thực và ủy quyền mạnh mẽ trên toàn môi trường.
 
-#### Domain-Driven Design (DDD)
+- **Các phương pháp hay nhất (Best Practices):**
+    + **Nguyên tắc đặc quyền tối thiểu (Least Privilege Principle):** Chỉ cấp các quyền cụ thể cần thiết để thực hiện một tác vụ.
+    + **Truy cập Root:** Xóa access key của tài khoản root ngay sau khi tạo tài khoản để ngăn chặn xâm phạm.
+    + **Độ chính xác của Policy:** Tránh sử dụng ký tự đại diện ("*") trong Actions hoặc Resources để giảm thiểu bề mặt tấn công.
+    + **Single Sign-On (SSO):** Sử dụng SSO để tích hợp đa tài khoản liền mạch và quản lý truy cập tập trung.
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+- **Service Control Policies (SCPs):** Đây là các chính sách cấp tổ chức xác định các quyền tối đa có sẵn cho tất cả các tài khoản trong một tổ chức. Điều quan trọng cần lưu ý là SCP hoạt động nghiêm ngặt như các bộ lọc; bản thân chúng không cấp quyền.
 
-#### Event-Driven Architecture
+- **Permission Boundaries:** Cho phép quản trị viên thiết lập các quyền tối đa mà một chính sách dựa trên danh tính (identity-based policy) có thể cấp cho một User hoặc Role cụ thể, cung cấp một mạng lưới an toàn chống lại việc leo thang đặc quyền.
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+- **Multi-Factor Authentication (MFA):**
 
-#### Compute Evolution
+| Tính năng | TOTP (Time-based One-Time Password) | FIDO2 (Fast Identity Online 2) |
+| :--- | :--- | :--- |
+| **Cơ chế** | **Bí mật được chia sẻ (Shared secret)** | **Mật mã khóa công khai (Public-key cryptography)** |
+| **Tương tác người dùng** | Yêu cầu nhập mã 6 chữ số thủ công | Yêu cầu chạm đơn giản hoặc quét sinh trắc học |
+| **Chi phí** | Miễn phí (Dựa trên phần mềm) | Chi phí thay đổi (Khóa phần cứng) |
+| **Khôi phục** | Sao lưu linh hoạt và các tùy chọn khôi phục | Sao lưu nghiêm ngặt và thường không thể khôi phục nếu bị mất |
 
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
+- **Xoay vòng thông tin xác thực với AWS Secrets Manager:**
+    + Credential Updater sử dụng các hàm của Secrets Manager theo chu kỳ: *Create Secret* -> *Set Secret* (ví dụ: mỗi 7 ngày) -> *Test Secret* -> *Finish Secret*.
+    + Các sự kiện xoay vòng có thể được kích hoạt chính xác thông qua EventBridge Schedule.
+    + Quá trình kết thúc bằng việc loại bỏ bí mật cũ, đảm bảo vô hiệu hóa các thông tin xác thực cũ.
 
-#### Amazon Q Developer
+### Detection and Continuous Monitoring (Phát hiện và Giám sát Liên tục)
 
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+- **Khả năng hiển thị bảo mật đa lớp:**
+    + **Management Events:** Giám sát các lệnh gọi API và hành động console trên tất cả các tài khoản tổ chức.
+    + **Data Events:** Theo dõi truy cập đối tượng S3 và thực thi Lambda ở quy mô lớn.
+    + **Network Activity Events:** Tích hợp VPC Flow Logs để giám sát cấp độ mạng chi tiết.
+    + **Phạm vi tổ chức:** Đảm bảo nhập log thống nhất trên tất cả các tài khoản thành viên và các region.
 
-### Những Gì Học Được
+- **Cảnh báo & Tự động hóa với EventBridge:**
+    + **Sự kiện thời gian thực:** Các sự kiện CloudTrail chuyển trực tiếp vào EventBridge để xử lý ngay lập tức. Điều này tạo thành nền tảng của Kiến trúc hướng sự kiện (EDA), cho phép hệ thống phản ứng tức thời với các thay đổi trạng thái.
+    + **Cảnh báo tự động:** Phát hiện và thông báo về các hoạt động đáng ngờ trên toàn bộ tổ chức.
+    + **Định tuyến sự kiện liên tài khoản:** Tạo điều kiện xử lý sự kiện tập trung và phản hồi tự động bằng cách định tuyến các sự kiện dựa trên quy tắc đến các mục tiêu ở các tài khoản hoặc region khác nhau.
+    + **Tích hợp & Quy trình làm việc:** Hỗ trợ tích hợp liền mạch với Lambda, SNS và SQS để kích hoạt các quy trình bảo mật tự động.
 
-#### Tư Duy Thiết Kế
+- **Detection-as-Code:**
+    + **CloudTrail Lake Queries:** Liên quan đến việc tạo và thực thi các quy tắc phát hiện dựa trên SQL để săn tìm mối đe dọa nâng cao.
+    + **Logic được kiểm soát phiên bản:** Các quy tắc và logic phát hiện được theo dõi, lập phiên bản và quản lý thông qua các kho lưu trữ mã (code repositories).
+    + **Triển khai tự động:** Trails và các quy tắc phát hiện được triển khai tự động trên tất cả các tài khoản tổ chức liên quan thông qua CI/CD pipelines.
+    + **Infrastructure-as-Code (IaC):** Sử dụng các công cụ như CloudFormation hoặc Terraform để tự động hóa việc thiết lập logging và event trails của tổ chức.
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+### GuardDuty
 
-#### Kiến Trúc Kỹ Thuật
+GuardDuty là một giải pháp phát hiện mối đe dọa thông minh, luôn bật, liên tục giám sát hoạt động độc hại và hành vi trái phép.
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
+- **Cách GuardDuty hoạt động:** Nó dựa vào việc phân tích liên tục **Ba Trụ cột Phát hiện (Three Pillars of Detection):**
 
-#### Chiến Lược Hiện Đại Hóa
+| Nguồn dữ liệu | Những gì nó giám sát | Ví dụ thực tế |
+| :--- | :--- | :--- |
+| **CloudTrail Events** | Các hành động IAM, thay đổi quyền, gọi API | Kẻ tấn công vô hiệu hóa logging để che giấu dấu vết. |
+| **VPC Flow Logs** | Lưu lượng mạng đến/đi từ tài nguyên của bạn | Một EC2 instance gửi dữ liệu đến máy chủ C2 botnet đã biết. |
+| **DNS Logs** | Các truy vấn DNS từ cơ sở hạ tầng của bạn | Các truy vấn bị nhiễm phần mềm độc hại cố gắng phân giải các trang web khai thác tiền điện tử. |
 
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+- **Các gói bảo vệ nâng cao:** GuardDuty cung cấp các tiện ích bổ sung chuyên biệt để bảo vệ toàn diện:
+    + **S3 Protection:** Phát hiện các mẫu truy cập S3 bất thường và quét phần mềm độc hại trong các đối tượng S3 khi tải lên.
+    + **EKS Protection:** Giám sát audit logs Kubernetes để phát hiện truy cập trái phép và tương quan các finding với S3 để lập bản đồ đường dẫn tấn công đầy đủ.
+    + **Malware Protection:** Tự động quét các volume EBS của EC2 instance khi nghi ngờ bị xâm phạm.
+    + **RDS Protection:** Phân tích nhật ký hoạt động đăng nhập cho cơ sở dữ liệu (Aurora/RDS) để phát hiện các cuộc tấn công brute-force.
+    + **Lambda Protection:** Giám sát nhật ký mạng từ các lệnh gọi hàm Lambda để phát hiện xem một hàm bị xâm phạm có đang giao tiếp với các IP độc hại hay không.
+    + **Runtime Monitoring:** Đạt được bằng cách sử dụng GuardDuty Agent được cài đặt trên EC2/EKS/ECS Fargate để giám sát các tiến trình đang chạy, các mẫu truy cập tệp và system calls.
 
-### Ứng Dụng Vào Công Việc
+- **Tiêu chuẩn tuân thủ:**
+    + **AWS Foundational Security Best Practices:** Một tiêu chuẩn được phát triển bởi AWS, bao gồm một loạt các dịch vụ.
+    + **CIS AWS Foundations Benchmark:** Một hướng dẫn dựa trên sự đồng thuận được phát triển bởi AWS và các chuyên gia trong ngành, tập trung vào Identity (IAM), Logging & Monitoring và Networking.
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+- **Thực thi tuân thủ với Detection-as-Code:**
+    + **Công cụ IaC:** AWS CloudFormation được sử dụng để triển khai cấu hình.
+    + **Compliance Engine:** AWS CloudFormation đẩy các kiểm tra cấu hình đến AWS Security Hub CSPM.
+    + **Tiêu chuẩn tuân thủ được áp dụng:** Security Hub thực hiện kiểm tra so với các tiêu chuẩn được liệt kê (AWS Foundational, CIS, PCI DSS, NIST).
+    + **Tài nguyên được bao gồm:** Chủ yếu là Amazon S3, Amazon EC2 và Amazon RDS.
 
-### Trải nghiệm trong event
+### Network Security Controls
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+- **Các vector tấn công:** Các mối đe dọa được phân loại thành **Ingress Attacks** (ví dụ: DDoS, SQL injection), **Egress Attacks** (ví dụ: trích xuất dữ liệu, DNS tunneling) và **Inside Attacks** (ví dụ: di chuyển ngang - lateral movement).
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+- **Security Groups (SG):** Hoạt động như tường lửa stateful ở cấp độ instance/giao diện. Chúng chỉ hỗ trợ các quy tắc "allow" và bao gồm mặc định ngầm định "deny all".
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
+- **Network ACLs (NACLs):** Hoạt động ở cấp độ subnet như một lớp bảo vệ bổ sung. Chúng là stateless và sử dụng các quy tắc được đánh số để cho phép (ALLOW) hoặc từ chối (DENY) lưu lượng truy cập một cách rõ ràng.
 
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
+- **AWS TGW Security Group Referencing:** Cho phép Transit Gateway (TGW) VPC xác định các quy tắc inbound chỉ sử dụng tham chiếu SG, đơn giản hóa việc quản lý trong các cấu trúc liên kết phức tạp.
 
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
+- **Route 53 Resolver:** Định tuyến các truy vấn DNS đến Private DNS (private hosted zones), VPC DNS hoặc Public DNS dựa trên các quy tắc.
 
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
+- **AWS Network Firewall:**
+    + **Trường hợp sử dụng:** Lọc Egress (chặn các tên miền/giao thức độc hại), phân đoạn môi trường (VPC tới VPC) và ngăn chặn xâm nhập (quy tắc IDS/IPS).
+    + **Phòng thủ chủ động:** Có thể tự động chặn lưu lượng truy cập độc hại bằng cách sử dụng Amazon Threat Intelligence, nơi các GuardDuty findings được đánh dấu cho các hành động chặn tự động.
 
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+### Bảo vệ Dữ liệu & Quản trị
+
+- **Mã hóa (KMS):** Dữ liệu được mã hóa bằng Data Key, khóa này lại được bảo vệ bởi Customer Master Key (CMK) (Envelope Encryption). Các chính sách KMS thực thi lớp bảo mật thứ hai với các khóa Condition để xác định chính xác *khi nào* được phép mã hóa/giải mã.
+
+- **Certificate Management (ACM):** Cung cấp chứng chỉ công khai miễn phí và tự động gia hạn chúng 60 ngày trước khi hết hạn. DNS Validation là phương pháp được khuyến nghị để xác minh quyền sở hữu.
+
+- **Secrets Manager:** Giải quyết rủi ro bảo mật của thông tin xác thực được hardcode. Nó sử dụng logic Lambda 4 bước để thực hiện xoay vòng thông tin xác thực tự động mà không gây ra thời gian chết (downtime).
+
+- **Bảo mật dịch vụ API (S3 & DynamoDB):** S3 yêu cầu TLS 1.2+ và bucket policies với `aws:SecureTransport` để thực thi. DynamoDB được bảo mật theo mặc định, bắt buộc sử dụng HTTPS.
+
+- **Bảo mật dịch vụ cơ sở dữ liệu (RDS):** Yêu cầu sự tin cậy phía máy khách vào AWS Root CA Bundle để xác minh danh tính máy chủ và thực thi phía máy chủ (ví dụ: đặt `rds.force_ssl=1` cho PostgreSQL).
+
+### Ứng phó Sự cố & Phòng ngừa
+
+- **Các phương pháp phòng ngừa hay nhất:** Các biện pháp phòng ngừa chính bao gồm sử dụng thông tin xác thực tạm thời, đảm bảo S3 buckets không bao giờ tiếp xúc trực tiếp với internet, đặt các dịch vụ nhạy cảm trong private subnets, quản lý tất cả tài nguyên thông qua Infrastructure as Code và sử dụng xác minh hai cổng (double-gate verification) cho các thay đổi rủi ro cao (phê duyệt PR, triển khai pipeline).
+
+- **Quy trình Ứng phó Sự cố:** Một cách tiếp cận có cấu trúc gồm 5 bước:
+    1.  Chuẩn bị (Preparation)
+    2.  Phát hiện & Phân tích (Detection & Analysis)
+    3.  Ngăn chặn (Containment) (cô lập tài nguyên, thu hồi thông tin xác thực)
+    4.  Diệt trừ & Phục hồi (Eradication & Recovery)
+    5.  Hoạt động sau sự cố (Post-Incident Activity) (bài học kinh nghiệm và tài liệu hóa).
+
+## Trải nghiệm Sự kiện
+
+Hội thảo này rất phù hợp với nhóm của chúng tôi, vì nội dung phù hợp trực tiếp với dự án đang diễn ra tập trung vào Ứng phó sự cố tự động (Automated Incident Response) và Pháp y số (Forensics).
+
+Các diễn giả đã giải quyết một số câu hỏi quan trọng từ nhóm của chúng tôi:
+
+- **Hỏi:** Dự án của nhóm chúng tôi là một công cụ Ứng phó sự cố tự động và Forensics sử dụng GuardDuty làm trình kích hoạt chính. Tuy nhiên, thử nghiệm của chúng tôi chỉ ra rằng GuardDuty có thể mất tới 5 phút để tạo ra một finding sau khi sự cố xảy ra. Có giải pháp nào để giảm thiểu độ trễ này không?
+- **Đáp:** Độ trễ 5 phút để GuardDuty tạo ra finding phần lớn là do cấu hình vốn có của nó, vì nó phải nhập và xử lý một lượng lớn dữ liệu bảo mật để xác định chính xác các mối đe dọa. Để giảm độ trễ, bạn có thể xem xét tích hợp các dịch vụ bảo mật của bên thứ ba, chẳng hạn như Open Clarity Free, để có các finding gần như thời gian thực. Ngoài ra, việc tận dụng trực tiếp CloudTrail có thể giúp phát hiện các bất thường cụ thể và hành vi người dùng bất thường nhanh hơn so với việc chờ finding tổng hợp từ GuardDuty.
+
+Hơn nữa, ông Mendel Grabski đã ân cần đề nghị hỗ trợ và cố vấn khi chúng tôi thảo luận về các chi tiết cụ thể của dự án sau sự kiện.
+
+#### Một số hình ảnh sự kiện
+
+![Hình ảnh tất cả người tham dự](/images/4-Event/Event6AttendeePic.jpg)
+_Hình ảnh tất cả người tham dự_
+
+![Ảnh nhóm với diễn giả Mendel Grabski và diễn giả Van Hoang Kha](/images/4-Event/Event6PicturewithSpeakers.jpg)
+_Ảnh nhóm với diễn giả Mendel Grabski và diễn giả Van Hoang Kha_

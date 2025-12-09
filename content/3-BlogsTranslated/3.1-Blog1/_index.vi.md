@@ -1,126 +1,56 @@
 ---
-title: "Blog 1"
-date: "2000-01-01"
-weight: 1
+title: "Dân chủ hóa nguồn lực lượng tử"
+date: "2025-08-16"
+weight: 01
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+# Dân chủ hóa nguồn lực lượng tử: Đại học Michigan và AWS
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Đại học Michigan đang tạo ra bước đột phá trong việc tiếp cận công nghệ lượng tử thông qua sự hợp tác đổi mới với Amazon Web Services (AWS). Dưới sự dẫn dắt của Tiến sĩ Zheshen Zhang, quan hệ đối tác này nhằm mục tiêu chuyển đổi nền tảng **QREAL** (Quantum Receiver Enhanced by Adaptive Learning) của trường, được Quỹ Khoa học Quốc gia (NSF) tài trợ, thành một bệ thử lượng tử có thể truy cập qua đám mây.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+> “Cộng đồng công nghệ lượng tử đang đối mặt với một thách thức lớn — tất cả các nguồn lực lượng tử đều bị phân tán và rời rạc,” Tiến sĩ Zhang giải thích. “Các nhóm nghiên cứu phát triển các đơn vị máy tính lượng tử, kết nối lượng tử, cảm biến biến đổi đang trải rộng trên toàn cầu. Việc thúc đẩy khoa học và công nghệ thông tin lượng tử đòi hỏi một khuôn khổ thống nhất, có khả năng kết nối những chức năng khác nhau này.”
 
----
-
-## Hướng dẫn kiến trúc
-
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
-
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
-
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Giải pháp sử dụng công nghệ điện toán phi máy chủ của **AWS (AWS serverless)**, bao gồm **AWS Fargate** để điều phối container, **AWS Lambda** cho điện toán phi máy chủ, và **Amazon Relational Database Service (Amazon RDS)** để quản lý cơ sở dữ liệu. Thông qua các dịch vụ đám mây AWS này, người dùng có thể gửi lệnh từ xa nhằm cấu hình, kết nối và định tuyến thông tin giữa các thành phần phần cứng lượng tử khác nhau.
 
 ---
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+## Chuyển đổi giáo dục lượng tử
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Dự án giải quyết hai thách thức then chốt trong giáo dục lượng tử:
+
+1.  **Tiếp cận khái niệm:** Dự án giúp sinh viên tiếp cận các khái niệm lượng tử đi ngược lại trực giác thông thường thông qua các minh họa tương tác sử dụng dữ liệu thực nghiệm.
+    > “Không giống như các ngành học truyền thống, các khái niệm lượng tử như chồng chập và vướng víu có tính phi trực quan cao,” Tiến sĩ Zhang lưu ý. “Các minh họa của chúng tôi trực quan hóa những khái niệm này bằng cách sử dụng dữ liệu đã được xử lý trước từ các thí nghiệm lượng tử thực tế.”
+
+2.  **Thu hẹp khoảng cách lý thuyết - thực hành:** Giáo dục lượng tử truyền thống thường tập trung mạnh vào các khái niệm lý thuyết, thường tách rời với thực tế thí nghiệm. Các phòng thí nghiệm ảo trong bệ thử cung cấp cho sinh viên trải nghiệm thực hành với các hệ thống lượng tử vật lý từ bất kỳ đâu.
 
 ---
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+## Thúc đẩy nghiên cứu thông qua truy cập hợp nhất
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Bệ thử giải quyết một thách thức cơ bản trong nghiên cứu lượng tử bằng cách tạo ra một mô hình **fabless** cho ngành công nghiệp lượng tử.
 
----
+> “Hãy tưởng tượng ngành công nghiệp bán dẫn,” Tiến sĩ Zhang giải thích. “Các công ty như NVIDIA và AMD không vận hành các nhà máy đúc chip riêng của họ—họ thuê ngoài sản xuất cho các nhà máy đúc thương mại. Chúng tôi muốn phát triển một mô hình tương tự cho ngành công nghiệp lượng tử.”
 
-## The pub/sub hub
+Cách tiếp cận này cho phép các nhà nghiên cứu từ nhiều lĩnh vực khác nhau thúc đẩy sự đổi mới trong công nghệ lượng tử:
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+* **Các nhà khoa học máy tính:** Có thể truy cập phần cứng lượng tử thực thay vì chỉ dựa vào mô phỏng (ví dụ: nhóm nghiên cứu của Tiến sĩ Jianqing Liu tại ĐH Bang Bắc Carolina nghiên cứu QOS trong định tuyến vướng víu).
+* **Các nhà vật lý lượng tử:** Có thể phát triển các mô-đun cảm biến mới bằng cách cấu hình các kết nối giữa những thiết bị khác nhau, chẳng hạn như các nguồn ánh sáng vướng víu và các đơn vị xử lý AI.
+* **Các kỹ sư:** Có thể tạo nguyên mẫu và xác thực các chức năng cơ bản trước khi chuyển sang giai đoạn tích hợp quy mô lớn và đóng gói cùng các đối tác công nghiệp.
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+Bệ thử thu thập và tập hợp dữ liệu trong một thư viện thống nhất, sau đó được phổ biến đến cộng đồng nghiên cứu rộng lớn hơn. Cách tiếp cận hợp tác này giúp phá vỡ các rào cản giữa các ngành khác nhau—vật lý, khoa học máy tính, kỹ thuật điện, khoa học vật liệu và hóa học.
 
 ---
 
-## Core microservice
+## Những cải tiến trong tương lai
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+Nhìn về tương lai, dự án sẽ được mở rộng để bổ sung thêm các nguồn tài nguyên lượng tử mới, chẳng hạn như **nguồn ánh sáng nén** (tương tự công nghệ trong LIGO). Nền tảng này cũng sẽ tích hợp hoàn toàn với **AWS Braket**, cung cấp quyền truy cập vào nhiều công nghệ lượng tử từ nhiều nhà cung cấp khác nhau, bao gồm các bộ mô phỏng mạch và các loại QPU khác nhau.
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+> “Chúng tôi không chỉ đơn thuần bổ sung các mô-đun lượng tử độc lập,” Tiến sĩ Zhang cho biết. “Chúng tôi đang tiêu chuẩn hóa các mô-đun để mỗi thành phần mới đều có thể kết nối một cách tự nhiên với các thành phần hiện có trong bệ thử, tạo nên một hệ thống có khả năng tương tác và mở rộng.”
 
----
+Sự hợp tác với AWS có ý nghĩa chiến lược nhờ phạm vi phủ sóng toàn cầu và hạ tầng vững chắc. “Hạ tầng đám mây của AWS cung cấp các khả năng vượt trội về truy cập toàn cầu, quản lý dữ liệu và bảo mật—những chức năng thiết yếu cho một bệ thử bền vững,” Tiến sĩ Zhang nhấn mạnh.
 
-## Front door microservice
+Khi công nghệ lượng tử tiếp tục phát triển nhanh chóng, quan hệ đối tác này tạo nền tảng cho dân chủ hóa quyền truy cập tới các tài nguyên máy tính lượng tử, mô phỏng, cảm biến và kết nối.
 
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+_Nguồn: Chris Edwards, Guangyi (Leo) Li, Kailu Zhou, Rifkhan Anoor, Visuttha Manthamkarn, và Dr. Zheshen Zhang | 16/08/2025_

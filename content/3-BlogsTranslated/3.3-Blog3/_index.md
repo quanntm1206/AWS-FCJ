@@ -1,126 +1,59 @@
 ---
-title: "Blog 3"
-date: "2000-01-01"
-weight: 1
+title: "Báo cáo OSPAR 2025"
+date: "2025-08-16"
+weight: 03
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Báo cáo OSPAR 2025: 170 dịch vụ trong phạm vi theo hướng dẫn OSPAR v2.0 mới
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
-
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Chúng tôi vui mừng thông báo đã hoàn thành chu kỳ kiểm toán hàng năm của AWS về **Báo cáo Kiểm toán Nhà Cung cấp Dịch vụ Gia công (OSPAR)** vào ngày 7 tháng 8 năm 2025, dựa trên các hướng dẫn mới được nâng cấp phiên bản 2.0 (**OSPAR v2.0**). AWS là nhà cung cấp dịch vụ đám mây toàn cầu đầu tiên tại Singapore nhận được báo cáo này theo các hướng dẫn OSPAR v2.0 mới.
 
 ---
 
-## Architecture Guidance
+## Hướng dẫn ABS và Tiêu chuẩn OSPAR v2.0
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+Hiệp hội Các Ngân hàng tại Singapore (ABS) đã thiết lập *Hướng dẫn về Mục tiêu Kiểm soát và Thủ tục cho các Nhà Cung cấp Dịch vụ Gia công* (ABS Guidelines) nhằm cung cấp các tiêu chí kiểm soát cơ bản mà các nhà cung cấp dịch vụ gia công (OSP) hoạt động tại Singapore cần tuân thủ.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+> ABS đã cập nhật nâng cấp Hướng dẫn ABS lên **phiên bản 2.0**, yêu cầu các OSP — như AWS — phải tuân thủ trong kỳ kiểm toán bắt đầu từ hoặc sau ngày 1 tháng 1 năm 2025.
 
-**The solution architecture is now as follows:**
+Hướng dẫn ABS phiên bản nâng cấp tích hợp các yếu tố then chốt từ các cập nhật quy định của Cơ quan Tiền tệ Singapore (MAS) về:
+* Vệ sinh an ninh mạng
+* Quản lý rủi ro công nghệ
+* Quản lý liên tục kinh doanh
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
-
----
-
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
-
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+Đồng thời, phiên bản này bổ sung các lĩnh vực kiểm soát mới như bảo mật dữ liệu, mật mã học, phát triển và quản lý phần mềm ứng dụng.
 
 ---
 
-## Technology Choices and Communication Scope
+## Phạm vi mở rộng: 170 Dịch vụ
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Chu kỳ chứng nhận OSPAR 2025 bao gồm việc bổ sung **bảy (07) dịch vụ mới** vào phạm vi, nâng tổng số dịch vụ trong phạm vi lên **170** tại khu vực AWS Châu Á Thái Bình Dương (Singapore).
 
----
+**Các dịch vụ mới bổ sung bao gồm:**
+* Amazon DynamoDB Accelerator (DAX)
+* Amazon Security Lake
+* Amazon Verified Permissions
+* AWS Payment Cryptography
+* AWS Resource Explorer
+* AWS Verified Access
+* AWS Wickr
 
-## The Pub/Sub Hub
+Việc thành công hoàn thành đánh giá OSPAR cho thấy AWS tiếp tục duy trì một hệ thống kiểm soát vững chắc đáp ứng các hướng dẫn này. Điều này nhấn mạnh cam kết của chúng tôi trong việc đáp ứng các kỳ vọng về an ninh dành cho các nhà cung cấp dịch vụ đám mây do ngành dịch vụ tài chính tại Singapore đặt ra.
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
-
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+Khách hàng có thể sử dụng OSPAR để đơn giản hóa các quy trình thẩm định (due diligence), qua đó giảm bớt công sức và chi phí liên quan đến việc tuân thủ. OSPAR vẫn là một chương trình đảm bảo cốt lõi dành cho các khách hàng ngành dịch vụ tài chính vì nó gắn chặt với các yêu cầu quy định địa phương từ MAS.
 
 ---
 
-## Core Microservice
+## Cách truy cập báo cáo
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+Bạn có thể tải xuống báo cáo OSPAR mới nhất từ **AWS Artifact**, một cổng dịch vụ tự phục vụ cho truy cập các báo cáo tuân thủ của AWS theo yêu cầu.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+1.  Đăng nhập vào **AWS Artifact** trong AWS Management Console.
+2.  Tìm kiếm báo cáo OSPAR 2025.
+3.  Danh sách đầy đủ các dịch vụ nằm trong phạm vi OSPAR có trong báo cáo hoặc được liệt kê trên trang *AWS Services in Scope by Compliance Program*.
 
----
+Như thường lệ, chúng tôi cam kết đưa các dịch vụ mới vào phạm vi của chương trình OSPAR dựa trên nhu cầu kiến trúc và quy định của bạn. Nếu bạn có câu hỏi về báo cáo OSPAR, vui lòng liên hệ với đội ngũ tài khoản AWS của bạn.
 
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
-
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
-
----
-
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+_Nguồn: Joseph Goh | 16/08/2025_

@@ -8,231 +8,146 @@ pre: " <b> 4.5.</b> "
 
 # Summary Report: “BUILDING AGENTIC AI - Context Optimization with Amazon Bedrock”
 
-### Event Objectives
+## Event Objectives
 
-- Technical deep-dive into AWS Bedrock Agent Core
-- Building Agentic Workflow on AWS
-- Introduction to Diaflow
-- Introduction to CloudThinker
-- CloudThinker Agentic Orchestration, Context Optimization on Amazon Bedrock
-- CloudThinker Hack: Hands-on Workshop
+- To conduct a technical deep-dive into the AWS Bedrock Agent Core.
+- To demonstrate the construction of Agentic Workflows within the AWS ecosystem.
+- To introduce **Diaflow** as an AI automation platform.
+- To introduce **CloudThinker** and its capabilities in Cloud Operations.
+- To explore Agentic Orchestration and Context Optimization strategies using Amazon Bedrock.
+- To facilitate practical learning through the CloudThinker Hack: Hands-on Workshop.
 
-### Speakers
+## Speakers
 
-- **Nguyen Gia Hung** - Head of Solutions Architect AWS
-
+- **Nguyen Gia Hung** - Head of Solutions Architect, AWS
 - **Kien Nguyen** - AWS Startup Solutions Architect
+- **Viet Pham** - CEO & Founder, Diaflow
+- **Thang Ton** - Co-Founder & COO, CloudThinker
+- **Henry Bui** - Head of Engineering, CloudThinker
+- **Van Hoang Kha** - AWS Community Leader
+- **Nhat Tran** - CTO, CloudThinker
 
-- **Viet Pham** - CEO & Founder of Diaflow
+## Key Highlights
 
-- **Thang Ton** - Co-Founder & COO CloudThinker
+### Amazon Bedrock AgentCore
 
-- **Henry Bui** - Head of Engineering CloudThinker
- 
-- **Van Hoang Kha** - AWS Comumnity Leaders
+**The Evolution to Agentic AI:** The adoption of Agentic AI systems by enterprises is accelerating rapidly. AWS positions itself as the optimal environment for building and scaling these AI Agents.
 
-- **Nhat Tran** - CTO CloudThinker
+**AWS Ecosystem Provision:**
+- **Frameworks:** Supports integration with Strands, LangGraph, OpenAI, etc.
+- **Applications:** Offerings include Kiro and AWS QuickSuite.
+- **Foundation:** Built upon Amazon SageMaker and Amazon Bedrock Models.
 
-### Key Highlights
+**Core Components of Amazon Bedrock AgentCore:**
+- **Runtime:** A secure, serverless agent deployment environment that scales workloads and accelerates time-to-market.
+- **Identity:** Enterprise-grade identity and access management (IAM) that accelerates development while securing access for AI Agents.
+- **Gateway:** Provides unified, secure access to tools, featuring intelligent tool discovery capabilities.
+- **Memory:** Facilitates intelligent, context-aware memory retention, simplifying the management of enterprise-grade data with deep customization options.
+- **Browser:** A scalable, serverless cloud browser runtime offering enterprise-grade security and observability.
+- **Code Interpreter:** A secure, sandboxed environment for code execution, enabling large-scale data processing with ease.
+- **Observability:** Delivers complete visibility into agent performance to maintain quality and trust while integrating seamlessly with other observability tools.
 
-## Amazon Bedrock AgentCore
-- The evolution to Agentic AI: The number of enterprises utilizing Agentic AI systems is rising.
-=> AWS provides the optimal environment to build and scale AI Agents.
+### Diaflow: AI Automation Platform
 
-What does AWS provide?
-- Frameworks for building agents: Strands, Langgraph, OpenAI, etc.
-- Applications: Kiro, AWS QuickSuite
-- Amazon Sagemaker
-- Amazon Bedrock Models and AgentCore
+Diaflow is an AI Automation Platform for Businesses designed to unlock team potential by providing flexible, no-code tools to automate critical workflows rapidly.
 
-What are Amazon Bedrock AgentCores?
-- Runtime: Secure, serverless agent deployment => Scales workloads and accelerates time to market.
-- Identity: Enterprise agent identity and access management => Accelerates development and secures access for AI Agents, building streamlined AI Agent experiences.
-- Gateway: Unified, secure tool access => Simplifies development and secure access to tools, featuring intelligent tool discovery.
-- Memory: Intelligent context-aware memory retention => Simplifies the management of enterprise-grade data memory with deep customization options.
-- Browser: Scalable cloud browser runtime: Provides serverless browser infrastructure with enterprise-grade security and observability.
-- Code Interpreter: Secure sandboxed code execution => Executes code securely, providing large-scale data processing and ease of use.
-- Observability: Complete agent performance visibility => Maintains quality and trust while accelerating time to market, allowing integration with other observability tools.
+- **Mission:** To transform manual processes into intelligent workflows in minutes, addressing the statistic that 90% of businesses waste over 20 hours per person per week on repetitive tasks, while simultaneously solving data privacy concerns.
+- **Adoption:** Over 6,000 users globally across Retail, IT Services, Finance, Marketing, and Healthcare.
+- **Backing:** Developed by experts from major tech institutions and backed by partners like NVIDIA, Microsoft, AWS, and Google.
+- **Presence:** Operating in the USA, Switzerland, France, South Korea, Singapore, and Vietnam.
 
-## Diaflow: Amplify team's potential with AI Automation
-Diaflow is an AI Automation Platform for Businesses, with a mission to unlock the full potential of teams by providing powerful, flexible tools to automate what matters most—rapidly and without code.
+**Core Capabilities & Features:**
+- **AI-Powered Automation:** Reduces manual tasks by 80% by connecting Databases, Apps, Knowledge Bases, APIs, and Legacy systems.
+- **Autonomous Task Execution:** Users describe a goal, and Diaflow plans and executes the necessary steps.
+- **Multi-Model Processing:** Supports various LLMs including Claude, Gemini, and Deepseek.
+- **Enterprise-Grade Security:** Compliant with HIPAA, SOC2, and GDPR.
 
-- Transforms manual processes into intelligent workflows in minutes rather than months => solving the issue where over 20 hours per person per week are wasted on repetitive tasks in 90% of businesses, while addressing concerns regarding data privacy and security when deploying AI internally.
+### CloudThinker: Agentic Cloud Operations
 
-- Customers: Over 6,000 users from global customers across various industries, including Retail, IT Services, Finance, Marketing, and Healthcare.
+CloudThinker addresses common customer challenges such as exploding cloud costs, the complexity of cloud management exceeding capability, and reactive incident responses.
 
-- Backed By: Developed by experts from major tech and academic institutions and sponsored/backed by key partners such as NVIDIA, Microsoft, AWS, and Google.
-
-- Locations: The USA, Switzerland, France, South Korea, Singapore, and Vietnam.
-
-# Diaflow Capabilities
-
-- AI-Powered Automation: Reduces manual tasks by 80% by connecting Databases, Apps, Knowledge bases, APIs, and Legacy systems.
-
-- AI Agents: Deploys 24/7 intelligent assistance.
-
-- Internal AI Tools & Apps: Deploys AI-powered apps tailored to specific business needs.
-
-# Diaflow Features
-
-- Autonomous Task Execution: Describe your goal, and Diaflow will plan and execute it.
-
-- Multi-Model Processing: Choose from Claude, Gemini, Deepseek, etc.
-
-- Integration with usable tools: Built-in Drive, Pages, Table, and Vector.
-
-- Enterprise-Grade Security: HIPAA, SOC2, and GDPR compliant.
-
-## CloudThinker
-
-Some problems for customers using cloud platforms: Exploding Cloud Costs, Cloud Complexity > Cloud Capability, and Reactive Incident Response.
-
-# CloudThinker Capabilities
-
-Agentic AI Cloud Operations: Insights -> Reasoning -> Execution
+**Capabilities: Insights -> Reasoning -> Execution**
 - Multi-agent Collaboration
 - Autonomous Operations
-- Continuous Optimization
-- Continuous Learning
+- Continuous Optimization & Learning
 - Multi-cloud Capability
 
-# CloudThinker Product Feature
+**The CloudThinker AI Agent Team:**
+- **Alex:** Cloud Engineer
+- **Kai:** Kubernetes Engineer
+- **Anna:** General Manager
+- **Oliver:** Security Engineer
+- **Tony:** Database Engineer
 
-- Code review
-- Incident Response
-- Operation Automation
-- Infrastructure Observability
-- Kubernetes Management (Coming soon)
-- Cloud Keeper (Coming soon)
+### Agentic Orchestration and Context Optimization
 
-# CloudThinker Solutions
+#### AI Agent Architecture
+- **Chatbots vs. Agents:** Unlike reactive chatbots that use rule-based decisions, Agents are proactive, capable of initiating actions, making dynamic decisions, and adapting through experience to handle multi-step tasks.
+- **Core Components:**
+    + **Planning:** Deconstructs tasks into executable steps.
+    + **Memory:** Retains context and interaction history.
+    + **Tools:** Interfaces with external APIs, search engines, and code interpreters.
+    + **Action:** Executes the plan and formulates the final response.
 
-- Cloud Migration & Modernization
-- Cloud Operation & Optimization
-- Compliance Readiness
-- Security Assessment
+#### Getting Started with Agents
+- **ReAct Architecture:** A paradigm of interleaving thought and action (User Input → Reasoning/Thought → Action/Tool Use → Observation → Final Answer).
+- **Tool Selection:** Effective tools must possess Agent Context, support diverse workflows, enable intuitive problem-solving, and undergo rigorous real-world testing.
 
-# CloudThinker AI Agent Team
+#### Coordination Models: Solving Bottlenecks
+Single-Agent systems often face "context isolation" (handling 100k+ tokens) and sequential processing bottlenecks. Distributed orchestration solves this via two main models:
 
-- Alex: Cloud Engineer
-- Kai: Kubernetes Engineer
-- Anna: General Manager
-- Oliver: Security Engineer
-- Tony: Database Engineer
-
-## CloudThinker Agentic Orchestration and Context Optimization on Amazon Bedrock
-
-# AI Agent Evolution and Architecture
-
-- Chatbots: Reactive, use rule-based decisions for simple tasks, and possess limited adaptability.
-
-- Agents: Proactive, capable of initiating actions, making dynamic and complex decisions, and adapting by learning from experience to handle complex, multi-step tasks.
-
-- Core Agent Core Architecture Components:
-    + Planning: Breaks down tasks and creates steps.
-
-    + Memory: Recalls context and interactions.
-
-    + Tools: Uses external APIs, search, and code.
-
-    + Action: Executes the plan and provides the final response.
-
-# Getting started with Agents
-
-- ReAct Agent Architecture: Interleaving thought and action for complex tasks => User Input → Reasoning (Thought) → Action (Tool Use) → Observation → Final Answer.
-
-- Evals & Observability from Day 1
-
-- Utilize tools: Effective tools have Agent Context, diverse workflows, intuitive problem solving, and undergo real-world tests.
-
-- Quick win techniques: Prompt Caching -> Context Compaction -> Tool Consolidation -> Parallel tool calling.
-
-# Multi-Agent vs Multi Session: Solving Single-Agent Bottlenecks
-
-Single-Agent systems, which handle all tasks monolithically, face issues like context isolation (100k+ tokens), sequential processing, and multi-batch problems. This leads to two patterns for distributed orchestration: Multi-Agent and Multi-Session.
-
-# Agent Coordination Models
-
- | Feature | Network (Peer-to-Peer) | Supervisor |
+| Feature | Network (Peer-to-Peer) | Supervisor |
 | :--- | :--- | :--- |
-| **Structure** | Agents communicate directly with each other. | A central Supervisor delegates tasks to specialized Worker agents. |
-| **Pros** | * Flexible communication. * Good fault tolerance. * Easier to switch from single-agent to multi-agent modes. | * Clear task delegation. * Central coordination. * Modular and scalable. |
-| **Cons** | * Complex debugging. * Ownership ambiguity. | * Bottleneck risk. * Cannot switch to single-agent mode. |
+| **Structure** | Agents communicate directly with one another. | A central Supervisor delegates tasks to specialized Worker agents. |
+| **Pros** | * Flexible communication.<br>* High fault tolerance.<br>* Easier transition from single-agent modes. | * Clear task delegation.<br>* Centralized coordination.<br>* Modular and scalable architecture. |
+| **Cons** | * Complex debugging.<br>* Ambiguity in ownership. | * Potential bottleneck risk.<br>* Inflexible switching to single-agent mode. |
 
-# Supervisor Variants: Three Approaches
-| Approach | Group Chat-based Supervisor | Supervisor as Tool (Subagents) | Hierarchical |
-| :--- | :--- | :--- | :--- |
-| **Notes** | Collaborative context, simple coordination, **Best for small teams**. **CloudThinker uses this.** | Fine-grained control, less worker autonomy, no direct user access. | Scales to large organizations, multiple supervision layers, more complex setup. |
+**Supervisor Variants:**
+1.  **Group Chat-based:** Collaborative context, simple coordination. *Used by CloudThinker.*
+2.  **Supervisor as Tool (Subagents):** Fine-grained control, less worker autonomy.
+3.  **Hierarchical:** Multi-layer supervision, scalable for large organizations.
 
-# Single-Agent and Multi-Agent in a Unified Architecture:
+#### Solving the 100:1 Agentic Cost Problem
+Agentic Architectures face a "Context Explosion" where the Input/Output token ratio can reach 100:1 (compared to 3:1 for chatbots). To combat this, four "Quick-win" techniques were presented, offering 80–95% cost savings and 3–5x latency reduction:
 
-- Unified architecture that dynamically routes tasks to the appropriate agents: Uses a Supervisor for multi-agent coordination and retry.
+1.  **Prompt Caching:**
+    * *Goal:* 70–90% cost reduction.
+    * *Method:* A Three-Tier Architecture where System Prompt and Conversation History are cached, while the current turn remains dynamic.
+2.  **Context Compaction:**
+    * *Goal:* 80% summarization cost reduction.
+    * *Method:* Cache-Preserving Summarization appends instructions at the payload level to summarize old messages without breaking cache keys.
+3.  **Tool Consolidation:**
+    * *Goal:* 20% reduction in token count and hallucinations.
+    * *Method:* Consolidating CRUD operations into single interfaces and using **Just-In-Time Schemas** to fetch documentation only when required.
+4.  **Parallel Tool Calling:**
+    * *Goal:* 30–40% reduction in round trips.
+    * *Method:* Providing explicit instructions to the LLM to parallelize tool calls and reasoning steps.
 
-- Task routing is determined by complexity and agent capability:
-    + Simple requests are sent directly to specialists.
-    + Complex tasks requiring coordination are transferred to the Supervisor.
-    + Simple tasks that an agent can handle alone are managed by that agent.
-    + Simple tasks that require collaboration are handled via a Group Chat.
-    + A default specialist agent handles requests when no specific agent is mentioned.
+#### Cross-Region Inference
+To avoid rate limits caused by high-volume tool calls (50–100 per task), workloads are automatically routed across global regions (US, EU, APAC). This eliminates single points of failure and provides a global profile for near-zero latency.
 
-# Solving the 100:1 Agentic Cost Problem
-
-Agentic Architectures face a "Context Explosion" where the Input/Output token ratio can be 100:1, compared to roughly 3:1 for chatbots. Input costs dominate due to 50–100 tool calls per task, compounding context degradation and latency.
-
-=> Four Quick-win Techniques: combined savings of 80–95% and a 3–5x latency reduction:
-
-- Prompt Caching:
-
-    + Goal: Achieves 70–90% cost reduction and 95%+ cache hit rates.
-
-    + Method: Uses a Three-Tier Architecture where the System Prompt (Tier 1) and Conversation History (Tier 2) are cached, while the current turn (Tier 3) is not, preserving turn-by-turn adaptability.
-
-- Context Compaction:
-
-    + Goal: Delivers 80% summarization cost reduction and maintains longer sessions.
-
-    + Method: Cache-Preserving Summarization appends summarization instructions at the payload level to preserve cache keys, summarizing old messages to preserve context without hitting limits.
-
-- Tool Consolidation:
-
-    + Goal: 20% reduction in token count and hallucination, leading to a faster decision time.
-
-    + Tool Pollution Problem: Too many tool definitions (e.g., 50) flood the context window.
-
-    + Method: Consolidates CRUD operations into single interfaces with command-based parameters, using Just-In-Time Schemas to fetch documentation only when needed.
-
-- Parallel Tool Calling:
-
-    + Goal: 30–40% reduction in power round trips and a 3–5x latency reduction.
-
-    + Method: Uses explicit instruction to parallelize tool calls and reasoning steps, which is necessary because modern LLMs can parallelize but won't do so without explicit guidance.
-
-# Cross-Region Inference
-
-- Problem: Single-region deployments can hit rate limits due to 50–100 tool calls per task, creating a single point of failure.
-
-=> Solution: Automatically routes workloads across regions (US, EU, APAC) to eliminate rate limit bottlenecks and provide a global profile for near-zero latency and improved throughput.
-
-# The best multi-agent system self-realizes when NOT to use multiple agents.
+> **Key Insight:** The best multi-agent system self-realizes when *NOT* to use multiple agents.
 
 ## CloudThinker Hack: Hands-On Workshop
 
-- Organizers provide attendees with CloudThinker instructions and Free Standard Plan Code to use for analyzing AWS Accounts.
+The organizers provided attendees with access to CloudThinker instructions and a Free Standard Plan Code to analyze their personal AWS Accounts.
 
-### Event Experience
+## Event Experience
 
-- The event was highly informative, strengthening our understanding of Amazon Bedrock and introducing us to Diaflow and CloudThinker—two incredibly useful AI Agent tools.
+This event was highly informative, significantly strengthening our understanding of Amazon Bedrock and introducing us to powerful tools like Diaflow and CloudThinker.
 
-- Participation in CloudThinker Hack: Hands-On Workshop: We used CloudThinker to analyze our AWS Account's infrastructure. It successfully identified an abnormally high volume of S3 Bucket GET requests (3 million in 2 weeks) and resolved the issue by recommending the use of Data Firehose to consolidate logs before saving.
-
-=> Our team was awarded a prize for effectively utilizing CloudThinker to analyze our problem: A CloudThinker T-Shirt and a CloudThinker Keychain.
+**Success Story:**
+During the *CloudThinker Hack* workshop, our team utilized the tool to analyze our AWS Account's infrastructure.
+- **The Finding:** CloudThinker successfully identified an abnormally high volume of S3 Bucket GET requests (over 3 million requests in a 2-week period).
+- **The Solution:** The agent recommended using **Amazon Data Firehose** to consolidate logs before saving them to S3, rather than writing individual small files.
+- **The Result:** Our team was awarded a prize for effectively utilizing CloudThinker to diagnose and resolve this issue. We received a CloudThinker T-Shirt and Keychain.
 
 #### Some event photos
 ![Picture of all Attendees](/images/4-Event/Event7AllAttendee.jpg)
 _Picture of all attendees_
 
 ![Recieving Prize From CloudThinker1](/images/4-Event/CloudThinkerPrize1.jpg)
-_Recieving Prize From CloudThinker_
+_Receiving Prize From CloudThinker_
 
 ![Recieving Prize From CloudThinker2](/images/4-Event/CloudThinkerPrize2.jpg)
-_Recieving Prize From CloudThinker_
+_Receiving Prize From CloudThinker_

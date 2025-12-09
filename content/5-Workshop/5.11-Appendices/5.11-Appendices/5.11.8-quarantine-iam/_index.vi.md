@@ -1,37 +1,56 @@
 ---
-title : "Dọn dẹp tài nguyên"
+title : "Mã Quarantine IAM"
 date: "2000-01-01"
-weight : 6
+weight : 08
 chapter : false
-pre : " <b> 5.6. </b> "
+pre : " <b> 5.11.8. </b> "
 ---
+```python
 
-#### Dọn dẹp tài nguyên
+import json
+import boto3
+import os
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+QUARANTINE_POLICY_ARN = os.environ.get("QUARANTINE_POLICY_ARN")
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+def lambda_handler(event, context):
+    print("=== EVENT RECEIVED ===")
+    print(json.dumps(event, indent=2))
+    
+    try:
+        finding = event.get('detail', {})
+        user_name = (
+            finding.get('resource', {})
+                    .get('accessKeyDetails', {})
+                    .get('userName')
+        )
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+        if not user_name:
+            print("[WARNING] No IAM user found in this finding. Skipping.")
+            return {"status": "no_user"}
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+        print(f"[ACTION] Quarantining IAM User '{user_name}'...")
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+        iam = boto3.client('iam')
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
+        # Kiểm tra nếu policy đã được gán (Check if policy is already attached)
+        attached_policies = iam.list_attached_user_policies(UserName=user_name)['AttachedPolicies']
+        policy_arns = [p['PolicyArn'] for p in attached_policies]
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+        if QUARANTINE_POLICY_ARN in policy_arns:
+            print(f"[INFO] Policy {QUARANTINE_POLICY_ARN} is already attached to user {user_name}.")
+        else:
+            iam.attach_user_policy(
+                UserName=user_name,
+                PolicyArn=QUARANTINE_POLICY_ARN
+            )
+            print(f"[SUCCESS] Policy attached. User {user_name} is now quarantined.")
+        
+    except Exception as e:
+        print(f"[ERROR] Failed to quarantine user: {str(e)}")
+        raise e
 
-5. Xóa các S3 bucket
+    return {"status": "processed", "action": "iam_quarantined"}
 
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+```

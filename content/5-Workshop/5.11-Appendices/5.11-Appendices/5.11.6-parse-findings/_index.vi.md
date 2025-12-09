@@ -1,37 +1,48 @@
 ---
-title : "Dọn dẹp tài nguyên"
+title : "Mã Parse Findings"
 date: "2000-01-01"
-weight : 6
+weight : 06
 chapter : false
-pre : " <b> 5.6. </b> "
+pre : " <b> 5.11.6. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+```python
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+import json
+import logging
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+def lambda_handler(event, context):
+    instance_ids = []
+    
+    detail = event.get('detail', {})
+    
+    region = event.get('region') or detail.get('region') or 'ap-southeast-1'
+    
+    instance_id_primary = detail.get('resource', {}).get('instanceDetails', {}).get('instanceId')
+    if instance_id_primary:
+        instance_ids.append(instance_id_primary)
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+    # --- 2. Extract from the older/secondary 'resources' array structure ---
+    # --- 2. Trích xuất từ cấu trúc mảng 'resources' cũ/phụ ---
+    for r in detail.get("resources", []):
+        if r.get("type") == "AwsEc2Instance":
+            id_from_details = r.get('details', {}).get('instanceId')
+            
+            if id_from_details:
+                instance_ids.append(id_from_details)
+            else:
+                arn_id = r.get('id')
+                if arn_id and arn_id.startswith('arn:aws:ec2:'):
+                    instance_ids.append(arn_id.split('/')[-1])
+    
+    unique_instance_ids = list(set([id for id in instance_ids if id]))
+    
+    return {
+        "InstanceIds": unique_instance_ids, 
+        "Region": region
+    }
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
-
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
-
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
-
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
-
-5. Xóa các S3 bucket
-
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+```

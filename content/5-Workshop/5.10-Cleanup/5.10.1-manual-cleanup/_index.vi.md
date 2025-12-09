@@ -1,37 +1,133 @@
 ---
-title : "Dọn dẹp tài nguyên"
+title : "Dọn dẹp thủ công"
 date: "2000-01-01"
-weight : 6
+weight : 10
 chapter : false
-pre : " <b> 5.6. </b> "
+pre : " <b> 5.10.1 </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+## Clean up (Thiết lập cơ sở hạ tầng thủ công)
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+### Giai đoạn 1: Dọn dẹp Automation và Monitoring
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+Mục tiêu ở đây là **dừng tất cả các tiến trình đang hoạt động** và xóa các tài nguyên monitoring và automation cốt lõi (EventBridge, Step Functions, SNS, GuardDuty, Flow Logs, CloudTrail).
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+#### 1. Xóa Incident Response Automation
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+1.1 **Xóa EventBridge Rule**
+* Vào **EventBridge Console** → **Rules**.
+* Chọn rule: **`IncidentResponseAlert`**.
+* Nhấn **"Delete"**.
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+1.2 **Xóa Step Functions State Machine**
+* Vào **Step Functions Console** → **State Machines**.
+* Chọn State Machine: **`IncidentResponseStepFunctions`**.
+* Nhấn **"Delete"**.
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+1.3 **Xóa SNS Topic và Subscription**
+* Vào **SNS Console** → **Topics** → **`IncidentResponseAlerts`**.
+* Đầu tiên, xóa subscription liên kết với **`ir-alert-dispatch`**.
+* Sau đó, xóa chính topic bằng cách nhấn **"Delete topic"**.
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
+1.4 **Xóa GuardDuty Detector**
+* Vào **GuardDuty Console** → **Settings** → **General**.
+* Nhấn **"Suspend"** để dừng xử lý, sau đó nhấn **"Disable GuardDuty"** (hoặc **"Delete detector"**).
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+1.5 **Vô hiệu hóa VPC Flow Logs**
+* Vào **VPC Console** → **VPC Flow Logs**.
+* Chọn flow log đã tạo (liên kết với `YOUR_VPC_ID`).
+* Nhấn **"Delete flow log"**.
 
-5. Xóa các S3 bucket
+1.6 **Xóa CloudTrail Trail**
+* Vào **CloudTrail Console** → **Trails**.
+* Chọn trail: **`incident-responses-cloudtrail-ACCOUNT_ID-REGION`**.
+* Nhấn **"Delete"**.
 
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+---
+
+### Giai đoạn 2: Dọn dẹp Lambda và Compute
+
+#### 2. Xóa tất cả Lambda Functions (9 Functions)
+
+Vào **Lambda Console** và xóa các functions sau:
+
+* `incident-response-cloudtrail-etl`
+* `incident-response-guardduty-etl`
+* `cloudwatch-etl-lambda`
+* `cloudwatch-eni-etl-lambda`
+* `cloudwatch-export-lambda`
+* `ir-parse-findings-lambda`
+* `ir-isolate-ec2-lambda`
+* `ir-quarantine-iam-lambda`
+* `ir-alert-dispatch`
+
+#### 3. Xóa Isolation Security Group
+
+* Vào **EC2 Console** → **Security Groups**.
+* Tìm và chọn Security Group: **`IR-Isolation-SG`** (sử dụng ID `sg-XXXXXXX`).
+* Nhấn **"Delete security group"**.
+
+#### 4. Xóa CloudWatch Log Groups
+
+Vào **CloudWatch Console** → **Log Groups** và xóa:
+
+* Centralized log group: **`/aws/incident-response/centralized-logs`**.
+* Bất kỳ **Lambda log groups** nào liên quan đến 9 functions đã xóa (ví dụ: `/aws/lambda/ir-parse-findings-lambda`).
+
+---
+
+### Giai đoạn 3: Dọn dẹp Processing và Data Lake
+
+#### 5. Xóa Kinesis Data Firehose Streams
+
+Vào **Kinesis Console** → **Delivery Streams** và xóa:
+
+* `cloudtrail-firehose-stream`
+* `vpc-dns-firehose-stream`
+* `vpc-flow-firehose-stream`
+
+#### 6. Xóa AWS Glue Tables và Database
+
+6.1 **Xóa Glue Tables**
+* Vào **Glue Console** → **Tables**.
+* Chọn và xóa: **`security_logs.processed_cloudtrail`**, **`security_logs.processed_guardduty`**, **`security_logs.vpc_logs`**, và **`security_logs.eni_flow_logs`**.
+
+6.2 **Xóa Glue Database**
+* Vào **Glue Console** → **Databases**.
+* Chọn database: **`security_logs`** và nhấn **"Delete"**.
+
+#### 7. Xóa IAM Roles và Policies
+
+7.1 **Xóa IAM Policies**
+* Vào **IAM Console** → **Policies**.
+* Xóa custom managed policy: **`IrQuarantineIAMPolicy`**.
+* *Lưu ý: Inline policies được tạo trong quá trình cài đặt sẽ tự động bị xóa khi role tương ứng bị xóa.*
+
+7.2 **Xóa IAM Roles**
+* Vào **IAM Console** → **Roles**.
+* Xóa 17 roles sau:
+    * **Lambda Execution Roles**: `CloudTrailETLLambdaServiceRole`, `GuardDutyETLLambdaServiceRole`, `CloudWatchETLLambdaServiceRole`, `CloudWatchENIETLLambdaServiceRole`, `CloudWatchExportLambdaServiceRole`, `ParseFindingsLambdaServiceRole`, `IsolateEC2LambdaServiceRole`, `QuarantineIAMLambdaServiceRole`, `AlertDispatchLambdaServiceRole`.
+    * **Service Roles**: `CloudTrailFirehoseRole`, `CloudWatchFirehoseRole`, `StepFunctionsRole`, `IncidentResponseStepFunctionsEventRole`, `FlowLogsIAMRole`, `GlueCloudWatchRole`.
+
+---
+
+### Giai đoạn 4: Dọn dẹp S3 Bucket (Xóa dữ liệu)
+
+#### 8. Làm trống và Xóa S3 Buckets
+
+Đây là **bước cuối cùng** để đảm bảo tất cả các khoản phí lưu trữ được dừng lại.
+
+| Bucket Name | Mục đích |
+| :--- | :--- |
+| **`incident-response-log-list-bucket-ACCOUNT_ID-REGION`** | Nguồn Log Chính (CloudTrail/GuardDuty/Exported CW) |
+| **`processed-cloudtrail-logs-ACCOUNT_ID-REGION`** | Firehose Destination cho CloudTrail logs |
+| **`processed-cloudwatch-logs-ACCOUNT_ID-REGION`** | Firehose Destination cho VPC DNS/Flow logs |
+| **`processed-guardduty-findings-ACCOUNT_ID-REGION`** | ETL Destination cho GuardDuty logs |
+| **`athena-query-results-ACCOUNT_ID-REGION`** | Lưu trữ kết quả truy vấn Athena |
+
+1.  Vào **S3 Console**.
+2.  Đối với **mỗi bucket trong 5 buckets**:
+    * Nhấn vào tên bucket.
+    * Vào tab **"Objects"**.
+    * Nhấn **"Empty"** để xóa tất cả dữ liệu. Bạn phải xác nhận việc xóa vĩnh viễn bằng cách gõ `permanently delete`.
+    * Quay lại danh sách S3 bucket, chọn bucket, và nhấn **"Delete"**.

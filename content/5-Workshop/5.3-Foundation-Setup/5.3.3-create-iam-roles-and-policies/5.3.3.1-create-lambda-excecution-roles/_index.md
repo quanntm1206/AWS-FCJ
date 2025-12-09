@@ -20,8 +20,6 @@ pre : " <b> 5.3.3.1. </b> "
 
       - In the left sidebar, click **"Roles"**
 
-    > [Screenshot: IAM Console with Roles menu item]
-
 3.  **Click "Create role"**
 
     > [Screenshot: IAM Roles page with Create role button]

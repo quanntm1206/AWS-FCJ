@@ -27,9 +27,6 @@ In this section, you will create 5 S3 buckets that serve as the foundation for t
    > [Screenshot: AWS S3 Console Homepage]
 
 2. **Click on "Create bucket"**
-
-   > [Screenshot: Create Bucket Button]
-
 3. **General configuration**:
    - **Bucket name**: Enter `incident-response-log-list-bucket-ACCOUNT_ID-REGION`
      - Example: `incident-response-log-list-bucket-123456789012-us-east-1`
@@ -39,8 +36,6 @@ In this section, you will create 5 S3 buckets that serve as the foundation for t
 
 4. **Object Ownership**:
    - Keep default: **ACLs disabled (recommended)**
-
-   > [Screenshot: S3 Bucket Configuration - Object Ownership]
 
 5. **Block Public Access settings for this bucket**:
    - Check **"Block all public access"**
@@ -71,8 +66,6 @@ In this section, you will create 5 S3 buckets that serve as the foundation for t
    - Keep all defaults
 
 10. **Click "Create bucket"**
-
-    > [Screenshot: Create bucket button at bottom of page]
 
 11. **Verify bucket creation**:
     - You should see a success message

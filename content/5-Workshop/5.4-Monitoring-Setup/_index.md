@@ -11,31 +11,31 @@ This Monitoring Setup phase activates and configures the three core log sources 
 
 ## Create CloudWatch Log Group
 
-1.  **Open CloudWatch Console** → **Log groups** → **Create log group**
-
+1.  **Open CloudWatch Console** → **Log Management** → **Create log group**
+    > [Screenshot: CloudWatch log gr]
 2.  **Configure**:
 
       - **Log group name**: `/aws/incident-response/centralized-logs`
       - **Retention**: 90 days
       - **KMS key**: None
-
+    > [Screenshot: CloudWatch log gr config]
 3.  **Click "Create"**
-
 -----
 
 ## Enable AWS CloudTrail
 
-1.  **Open CloudTrail Console** → **Create trail**
+1.  **Open CloudTrail Console** → **Trail** → **Create trail**
 
 2.  **Trail attributes**:
 
       - **Trail name**: `incident-responses-cloudtrail-ACCOUNT_ID-REGION`
       - **Storage location**: Use existing S3 bucket
-      - **S3 bucket**: `incident-response-log-list-bucket-ACCOUNT_ID-REGION`
+      - **S3 bucket**: Choose your `incident-response-log-list-bucket-ACCOUNT_ID-REGION`
       - **Log file validation**: Enabled
+      - Click next
 
 3.  **Choose log events**:
-
+      - **Events** Choose all
       - **Management events**: All (Read + Write)
       - **Data events**: S3 - Log all events
 

@@ -52,8 +52,7 @@ This Monitoring Setup phase activates and configures the three core log sources 
           "arn:aws:s3:::athena-query-results-ACCOUNT_ID-REGION/",
           "arn:aws:s3:::processed-cloudwatch-logs-ACCOUNT_ID-REGION/"
 
-
-5.  **Create trail**
+5.  **Save change**
 
 -----
 
@@ -94,25 +93,18 @@ This Monitoring Setup phase activates and configures the three core log sources 
 
 1.  **Open the Amazon Route 53 Console**.
    
-2.  In the left navigation pane, select **Resolver** -> **Query logging**.
+2.  In the left navigation pane, select **VPC Resolver** -> **Query logging**.
 
 3.  Click **"Configure query logging"**.
 
 4.  **Configure**:
 
     * **Name**: Enter a descriptive name, e.g., `IR-DNS-Query-Log-Config`.
+    **Destination for query logs**: CloudWatch Logs log group
     * **Log group**: Select **"Existing log group"** and choose:
         * **`/aws/incident-response/centralized-logs`**
 
-5.  Click **"Next"**.
-
-6.  **VPCs to associate with**:
-    * Select the **AWS Region** where your VPC resides.
-    * In the **VPCs** section, locate and check the box next to your target VPC ID (the one noted as `YOUR_VPC_ID` in the prerequisites).
-
-7.  Click **"Next"** to review the configuration.
-
-8.  Click **"Submit"**.
+5.  Click **"Configure query logging"**.
 
 -----
 

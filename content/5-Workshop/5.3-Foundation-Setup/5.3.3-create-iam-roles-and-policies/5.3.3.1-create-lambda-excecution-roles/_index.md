@@ -14,7 +14,7 @@ pre : " <b> 5.3.3.1. </b> "
       - Navigate to https://console.aws.amazon.com/iam/
       - Or: AWS Management Console → Search for "IAM" → Click "IAM"
 
-    > [Screenshot: IAM Console Dashboard]
+![alt text](</images/5-Workshop/Workshop pic/11 iam console 5.3.3.1.png>)
 
 2.  **Navigate to Roles**:
 
@@ -22,7 +22,7 @@ pre : " <b> 5.3.3.1. </b> "
 
 3.  **Click "Create role"**
 
-    > [Screenshot: IAM Roles page with Create role button]
+![alt text](</images/5-Workshop/Workshop pic/12 create role.png>)
 
 4.  **Select trusted entity**:
 
@@ -30,7 +30,7 @@ pre : " <b> 5.3.3.1. </b> "
       - **Use case**: Select **"Lambda"**
       - Click **"Next"**
 
-    > [Screenshot: IAM Create role - Select trusted entity]
+![alt text](</images/5-Workshop/Workshop pic/13 create role setting.png>)
 
 5.  **Add permissions**:
 
@@ -38,7 +38,7 @@ pre : " <b> 5.3.3.1. </b> "
       - Check the box next to **"AWSLambdaBasicExecutionRole"**
       - Click **"Next"**
 
-    > [Screenshot: IAM Create role - Add permissions]
+![alt text](</images/5-Workshop/Workshop pic/14 add permission.png>)
 
 6.  **Name, review, and create**:
 
@@ -46,7 +46,7 @@ pre : " <b> 5.3.3.1. </b> "
       - **Description**: Enter `Execution role for CloudTrail ETL Lambda function`
       - Click **"Create role"**
 
-    > [Screenshot: IAM Create role - Name and review]
+![alt text](</images/5-Workshop/Workshop pic/15 Name, review, and create.png>)
 
 7.  **Add inline policy**:
 
@@ -54,7 +54,7 @@ pre : " <b> 5.3.3.1. </b> "
       - Click on the **"Permissions"** tab
       - Click **"Add permissions"** → **"Create inline policy"**
 
-    > [Screenshot: IAM Role permissions tab with Add permissions button]
+![alt text](</images/5-Workshop/Workshop pic/16 Add inline policy.png>)
 
 8.  **Create inline policy**:
 
@@ -84,7 +84,7 @@ pre : " <b> 5.3.3.1. </b> "
 }
 ```
 
-> [Screenshot: IAM Create policy - JSON editor]
+![alt text](</images/5-Workshop/Workshop pic/17 Create inline policy .png>)
 
 9.  **Click "Next"**
 
@@ -93,14 +93,11 @@ pre : " <b> 5.3.3.1. </b> "
       - **Policy name**: Enter `CloudTrailETLPolicy`
       - Click **"Create policy"**
 
-    > [Screenshot: IAM Create policy - Review and create]
-
 11. **Verify role creation**:
 
       - You should see the role with both managed and inline policies attached
 
-    > [Screenshot: IAM Role showing AWSLambdaBasicExecutionRole and CloudTrailETLPolicy]
-
+![alt text](</images/5-Workshop/Workshop pic/19 Verify role creation_.png>)
 #### Create Remaining Lambda Roles
 
 **Follow the same process for each role below** (steps 3-11):

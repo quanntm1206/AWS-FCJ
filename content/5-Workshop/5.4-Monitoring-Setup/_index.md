@@ -12,20 +12,19 @@ This Monitoring Setup phase activates and configures the three core log sources 
 ## Create CloudWatch Log Group
 
 1.  **Open CloudWatch Console** → **Log Management** → **Create log group**
-    > [Screenshot: CloudWatch log gr]
+![alt text](</images/5-Workshop/Workshop pic/21 Open CloudWatch Console → Log groups → Create log group 5.4.png>)
 2.  **Configure**:
 
       - **Log group name**: `/aws/incident-response/centralized-logs`
       - **Retention**: 90 days
       - **KMS key**: None
-    > [Screenshot: CloudWatch log gr config]
 3.  **Click "Create"**
 -----
 
 ## Enable AWS CloudTrail
 
 1.  **Open CloudTrail Console** → **Trail** → **Create trail**
-
+![alt text](</images/5-Workshop/Workshop pic/22 Open CloudTrail Console 5.4.png>)
 2.  **Trail attributes**:
 
       - **Trail name**: `incident-responses-cloudtrail-ACCOUNT_ID-REGION`
@@ -40,17 +39,22 @@ This Monitoring Setup phase activates and configures the three core log sources 
       - **Management events**: All (Read + Write)
       - **Data events**: S3 - Log all events
       - Click next till step 4 and **Create Trail**
-4.  **Advanced event selectors: Exlcude log buckets**:
-      - **Click the Trail then scroll down to Data Event**
-    > [Screenshot: CloudTrail log gr config]
-      - Setup like picture with the under format:
-    > [Screenshot: CloudTrail septup huhu]
 
-          "arn:aws:s3:::incident-response-log-list-bucket-ACCOUNT_ID-REGION/",
-          "arn:aws:s3:::processed-guardduty-findings-ACCOUNT_ID-REGION/",
-          "arn:aws:s3:::processed-cloudtrail-logs-ACCOUNT_ID-REGION/",
-          "arn:aws:s3:::athena-query-results-ACCOUNT_ID-REGION/",
-          "arn:aws:s3:::processed-cloudwatch-logs-ACCOUNT_ID-REGION/"
+4.  **Advanced event selectors: Exlcude log buckets**:
+      - **Click the Trail then scroll down to Data Event and click Edit**
+![alt text](</images/5-Workshop/Workshop pic/23 Advanced event selectors Exlcude log buckets.png>)
+      - **Setup like picture with the under format**:
+![alt text](</images/5-Workshop/Workshop pic/24 [Screenshot CloudTrail septup huhu] .png>)
+
+-`arn:aws:s3:::incident-response-log-list-bucket-ACCOUNT_ID-REGION/`
+
+-`arn:aws:s3:::processed-guardduty-findings-ACCOUNT_ID-REGION/` 
+
+-`arn:aws:s3:::processed-cloudtrail-logs-ACCOUNT_ID-REGION` 
+
+-`arn:aws:s3:::athena-query-results-ACCOUNT_ID-REGION/`   
+
+-`arn:aws:s3:::processed-cloudwatch-logs-ACCOUNT_ID-REGION/`
 
 5.  **Save change**
 

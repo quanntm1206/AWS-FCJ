@@ -29,4 +29,4 @@ pre: " <b> 1. </b> "
 
 **Tuần 12:** [Chuyển đổi sang Real-time Streaming, Bảo mật mạng & Nghiên cứu NLP](1.12-week12/)
 
-**Tuần 13:** [Tối ưu hóa phân tích nâng cao, Agentic AI & Bảo vệ đồ án tốt nghiệp](1.13-week13/)
+**Tuần 13:** [Tối ưu hóa phân tích nâng cao, Agentic AI & Dự án tại FCJ](1.13-week13/)

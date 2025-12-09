@@ -1,56 +1,56 @@
 ---
-title: "Dân chủ hóa nguồn lực lượng tử"
-date: "2025-08-16"
-weight: 01
+title: "Democratizing Quantum Resources"
+date: "2025-09-16"
+weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
 
-# Dân chủ hóa nguồn lực lượng tử: Đại học Michigan và AWS
+# Democratizing Quantum Resources: University of Michigan and AWS
 
-Đại học Michigan đang tạo ra bước đột phá trong việc tiếp cận công nghệ lượng tử thông qua sự hợp tác đổi mới với Amazon Web Services (AWS). Dưới sự dẫn dắt của Tiến sĩ Zheshen Zhang, quan hệ đối tác này nhằm mục tiêu chuyển đổi nền tảng **QREAL** (Quantum Receiver Enhanced by Adaptive Learning) của trường, được Quỹ Khoa học Quốc gia (NSF) tài trợ, thành một bệ thử lượng tử có thể truy cập qua đám mây.
+The University of Michigan is breaking new ground in quantum technology accessibility through an innovative collaboration with **Amazon Web Services (AWS)**. Led by Dr. Zheshen Zhang, this partnership aims to transform the university’s **QREAL** (Quantum Receiver Enhanced by Adaptive Learning) platform—funded by the National Science Foundation (NSF)—into a cloud-accessible quantum testbed.
 
-> “Cộng đồng công nghệ lượng tử đang đối mặt với một thách thức lớn — tất cả các nguồn lực lượng tử đều bị phân tán và rời rạc,” Tiến sĩ Zhang giải thích. “Các nhóm nghiên cứu phát triển các đơn vị máy tính lượng tử, kết nối lượng tử, cảm biến biến đổi đang trải rộng trên toàn cầu. Việc thúc đẩy khoa học và công nghệ thông tin lượng tử đòi hỏi một khuôn khổ thống nhất, có khả năng kết nối những chức năng khác nhau này.”
+> “The quantum community faces a significant challenge—all quantum resources are spread out and fragmented,” explained Dr. Zhang. “Research groups developing quantum computer units, quantum interconnects, transduction sensors are scattered globally. Advancing quantum information science and technology requires a unified framework capable of connecting these different functionalities.”
 
-Giải pháp sử dụng công nghệ điện toán phi máy chủ của **AWS (AWS serverless)**, bao gồm **AWS Fargate** để điều phối container, **AWS Lambda** cho điện toán phi máy chủ, và **Amazon Relational Database Service (Amazon RDS)** để quản lý cơ sở dữ liệu. Thông qua các dịch vụ đám mây AWS này, người dùng có thể gửi lệnh từ xa nhằm cấu hình, kết nối và định tuyến thông tin giữa các thành phần phần cứng lượng tử khác nhau.
-
----
-
-## Chuyển đổi giáo dục lượng tử
-
-Dự án giải quyết hai thách thức then chốt trong giáo dục lượng tử:
-
-1.  **Tiếp cận khái niệm:** Dự án giúp sinh viên tiếp cận các khái niệm lượng tử đi ngược lại trực giác thông thường thông qua các minh họa tương tác sử dụng dữ liệu thực nghiệm.
-    > “Không giống như các ngành học truyền thống, các khái niệm lượng tử như chồng chập và vướng víu có tính phi trực quan cao,” Tiến sĩ Zhang lưu ý. “Các minh họa của chúng tôi trực quan hóa những khái niệm này bằng cách sử dụng dữ liệu đã được xử lý trước từ các thí nghiệm lượng tử thực tế.”
-
-2.  **Thu hẹp khoảng cách lý thuyết - thực hành:** Giáo dục lượng tử truyền thống thường tập trung mạnh vào các khái niệm lý thuyết, thường tách rời với thực tế thí nghiệm. Các phòng thí nghiệm ảo trong bệ thử cung cấp cho sinh viên trải nghiệm thực hành với các hệ thống lượng tử vật lý từ bất kỳ đâu.
+The solution uses **AWS serverless** technology, including **AWS Fargate** for container orchestration, **AWS Lambda** for serverless computing, and **Amazon Relational Database Service (Amazon RDS)** for database management. Through these AWS cloud services, users can remotely send instructions to configure, connect, and route information between different quantum hardware components.
 
 ---
 
-## Thúc đẩy nghiên cứu thông qua truy cập hợp nhất
+## Transforming quantum education
 
-Bệ thử giải quyết một thách thức cơ bản trong nghiên cứu lượng tử bằng cách tạo ra một mô hình **fabless** cho ngành công nghiệp lượng tử.
+The project addresses two critical challenges in quantum education:
 
-> “Hãy tưởng tượng ngành công nghiệp bán dẫn,” Tiến sĩ Zhang giải thích. “Các công ty như NVIDIA và AMD không vận hành các nhà máy đúc chip riêng của họ—họ thuê ngoài sản xuất cho các nhà máy đúc thương mại. Chúng tôi muốn phát triển một mô hình tương tự cho ngành công nghiệp lượng tử.”
+1.  **Grasping Concepts:** It helps students grasp counterintuitive quantum concepts through interactive demonstrations using real experimental data.
+    > “Unlike traditional disciplines, quantum concepts like superposition and entanglement are highly counterintuitive,” noted Dr. Zhang. “Our demos visualize these concepts using pre-processed data from actual quantum experiments.”
 
-Cách tiếp cận này cho phép các nhà nghiên cứu từ nhiều lĩnh vực khác nhau thúc đẩy sự đổi mới trong công nghệ lượng tử:
-
-* **Các nhà khoa học máy tính:** Có thể truy cập phần cứng lượng tử thực thay vì chỉ dựa vào mô phỏng (ví dụ: nhóm nghiên cứu của Tiến sĩ Jianqing Liu tại ĐH Bang Bắc Carolina nghiên cứu QOS trong định tuyến vướng víu).
-* **Các nhà vật lý lượng tử:** Có thể phát triển các mô-đun cảm biến mới bằng cách cấu hình các kết nối giữa những thiết bị khác nhau, chẳng hạn như các nguồn ánh sáng vướng víu và các đơn vị xử lý AI.
-* **Các kỹ sư:** Có thể tạo nguyên mẫu và xác thực các chức năng cơ bản trước khi chuyển sang giai đoạn tích hợp quy mô lớn và đóng gói cùng các đối tác công nghiệp.
-
-Bệ thử thu thập và tập hợp dữ liệu trong một thư viện thống nhất, sau đó được phổ biến đến cộng đồng nghiên cứu rộng lớn hơn. Cách tiếp cận hợp tác này giúp phá vỡ các rào cản giữa các ngành khác nhau—vật lý, khoa học máy tính, kỹ thuật điện, khoa học vật liệu và hóa học.
+2.  **Bridging Theory and Practice:** Traditional quantum education focuses heavily on theoretical concepts, often disconnected from experimental reality. The testbed’s virtual labs give students hands-on experience with physical quantum systems from anywhere.
 
 ---
 
-## Những cải tiến trong tương lai
+## Accelerating research through unified access
 
-Nhìn về tương lai, dự án sẽ được mở rộng để bổ sung thêm các nguồn tài nguyên lượng tử mới, chẳng hạn như **nguồn ánh sáng nén** (tương tự công nghệ trong LIGO). Nền tảng này cũng sẽ tích hợp hoàn toàn với **AWS Braket**, cung cấp quyền truy cập vào nhiều công nghệ lượng tử từ nhiều nhà cung cấp khác nhau, bao gồm các bộ mô phỏng mạch và các loại QPU khác nhau.
+The testbed addresses a fundamental challenge in quantum research by creating a **fabless model** for the quantum industry.
 
-> “Chúng tôi không chỉ đơn thuần bổ sung các mô-đun lượng tử độc lập,” Tiến sĩ Zhang cho biết. “Chúng tôi đang tiêu chuẩn hóa các mô-đun để mỗi thành phần mới đều có thể kết nối một cách tự nhiên với các thành phần hiện có trong bệ thử, tạo nên một hệ thống có khả năng tương tác và mở rộng.”
+> “Think of the semiconductor industry,” explains Dr. Zhang. “Companies like NVIDIA and AMD don’t run their own foundry facilities—they outsource manufacturing to commercial foundries. We want to develop something similar for the quantum industry.”
 
-Sự hợp tác với AWS có ý nghĩa chiến lược nhờ phạm vi phủ sóng toàn cầu và hạ tầng vững chắc. “Hạ tầng đám mây của AWS cung cấp các khả năng vượt trội về truy cập toàn cầu, quản lý dữ liệu và bảo mật—những chức năng thiết yếu cho một bệ thử bền vững,” Tiến sĩ Zhang nhấn mạnh.
+This approach enables researchers from diverse backgrounds to advance quantum innovation:
 
-Khi công nghệ lượng tử tiếp tục phát triển nhanh chóng, quan hệ đối tác này tạo nền tảng cho dân chủ hóa quyền truy cập tới các tài nguyên máy tính lượng tử, mô phỏng, cảm biến và kết nối.
+* **Computer scientists:** Can access physical quantum hardware instead of relying solely on simulations (e.g., Dr. Jianqing Liu’s team at NC State studying QOS for entanglement routing).
+* **Quantum physicists:** Can develop new sensing modules by configuring connections between different devices, such as entangled-light sources and AI processing units.
+* **Engineers:** Can prototype and validate fundamental functionalities before transitioning to larger-scale integration and packaging with industrial partners.
 
-_Nguồn: Chris Edwards, Guangyi (Leo) Li, Kailu Zhou, Rifkhan Anoor, Visuttha Manthamkarn, và Dr. Zheshen Zhang | 16/08/2025_
+The testbed collects and assembles data in a unified library, which is then disseminated to the broader research community. This collaborative approach helps break down barriers between different disciplines—physics, computer science, electrical engineering, materials science, and chemistry.
+
+---
+
+## Future developments
+
+Looking ahead, the project will expand to include new quantum resources, such as **squeeze-light sources** (technology similar to what’s used in LIGO). The platform will also fully integrate with **AWS Braket**, providing users access to various quantum technologies from multiple vendors, including circuit simulators and different types of QPUs.
+
+> “We’re not just adding stand-alone quantum modules,” said Dr. Zhang. “We’re standardizing them so each new module can inherently connect with existing ones in the testbed, creating an interoperable and expandable system.”
+
+The collaboration with AWS is strategic for its global reach and robust infrastructure. “AWS cloud offers unparalleled capabilities for worldwide access, data management, and security—essential functionalities for a sustainable testbed facility,” Dr. Zhang emphasized.
+
+As quantum technology continues to evolve rapidly, this partnership creates a foundation for democratizing access to quantum computing, simulation, sensing, and networking resources.
+
+_Source: Chris Edwards, Guangyi (Leo) Li, Kailu Zhou, Rifkhan Anoor, Visuttha Manthamkarn, and Dr. Zheshen Zhang | 16 SEP 2025_

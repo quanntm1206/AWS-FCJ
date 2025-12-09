@@ -1,103 +1,100 @@
 ---
-title: "MSK Replicator và MirrorMaker2"
-date: "2025-08-16"
-weight: 02
+title: "MSK Replicator vs MirrorMaker2"
+date: "2025-09-16"
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-# Amazon MSK Replicator và MirrorMaker2: Chiến lược sao chép Apache Kafka cho DR và Di chuyển
+# Amazon MSK Replicator and MirrorMaker2: Choosing the right replication strategy
 
-Khách hàng cần sao chép dữ liệu từ các cụm Apache Kafka của họ vì nhiều lý do khác nhau, chẳng hạn như yêu cầu tuân thủ quy định, di chuyển cụm và triển khai phục hồi thảm họa (DR). Tuy nhiên, chiến lược sao chép phù hợp có thể thay đổi tùy theo bối cảnh ứng dụng.
+Customers need to replicate data from their Apache Kafka clusters for a variety of reasons, such as compliance requirements, cluster migrations, and disaster recovery (DR) implementations. However, the right replication strategy can vary depending on the application context.
 
-Trong bài viết này, chúng tôi sẽ phân tích các yếu tố cần xem xét khi sử dụng **Amazon MSK Replicator** thay vì **MirrorMaker 2** của Apache Kafka, đồng thời giúp bạn lựa chọn giải pháp sao chép phù hợp với trường hợp sử dụng của mình.
-
----
-
-## Những thách thức trong việc lựa chọn chiến lược phục hồi thảm họa (DR)
-
-Khách hàng tạo ra kế hoạch duy trì hoạt động kinh doanh và chiến lược phục hồi thảm họa (DR) nhằm tối đa hóa khả năng chịu lỗi cho các ứng dụng của họ, bởi vì thời gian gián đoạn hoặc mất mát dữ liệu có thể dẫn đến mất doanh thu hoặc ngừng hoạt động.
-
-Đối với những khách hàng sử dụng Kafka như một dịch vụ phát trực tuyến và nhắn tin cốt lõi, việc lên kế hoạch DR cho hạ tầng Kafka là thiết yếu để đạt được các mục tiêu về **Thời gian Khôi phục (RTO)** và **Điểm Khôi phục (RPO)**.
-
-### Tính sẵn sàng của Amazon MSK
-* **Đa vùng khả dụng (Multi-AZ):** Amazon MSK phân phối các broker trên nhiều vùng khả dụng khác nhau trong một khu vực AWS.
-* **Sao chép nội cụm:** Hệ số nhân bản là 3 và giá trị `min-ISR` là 2, cùng với thiết lập producer `acks=all`, đảm bảo khả năng bảo vệ trước sự cố mất một broker hoặc mất một vùng khả dụng đơn lẻ.
-* **Express brokers:** Tăng cường khả năng phục hồi với lưu trữ trả theo mức sử dụng, tự động cấu hình tin cậy và phục hồi nhanh hơn.
-
-Tuy nhiên, nếu sự cố ảnh hưởng đến nhiều hơn một Availability Zone, bạn cần kiến trúc đa vùng (Multi-Region).
-
-### Sao lưu vào Amazon S3 so với Sao chép đa vùng
-Đối với các công ty có thể chịu được RTO dài hơn nhưng yêu cầu RPO thấp hơn, việc sao lưu dữ liệu vào **Amazon S3** (sử dụng Amazon MSK Connect) có thể là đủ. Tuy nhiên, phương pháp này có nhược điểm:
-* Quá trình khôi phục có thể mất nhiều thời gian tùy thuộc vào khối lượng dữ liệu.
-* Phức tạp trong việc xử lý offset nhóm tiêu dùng (consumer group offsets).
-
-Do đó, phần lớn các trường hợp sử dụng dữ liệu luồng đều dựa vào thiết lập các cụm **MSK đa vùng (multi-Region)** và cấu hình sao chép dữ liệu giữa các cụm để đảm bảo tính liên tục kinh doanh.
+In this post, we walk through the different considerations for using **Amazon MSK Replicator** over **Apache Kafka’s MirrorMaker 2**, and help you choose the right replication solution for your use case.
 
 ---
 
-## Lựa chọn giải pháp sao chép phù hợp: MSK Replicator so với MirrorMaker 2
+## Challenges with choosing DR strategies
 
-AWS khuyến nghị hai giải pháp chính để sao chép Kafka giữa các vùng (cross-Region):
+Customers create business continuity plans and DR strategies to maximize resiliency for their applications, because downtime or data loss can result in losing revenue or halting operations. For customers using Kafka, planning for DR is essential to meeting **Recovery Time Objective (RTO)** and **Recovery Point Objective (RPO)** goals.
 
-### 1. MSK Replicator: Ưu tiên cho sao chép cụm MSK trong cùng một tài khoản
-MSK Replicator là dịch vụ được quản lý hoàn toàn, không máy chủ (serverless), giúp sao chép dữ liệu giữa các cụm MSK ở các vùng khác nhau hoặc trong cùng một vùng.
+### Amazon MSK Availability Features
+* **Multi-AZ:** Amazon MSK provides high availability by distributing brokers across multiple Availability Zones.
+* **Intra-cluster replication:** A replication factor of 3 and `min-ISR` of 2, combined with `acks=all`, provides robust protection against single broker or single-AZ failures.
+* **Express brokers:** These offer pay-as-you-go storage and faster recovery times, increasing resilience.
 
-**Lợi ích:**
-* **Sao chép giữa các cụm MSK:** Hỗ trợ mô hình active-active và active-passive.
-* **Không quản lý hạ tầng:** Hoàn toàn không máy chủ, tự động mở rộng.
-* **Giám sát tích hợp:** Tích hợp chặt chẽ với Amazon CloudWatch.
-* **Tính khả dụng cao:** Khả năng chịu lỗi tích hợp vượt qua các Vùng Khả dụng.
+However, if an issue impacts an entire Region, a multi-Region architecture is required.
 
-### 2. MirrorMaker 2: Dành cho các kịch bản di cư, phức tạp và lai
-MirrorMaker 2 (MM2) là tiện ích tích hợp trong Kafka, sử dụng khung Kafka Connect, phù hợp cho các trường hợp đòi hỏi sự linh hoạt cao hoặc môi trường không phải Amazon MSK hoàn toàn.
+### S3 Backups vs. Multi-Region Replication
+For companies that can withstand a longer RTO but require a lower RPO, backing up data to **Amazon S3** (using Amazon MSK Connect) is a valid DR plan. However, this approach has challenges:
+* Restoration can take a long time depending on data volume.
+* Handling consumer group offsets is complex.
 
-**Khuyến nghị sử dụng khi:**
-* **Sao chép giữa các tài khoản:** Giữa các cụm MSK trong các tài khoản AWS khác nhau.
-* **Di chuyển sang Amazon MSK:** Từ on-premise, đám mây khác hoặc EC2 tự quản lý.
-* **Đám mây lai / Đa đám mây:** Kết nối Kafka tại cơ sở với Amazon MSK.
-* **Sử dụng xác thực mTLS hoặc SASL/SCRAM:** Khi không thể kích hoạt xác thực IAM (mặc dù MSK Replicator có hỗ trợ IAM kết hợp).
-* **Chính sách tùy chỉnh:** Yêu cầu nâng cao về đặt tên chủ đề hoặc biến đổi dữ liệu (SMT).
+Therefore, most streaming use cases rely on setting up MSK clusters in multiple Regions and configuring data replication between clusters to provide the required business resilience.
 
 ---
 
-## Tổng quan giải pháp MSK Replicator
+## Choosing the right replication solution: MSK Replicator vs MirrorMaker 2
 
-Sơ đồ sau minh họa kiến trúc sử dụng MSK Replicator cho mô hình phục hồi thảm họa:
+AWS recommends two primary solutions for cross-Region Kafka replication. Understanding when to use each is crucial.
 
-![alt text](/images/3-Blog/1.png)
+### 1. MSK Replicator: For most MSK cluster replications in the same account
+MSK Replicator is a fully managed, serverless Kafka replication service. It is the recommended solution for replicating data within the same AWS account.
 
-Chúng tôi tạo ra hai cụm MSK — một cụm chính tại vùng chính và một cụm dự phòng tại vùng phụ. MSK Replicator được triển khai ở vùng phụ nhằm sao chép các chủ đề, ACL, dữ liệu và offset nhóm tiêu dùng từ cụm chính.
+**Benefits:**
+* **Replication between MSK clusters:** Supports active-active or active-passive DR architectures.
+* **No infrastructure management:** Fully serverless with automatic scaling.
+* **Built-in monitoring:** Integrated with Amazon CloudWatch metrics and logs.
+* **Built-in high availability:** Offers fault tolerance across Availability Zones.
 
-* **Mô hình:** Sao chép một chiều cho DR (active-passive), nhưng có thể mở rộng cho active-active.
-* **Hoạt động:** Client kết nối với cụm chính và chuyển sang cụm phụ nếu xảy ra failover.
+### 2. MirrorMaker 2: For migrations and complex/hybrid scenarios
+MirrorMaker 2 (MM2) is a utility bundled with Kafka that uses the Kafka Connect framework. It remains the preferred solution for specific use cases requiring flexibility.
 
----
-
-## Giải pháp MirrorMaker 2
-
-Sơ đồ sau minh họa kiến trúc sử dụng MirrorMaker 2 cho kịch bản di chuyển:
-
-![alt text](/images/3-Blog/2.png)
-
-Chúng tôi tạo một cụm MSK tại vùng chính cùng với cụm Kafka hiện có tại cơ sở (hoặc trên đám mây khác/EC2).
-* **Mô hình:** Sao chép một chiều cho di cư cụm.
-* **Hoạt động:** Client tương tác với cụm tại cơ sở và dần được di cư sang tương tác với cụm MSK trên AWS.
-
-**Tài nguyên triển khai tự động (Amazon ECS với Fargate):**
-Thay vì cấu hình thủ công, nên sử dụng các mẫu Terraform và Docker có sẵn để triển khai MM2 trên Amazon ECS/Fargate với khả năng tự động mở rộng.
+**Recommended for:**
+* **Cross-account replication:** Replicating between MSK clusters in different AWS accounts.
+* **Migrations to Amazon MSK:** Moving from on-premises, other clouds, or self-managed EC2.
+* **Cross-cloud or hybrid cloud scenarios:** For DR or analytics across different environments.
+* **Using mTLS or SASL/SCRAM authentication:** When IAM authentication cannot be enabled.
+* **Custom replication policies:** Advanced topic naming or transformation requirements.
 
 ---
 
-## Kết luận
+## MSK Replicator solution overview
 
-Việc lựa chọn phụ thuộc vào yêu cầu cụ thể:
+The following diagram illustrates the architecture for using MSK Replicator for Disaster Recovery.
 
-| Giải pháp | Trường hợp sử dụng chính |
+
+
+We create two MSK clusters—one in the primary Region and a standby cluster in the secondary Region. MSK Replicator is deployed in the secondary region to replicate topics, ACLs, data, and consumer group offsets.
+* **Scenario:** Single-direction replication for active-passive DR (can be extended to active-active).
+* **Failover:** Kafka clients connect to the primary cluster and switch to the secondary upon failover.
+
+---
+
+## MirrorMaker2 solution overview
+
+The following diagram illustrates the architecture for using MirrorMaker 2 for Migration.
+
+
+
+We create an MSK cluster in the primary Region alongside an existing on-premises Kafka cluster (or self-managed/other cloud).
+* **Scenario:** Single-direction replication for cluster migration.
+* **Process:** Clients interact with the on-premises cluster and are migrated to run on AWS interacting with the MSK cluster.
+
+**Automated Deployment:**
+Rather than manual configuration, AWS recommends using automated deployment resources (Terraform, Docker images optimized for AWS) to deploy MirrorMaker 2 on **Amazon ECS with Fargate** for scalable, serverless container deployment.
+
+---
+
+## Conclusion
+
+Choosing the right replication solution depends on your specific requirements:
+
+| Solution | Primary Use Case |
 | :--- | :--- |
-| **Amazon MSK Replicator** | Sao chép MSK-sang-MSK trong cùng tài khoản, cần giải pháp quản lý hoàn toàn cho DR. |
-| **MirrorMaker 2** | Di chuyển sang MSK, môi trường lai, sao chép chéo tài khoản, hoặc cần chính sách sao chép tùy chỉnh phức tạp. |
+| **Amazon MSK Replicator** | Replicating from one MSK cluster to another within the same account; fully managed DR solution. |
+| **MirrorMaker 2** | Migrations to Amazon MSK, hybrid environments, cross-account replication, or complex custom policies. |
 
-Các phương pháp này cung cấp các tùy chọn để đảm bảo dự phòng dữ liệu, đáp ứng tuân thủ quy định và giảm thiểu công tác vận hành thông qua tự động hóa.
+These approaches provide customizable options to ensure data redundancy and business continuity, helping meet regulatory compliance while minimizing operational overhead.
 
-_Nguồn: Mazrim Mehrtens | 16/08/2025_
+_Source: Mazrim Mehrtens | 16 SEP 2025_

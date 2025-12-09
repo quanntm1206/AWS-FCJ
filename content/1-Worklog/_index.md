@@ -29,4 +29,4 @@ pre: " <b> 1. </b> "
 
 **Week 12:** [Real-time Streaming Transition, Network Security & NLP Research](1.12-week12/)
 
-**Week 13:** [Advanced Analytics Optimization, Agentic AI & Capstone Defense](1.13-week13/)
+**Week 13:** [Advanced Analytics Optimization, Agentic AI & Capstone](1.13-week13/)

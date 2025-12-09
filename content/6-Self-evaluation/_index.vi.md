@@ -1,40 +1,34 @@
 ---
-title: "Tự đánh giá"
-date: "2000-01-01"
+title: "Tự Đánh Giá"
+date: "2025-12-06"
 weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
+Trong suốt quá trình thực tập tại **Công ty Amazon Web Services Việt FRJ** từ ngày **08/09/2025** đến **9/12/2025**, tôi đã có cơ hội quý báu để trau dồi, cọ xát thực tế và vận dụng những kiến thức tích lũy từ giảng đường vào môi trường làm việc chuyên nghiệp.
+Tôi đã tham gia trực tiếp vào các **dự án Điện toán đám mây & DevOps**, với trọng tâm là **Phân tích Nhật ký Không máy chủ (Serverless Log Analytics)** và **Kiến trúc Đám mây Lai (Hybrid Cloud Architectures)**. Qua đó, tôi đã nâng cao đáng kể năng lực **triển khai các Dịch vụ Đám mây AWS (EC2, S3, Lambda, Athena), Giám sát Hệ thống (CloudWatch) và Tự động hóa Hạ tầng**.
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+Về tinh thần làm việc, tôi luôn nỗ lực hoàn thành công việc và tuân thủ nghiêm ngặt các quy định tại nơi làm việc. Tôi luôn duy trì **thái độ hòa nhã, tôn trọng** đối với mọi người và tích cực tương tác với đồng nghiệp để tối ưu hóa hiệu quả công việc. Tôi luôn ưu tiên việc tuân thủ thời gian làm việc tại văn phòng và hăng hái tham gia mọi hội thảo kỹ thuật của công ty để mở rộng vốn hiểu biết chuyên ngành.
 
-Trong suốt thời gian thực tập tại **[Tên công ty/tổ chức]** từ **[ngày bắt đầu]** đến **[ngày kết thúc]**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
-Tôi đã tham gia **[mô tả ngắn gọn dự án hoặc công việc chính]**, qua đó cải thiện kỹ năng **[liệt kê kỹ năng: lập trình, phân tích, viết báo cáo, giao tiếp…]**.  
+Để nhìn lại quá trình thực tập, tôi xin tự đánh giá bản thân dựa trên các tiêu chí sau:
 
-Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân thủ nội quy, và tích cực trao đổi với đồng nghiệp để nâng cao hiệu quả công việc.
+| STT | Tiêu chí | Mô tả | Tốt | Khá | Trung bình |
+| --- | --- | --- | --- | --- | --- |
+| 1 | **Kiến thức & Kỹ năng chuyên môn** | Am hiểu lĩnh vực, vận dụng kiến thức vào thực tiễn, thành thạo công cụ, chất lượng công việc | ☐ | ✅ | ☐ |
+| 2 | **Khả năng tiếp thu** | Khả năng lĩnh hội kiến thức mới và học hỏi nhanh chóng | ✅ | ☐ | ☐ |
+| 3 | **Tính chủ động** | Chủ động trong công việc, tìm kiếm nhiệm vụ và tích cực tham gia các hoạt động của công ty | ✅ | ☐ | ☐ |
+| 4 | **Tinh thần trách nhiệm** | Hoàn thành công việc đúng hạn và đảm bảo chất lượng | ✅ | ☐ | ☐ |
+| 5 | **Tính kỷ luật** | Tuân thủ lịch trình, quy định và quy trình làm việc | ✅ | ☐ | ☐ |
+| 6 | **Tư duy cầu tiến** | Sẵn sàng tiếp nhận phản hồi và hoàn thiện bản thân | ✅ | ☐ | ☐ |
+| 7 | **Giao tiếp** | Trình bày ý tưởng và báo cáo công việc rõ ràng, mạch lạc | ☐ | ✅ | ☐ |
+| 8 | **Làm việc nhóm** | Phối hợp hiệu quả với đồng nghiệp và tham gia vào các hoạt động nhóm | ✅ | ☐ | ☐ |
+| 9 | **Tác phong chuyên nghiệp** | Tôn trọng đồng nghiệp, đối tác và thể hiện **thái độ lịch thiệp** cùng văn hóa ứng xử doanh nghiệp | ✅ | ☐ | ☐ |
+| 10 | **Kỹ năng giải quyết vấn đề** | Nhận diện vấn đề, đề xuất giải pháp và thể hiện tính sáng tạo | ☐ | ✅ | ☐ |
+| 11 | **Đóng góp cho dự án/nhóm** | Hiệu quả công việc, đóng góp ý tưởng đổi mới, được tập thể ghi nhận | ☐ | ✅ | ☐ |
+| 12 | **Tổng quan** | Đánh giá chung về toàn bộ quá trình thực tập | ✅ | ☐ | ☐ |
 
-Để phản ánh một cách khách quan quá trình thực tập, tôi xin tự đánh giá bản thân dựa trên các tiêu chí dưới đây:
+### Những Điểm Cần Cải Thiện
 
-
-| STT | Tiêu chí                            | Mô tả                                                                                            | Tốt | Khá | Trung bình |
-| --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | --- | --- | ---------- |
-| 1   | **Kiến thức và kỹ năng chuyên môn** | Hiểu biết về ngành, áp dụng kiến thức vào thực tế, kỹ năng sử dụng công cụ, chất lượng công việc | ✅   | ☐   | ☐          |
-| 2   | **Khả năng học hỏi**                | Tiếp thu kiến thức mới, học hỏi nhanh                                                            | ☐   | ✅   | ☐          |
-| 3   | **Chủ động**                        | Tự tìm hiểu, nhận nhiệm vụ mà không chờ chỉ dẫn                                                  | ✅   | ☐   | ☐          |
-| 4   | **Tinh thần trách nhiệm**           | Hoàn thành công việc đúng hạn, đảm bảo chất lượng                                                | ✅   | ☐   | ☐          |
-| 5   | **Kỷ luật**                         | Tuân thủ giờ giấc, nội quy, quy trình làm việc                                                   | ☐   | ☐   | ✅          |
-| 6   | **Tính cầu tiến**                   | Sẵn sàng nhận feedback và cải thiện bản thân                                                     | ☐   | ✅   | ☐          |
-| 7   | **Giao tiếp**                       | Trình bày ý tưởng, báo cáo công việc rõ ràng                                                     | ☐   | ✅   | ☐          |
-| 8   | **Hợp tác nhóm**                    | Làm việc hiệu quả với đồng nghiệp, tham gia nhóm                                                 | ✅   | ☐   | ☐          |
-| 9   | **Ứng xử chuyên nghiệp**            | Tôn trọng đồng nghiệp, đối tác, môi trường làm việc                                              | ✅   | ☐   | ☐          |
-| 10  | **Tư duy giải quyết vấn đề**        | Nhận diện vấn đề, đề xuất giải pháp, sáng tạo                                                    | ☐   | ✅   | ☐          |
-| 11  | **Đóng góp vào dự án/tổ chức**      | Hiệu quả công việc, sáng kiến cải tiến, ghi nhận từ team                                         | ✅   | ☐   | ☐          |
-| 12  | **Tổng thể**                        | Đánh giá chung về toàn bộ quá trình thực tập                                                     | ✅   | ☐   | ☐          |
-
-### Cần cải thiện
-
-* Nâng cao tính kỹ luật, chấp hành nghiêm chỉnh nội quy của công ty hoặc bất kỳ trong một tổ chức nào
-* Cải thiện trong cách tư duy giải quyết vấn đề
-* Học cách giao tiếp tốt hơn trong giao tiếp hằng ngày và trong công việc, xử lý tình huống
+* **Củng cố Chuyên môn Kỹ thuật Sâu rộng:** Mặc dù đã nắm vững các nền tảng cơ bản, tôi cần tăng cường hiểu biết chuyên sâu về các kiến trúc phức tạp và kỹ năng gỡ lỗi (debugging) để có thể xử lý các vấn đề kỹ thuật nâng cao một cách độc lập hơn.
+* **Nâng cao Tư duy Giải quyết Vấn đề:** Tôi đặt mục tiêu cải thiện phương pháp tư duy logic trong việc khắc phục sự cố, chuyển đổi từ cách làm thử-và-sai sang phương pháp phân tích nguyên nhân gốc rễ một cách hệ thống hơn.
+* **Hoàn thiện Kỹ năng Giao tiếp:** Tôi sẽ tập trung vào việc diễn đạt các khái niệm kỹ thuật một cách ngắn gọn và dễ hiêiuf hơn, nhằm truyền tải ý tưởng hiệu quả hơn trong các buổi thảo luận nhóm và thuyết trình.

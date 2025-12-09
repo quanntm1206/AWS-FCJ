@@ -5,7 +5,7 @@ weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
-During my internship at **Amazon Web Services Vietnam Co., Ltd.** from **12/08/2025** to **12/11/2025**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
+During my internship at **Amazon Web Services Vietnam Co., Ltd.** from **08/09/2025** to **09/12/2025**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
 I participated in **Cloud Computing & DevOps projects**, specifically focusing on **Serverless Log Analytics** and **Hybrid Cloud Architectures**, through which I improved my skills in **AWS Cloud Services implementation (EC2, S3, Lambda, Athena), System Monitoring (CloudWatch), and Infrastructure Automation**.  
 
 In terms of work ethic, I always aim to complete tasks well and complied with workplace regulations. I consistently **maintained a polite, respectful attitude** towards everyone and actively engaged with colleagues to improve work efficiency. I prioritized attendance at the office and eagerly participated in all company technical workshops to broaden my industry knowledge.

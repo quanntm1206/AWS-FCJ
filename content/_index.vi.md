@@ -15,7 +15,7 @@ chapter: false
 
 &emsp; **Trường:** Đại học FPT
 
-&emsp; **Ngành:** Trí Tuệ Nhân Tạp
+&emsp; **Ngành:** Trí Tuệ Nhân Tạo
 
 &emsp; **Lớp:** AWS082025
 

@@ -24,7 +24,7 @@ In this section, you will create 5 S3 buckets that serve as the foundation for t
    - Navigate to https://console.aws.amazon.com/s3/
    - Or: AWS Management Console → Services → S3
 
-   > [Screenshot: AWS S3 Console Homepage]
+![alt text](</images/5-Workshop/Workshop pic/1 S3 console 5.3.1.png>)
 
 2. **Click on "Create bucket"**
 3. **General configuration**:

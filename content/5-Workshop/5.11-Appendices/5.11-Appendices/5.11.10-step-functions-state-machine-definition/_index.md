@@ -36,7 +36,7 @@ pre : " <b> 5.11.10. </b> "
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ir-parse-findings-lambda"
+        "FunctionName": "arn:aws:lambda:ap-southeast-1:831981618496:function:ir-parse-findings-lambda"
       },
       "Retry": [
         {
@@ -58,7 +58,7 @@ pre : " <b> 5.11.10. </b> "
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
-        "FunctionName": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ir-isolate-ec2-lambda",
+        "FunctionName": "arn:aws:lambda:ap-southeast-1:831981618496:function:ir-isolate-ec2-lambda",
         "Payload": {
           "InstanceId.$": "$.InstanceIds[0]",
           "Region.$": "$.Region"
@@ -153,6 +153,11 @@ pre : " <b> 5.11.10. </b> "
         "MinSize": 0
       },
       "ResultPath": null,
+      "Next": "Wait for ASG"
+    },
+    "Wait for ASG": {
+      "Type": "Wait",
+      "Seconds": 10,
       "Next": "DetachFromASG"
     },
     "DetachFromASG": {
@@ -161,8 +166,18 @@ pre : " <b> 5.11.10. </b> "
       "Parameters": {
         "AutoScalingGroupName.$": "$.ASGInfo.AutoScalingInstances[0].AutoScalingGroupName",
         "InstanceIds.$": "States.Array($.InstanceId)",
-        "ShouldDecrementDesiredCapacity": true
+        "ShouldDecrementDesiredCapacity": false
       },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "AutoScaling.ValidationException"
+          ],
+          "IntervalSeconds": 15,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
       "ResultPath": null,
       "Next": "DescribeVolumes"
     },
@@ -183,10 +198,15 @@ pre : " <b> 5.11.10. </b> "
     "CreateSnapshots": {
       "Type": "Map",
       "ItemsPath": "$.VolumeInfo.Volumes",
-      "MaxConcurrency": 5,
+      "MaxConcurrency": 1,
       "Iterator": {
-        "StartAt": "CreateSnapshot",
+        "StartAt": "Wait before calling CreateSnapshot API",
         "States": {
+          "Wait before calling CreateSnapshot API": {
+            "Type": "Wait",
+            "Seconds": 15,
+            "Next": "CreateSnapshot"
+          },
           "CreateSnapshot": {
             "Type": "Task",
             "Resource": "arn:aws:states:::aws-sdk:ec2:createSnapshot",
@@ -205,6 +225,16 @@ pre : " <b> 5.11.10. </b> "
                 }
               ]
             },
+            "Retry": [
+              {
+                "ErrorEquals": [
+                  "Ec2.RequestLimitExceeded"
+                ],
+                "IntervalSeconds": 60,
+                "MaxAttempts": 3,
+                "BackoffRate": 2
+              }
+            ],
             "End": true
           }
         }
@@ -212,10 +242,25 @@ pre : " <b> 5.11.10. </b> "
       "End": true
     },
     "Quarantine_IAM_User": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.detail.resource.accessKeyDetails.userType",
+          "StringEquals": "Root",
+          "Next": "RootUserDetected"
+        }
+      ],
+      "Default": "ExecuteIAMQuarantine"
+    },
+    "RootUserDetected": {
+      "Type": "Succeed",
+      "Comment": "Cannot quarantine root user"
+    },
+    "ExecuteIAMQuarantine": {
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
-        "FunctionName": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ir-quarantine-iam-lambda",
+        "FunctionName": "arn:aws:lambda:ap-southeast-1:831981618496:function:ir-quarantine-iam-lambda",
         "Payload.$": "$"
       },
       "Retry": [

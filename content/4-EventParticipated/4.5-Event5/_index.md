@@ -3,7 +3,7 @@ title: "Event 5
 date: "2025-11-29"
 weight: 05
 chapter: false
-pre: " <b> 4.5 </b> "
+pre: " <b> 4.5</b> "
 ---
 
 # Summary Report: “BUILDING AGENTIC AI - Context Optimization with Amazon Bedrock”

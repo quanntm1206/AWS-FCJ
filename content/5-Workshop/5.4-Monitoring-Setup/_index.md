@@ -31,52 +31,27 @@ This Monitoring Setup phase activates and configures the three core log sources 
       - **Trail name**: `incident-responses-cloudtrail-ACCOUNT_ID-REGION`
       - **Storage location**: Use existing S3 bucket
       - **S3 bucket**: Choose your `incident-response-log-list-bucket-ACCOUNT_ID-REGION`
+      - **Log file SSE-KMS encryption**: Disable
       - **Log file validation**: Enabled
       - Click next
 
 3.  **Choose log events**:
-      - **Events** Choose all
+      - **Events** Choose **Management events**, **Data events**
       - **Management events**: All (Read + Write)
       - **Data events**: S3 - Log all events
+      - Click next till step 4 and **Create Trail**
+4.  **Advanced event selectors: Exlcude log buckets**:
+      - **Click the Trail then scroll down to Data Event**
+    > [Screenshot: CloudTrail log gr config]
+      - Setup like picture with the under format:
+    > [Screenshot: CloudTrail septup huhu]
 
-4.  **Advanced event selectors: Exlcude log buckets** (replace `ACCOUNT_ID` and `REGION`):
-
-```json
-[
-  {
-    "Name": "Log all management events",
-    "FieldSelectors": [
-      {
-        "Field": "eventCategory",
-        "Equals": ["Management"]
-      }
-    ]
-  },
-  {
-    "Name": "Log S3 data events except IR buckets",
-    "FieldSelectors": [
-      {
-        "Field": "eventCategory",
-        "Equals": ["Data"]
-      },
-      {
-        "Field": "resources.type",
-        "Equals": ["AWS::S3::Object"]
-      },
-      {
-        "Field": "resources.ARN",
-        "NotStartsWith": [
           "arn:aws:s3:::incident-response-log-list-bucket-ACCOUNT_ID-REGION/",
           "arn:aws:s3:::processed-guardduty-findings-ACCOUNT_ID-REGION/",
           "arn:aws:s3:::processed-cloudtrail-logs-ACCOUNT_ID-REGION/",
           "arn:aws:s3:::athena-query-results-ACCOUNT_ID-REGION/",
           "arn:aws:s3:::processed-cloudwatch-logs-ACCOUNT_ID-REGION/"
-        ]
-      }
-    ]
-  }
-]
-```
+
 
 5.  **Create trail**
 

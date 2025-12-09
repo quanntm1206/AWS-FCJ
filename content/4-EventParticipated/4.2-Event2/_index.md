@@ -91,6 +91,4 @@ pre: " <b> 4.3. </b> "
 - We established an unofficial group named "Mèo Cam Đeo Khăn," representing a collaboration between my group, "The Ballers," and "Vinhomies."
 
 #### Some event photos
-![Top 10 Kahoot](/images/4-Event/Kahoottop10.jpg)
-![A Picture with the speakers and top 10 players](/images/4-Event/WithSpeaker.jpg)
 ![Mèo Cam Đeo Khăn group](/images/4-Event/Meocamdeokhan.jpg)

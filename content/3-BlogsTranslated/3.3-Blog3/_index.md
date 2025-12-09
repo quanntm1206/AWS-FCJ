@@ -1,5 +1,5 @@
 ---
-title: "OSPAR 2025 report"
+title: "Blog 3"
 date: "2025-09-16"
 weight: 03
 chapter: false

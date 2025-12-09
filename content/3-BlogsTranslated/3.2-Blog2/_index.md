@@ -1,5 +1,5 @@
 ---
-title: "MSK Replicator and MirrorMaker2"
+title: "Blog 2"
 date: "2025-09-16"
 weight: 02
 chapter: false

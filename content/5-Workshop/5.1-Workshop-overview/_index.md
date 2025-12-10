@@ -11,7 +11,7 @@ pre : " <b> 5.1. </b> "
 + This system is built around **AWS Security Services** (CloudTrail, GuardDuty, VPC Flow Logs, CloudWatch) feeding data into a **Centralized Data Lake (S3/Glue/Athena)** for analysis.
 + The core automation is driven by **AWS EventBridge** rules triggering **AWS Step Functions** workflows, which then execute **AWS Lambda** functions to perform isolation and alerting actions.
 
-![Workshop Architecture](images/2-Proposal/AWSWorkshopArchitecture-Stepfunctions.drawio.png)
+![Workshop Architecture](/images/2-Proposal/AWSWorkshopArchitecture-Stepfunctions.drawio.png)
 
 #### Workshop overview
 In this workshop, you will deploy a multi-phase system to achieve end-to-end security automation. This includes:

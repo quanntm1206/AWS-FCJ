@@ -23,7 +23,7 @@ Bên cạnh chuyên môn kỹ thuật,em cải thiện đáng kể kỹ năng gi
 Văn hóa công ty đề cao sự tôn trọng và tính hiệu quả. Trong các giai đoạn dự án gấp rút, mọi người tập trung hỗ trợ nhau tối đa để đạt mục tiêu chung. Tinh thần làm việc tập trung vào kết quả này giúp em hòa nhập nhanh chóng.
 
 **6. Chính sách / phúc lợi cho thực tập sinh**
-Cơ chế làm việc linh hoạt giúpem chủ động quản lý thời gian và tiến độ công việc. Điểm giá trị nhất là cơ hội tham gia các buổi chia sẻ kiến thức và thuyết trình nội bộ, cung cấp nhiều nội dung bổ ích áp dụng trực tiếp được cho dự án.
+Cơ chế làm việc linh hoạt giúp em chủ động quản lý thời gian và tiến độ công việc. Điểm giá trị nhất là cơ hội tham gia các buổi chia sẻ kiến thức và thuyết trình nội bộ, cung cấp nhiều nội dung bổ ích áp dụng trực tiếp được cho dự án.
 
 ### Đề xuất & mong muốn
 - Em mong muốn được thì nội dung thông báo về các kì thi sẽ rõ ràng hơn để bản thân tụi em có thể trang bị tốt hơn.
